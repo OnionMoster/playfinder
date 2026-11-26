@@ -1,65 +1,24 @@
-# PlayFinder user study
+# PlayFinder 用户研究
 
-This directory contains E's reproducible study protocol and analysis handoff.
-The experiment is a blinded, within-subject comparison of three recommendation
-conditions:
+本目录保存三种推荐条件的盲法被试内研究方案和分析材料：A 为 Popularity，B 为 BPR，C 为 Hybrid。参与者在界面上只看到三轮推荐，不看到模型名称或条件字母。
 
-- A — Popularity
-- B — BPR
-- C — Hybrid
+## 最终样本
 
-Participants see only **Round 1**, **Round 2**, and **Round 3**. Model names and
-condition letters are researcher-facing.
+共收到 21 次会话，其中一次因参与者编号无效而在分析前排除；最终 20 名成年 PC 游戏玩家完成全部三种条件，共 60 条参与者—条件记录。编号 `P01`–`P20` 确定性分配六种可能的条件顺序。正式研究前完成了一次不计入最终样本的试运行。
 
-## Final sample
+## 文件
 
-Twenty eligible adult PC players completed all three conditions. Participant
-IDs `P01`–`P20` deterministically assigned the six possible condition orders.
-Twenty-one sessions were received; one invalid-ID session was excluded before
-analysis. The final analysis contains 60 complete participant-condition rows.
+- `protocol.md`：主持流程、同意、时间安排和顺序平衡。
+- `tasks.md`：参与者的两项任务。
+- `questionnaire.md`：十道量表题和两道开放题；保留前端实际使用的英文原文。
+- `data-dictionary.md`：原始和派生变量。
+- `templates/`：导出字段约定；量表和开放题 CSV 是前端导出的表头模板，`participant-register.csv` 由主持人填写。
+- `analysis/`：离线指标提取和相关性分析。
 
-## Frozen collection procedure
+## 问卷与导出
 
-The supported-domain and platform rules were frozen, the three-condition
-package passed formal validation, and an excluded pilot completed the full flow
-before the formal sample began.
+参与者在原型内自行完成问卷，每轮十题全部完成后才能继续；提交时记录时间，关联字段来自研究状态。最终开放题在第三轮后填写。
 
-## Files
+每位参与者可导出四个以 `playfinder-<participant>-<session>` 命名的文件：`.json` 和 `.csv` 分别保存事件日志；`-likert.csv` 每轮一行；`-open-responses.csv` 保存最终开放题。导出时检查量表为 `3/3`。`analysis/analyze_study.py` 可直接读取事件 CSV 和量表 CSV。
 
-- `protocol.md` — moderator procedure, consent, timing, counterbalancing.
-- `tasks.md` — the two participant tasks.
-- `questionnaire.md` — ten Likert items and two open questions. This is the
-  source of truth for the wording; the prototype renders these exact items.
-- `data-dictionary.md` — raw and derived study variables.
-- `templates/` — column contracts. `likert-responses.csv` and
-  `open-responses.csv` are the headers the prototype's own exports must match,
-  not forms to fill in by hand. `participant-register.csv` is still filled in by
-  the moderator.
-- `analysis/` — offline-metric extraction and correlation analysis.
-
-## Questionnaire and exports
-
-Participants answer the ten Likert items and the two open questions **inside the
-prototype**. The page administers the ten items when a round ends, blocks
-progression until all ten are answered, timestamps each submission at the moment
-it happens, and fills `participant_id`, `round` and `condition` from study
-state. No questionnaire answer or join key is typed by a moderator.
-
-Each participant produces four files named
-`playfinder-<participant>-<session>`:
-
-| File | Contents |
-|---|---|
-| `.json` | full event log |
-| `.csv` | the same event log, 15 columns |
-| `-likert.csv` | three rows, one per round |
-| `-open-responses.csv` | one row |
-
-Export all four immediately after each participant, check that the Likert export
-reports `3/3`, and store them outside the submitted repository until
-de-identification is complete. `analysis/analyze_study.py` consumes the event CSV
-and the Likert CSV with no transformation.
-
-Do not collect names, Steam usernames, email addresses, or other direct
-identifiers. The open-text answers are the only free-text field in the study, so
-check them for accidental identifiers before analysis.
+原始记录未包含在本仓库中。开放文本需要检查是否意外包含姓名、邮箱、Steam 用户名等直接身份信息。

@@ -1,120 +1,56 @@
-# Section 1 — Problem definition and competitive analysis
+# 问题定义与竞品分析
 
-## Problem definition
+## 问题定义
 
-PC game discovery is not only a ranking problem. A list can have high predicted
-relevance while still being unusable because it contains games the user has
-already reviewed, exceeds the user's budget, does not run on the selected
-platform, or repeats near-identical genres and tags. PlayFinder therefore
-separates model ranking from a shared serving layer: each model supplies a
-Top-100 ranking over the same candidate set, while E applies the same
-training-period reviewed-item exclusion, explicit hard filters, and
-deterministic MMR diversity reranking.
+PC 游戏发现不仅是排序问题。即使预测相关性高，列表也可能包含用户已经评价过的游戏、超出预算、不支持所选平台，或重复相似的类型与标签。PlayFinder 将模型排序与统一服务层分开：模型基于同一候选集提供 Top-100，服务层统一排除训练期评价过的物品、应用硬过滤并使用确定性 MMR 重排。
 
-The research question is whether this controlled interface exposes meaningful
-differences between Popularity, BPR, and Hybrid recommendations in both offline
-ranking metrics and user-perceived discovery quality. PlayFinder does not claim
-that Hybrid or any other model is superior before the user study.
+研究关注：在相同界面及规则下，Popularity、BPR、Hybrid 在离线排序指标和用户感知的发现质量上是否存在有意义的差异；不能在用户研究前断言某一模型更优。
 
-## Competitive landscape
+## 竞品
 
 ### Steam Discovery Queue
 
-Steam describes Discovery Queue as a personalized mix of new, top-selling, and
-similar-to-played products. Users can wishlist, follow, purchase, or ignore an
-item, and Steam filters products already purchased or marked uninteresting.
-The queue is effective for low-effort serial exploration and supports immediate
-feedback. Its limitation for this research is experimental control: the public
-experience combines several discovery signals, presents items sequentially,
-and does not expose a reproducible candidate set, split, model identity, or
-common post-ranking policy.
+Steam 将新品、畅销和与已玩内容相似的产品组成个性化队列，支持愿望单、关注、购买和忽略，并过滤已购买或标记为不感兴趣的物品。它适合低操作成本的逐项探索；但公开体验混合多种信号，无法获得可复现的候选集、切分、模型身份和统一后处理规则。
 
-Sources: [Steam Discovery Update](https://store.steampowered.com/about/newstore?l=english),
-[Discovery Update 2.0](https://store.steampowered.com/about/newstore2016/).
+来源：[Steam Discovery Update](https://store.steampowered.com/about/newstore?l=english)、[Discovery Update 2.0](https://store.steampowered.com/about/newstore2016/)。
 
 ### Steam Interactive Recommender
 
-Steam's Interactive Recommender learns from playtime histories across millions
-of users. It provides controls for popular versus niche, recent versus classic,
-and tag filtering. Steam also states that the system cannot recommend a new
-release before anybody has played it. This is the closest comparator to
-PlayFinder's interactive personalization, but its learned representation,
-candidate generation, and evaluation split are not exposed to the user. Its
-controls tune the recommendation space; PlayFinder additionally treats budget
-and platform as explicit model-independent hard constraints and compares three
-fixed models under one serving contract.
+该系统利用大量用户的游戏时长学习，允许调整热门与小众、新作与经典以及标签过滤；Steam 表示无人玩过的新作暂无法推荐。它接近交互式个性化推荐，但不公开学习表示、候选生成和评测切分。PlayFinder 另外将预算和平台作为模型无关的硬约束，并在统一服务规则下对比三种固定模型。
 
-Sources: [Steam Labs](https://store.steampowered.com/labs),
-[Introducing the Interactive Recommender](https://store.steampowered.com/news/posts/?enddate=1584723646&feed=steam_blog).
+来源：[Steam Labs](https://store.steampowered.com/labs)、[Interactive Recommender 介绍](https://store.steampowered.com/news/posts/?enddate=1584723646&feed=steam_blog)。
 
 ### SteamDB
 
-SteamDB is an independent database covering Steam products, including current
-players, price history, regional information, and update history. It is strong
-for evidence-driven lookup and market monitoring. SteamDB states that its data
-is provided as-is and that it is not affiliated with Valve. Its primary job is
-catalogue intelligence rather than a controlled, user-specific recommendation
-experiment; the user must translate charts, price histories, and filters into
-a discovery decision.
+SteamDB 是独立 Steam 产品数据库，提供在线玩家数、价格历史、地区信息和更新历史，适合信息查询和市场观察。它声明数据按现状提供且与 Valve 无关；其主要用途是目录信息查询，用户需要自行把图表、价格和筛选结果转化为发现决策。
 
-Sources: [SteamDB](https://steamdb.info/),
-[SteamDB FAQ](https://steamdb.info/faq/).
+来源：[SteamDB](https://steamdb.info/)、[常见问题](https://steamdb.info/faq/)。
 
 ### Steam 250
 
-Steam 250 ranks games mainly from the number of Steam review votes and their
-positive approval rate. It emphasizes transparent, open-source, review-based
-global rankings and explicitly contrasts this with relying only on sales.
-Its own explanation notes that the ranking algorithm is intentionally blind to
-game content beyond vote count and approval. This transparency makes Steam 250
-useful for finding broadly well-reviewed or hidden games, but the ranking is not
-personalized to an individual's training history, platform, budget, or current
-taste request.
+Steam 250 主要根据评论票数和好评率形成公开、开源的全球排名；其算法刻意不依据票数与好评率之外的游戏内容。它有助于寻找广受好评或不易发现的游戏，但排名不针对个人训练历史、平台、预算或当前口味。
 
-Source: [About Steam 250](https://steam250.com/about).
+来源：[Steam 250 介绍](https://steam250.com/about)。
 
 ### Epic Games Store
 
-The inspected Epic Games Store browse surface supports search, genre/category
-browsing, release and deal-oriented discovery, and platform-oriented
-categories. Its store home also uses prominent editorial and campaign
-carousels. These mechanisms are effective when the user already has a genre or
-commercial context in mind. However, the reviewed public pages do not explain
-a reproducible user-level ranking model or expose controls comparable to a
-shared three-model experiment, so PlayFinder's contribution is not a larger
-storefront but an auditable recommendation comparison with explicit
-constraints.
+所检查的商店页面提供搜索、类型与类别浏览、发售及折扣发现和平台分类，首页还有编辑推荐与活动轮播。这适合已有类型或购物目标的用户；所检查页面未公开可复现的用户级排序模型，也未提供统一三模型实验。PlayFinder 的重点是受约束且可审查的推荐比较。
 
-Sources: [Epic Games Store Browse](https://store.epicgames.com/browse?lang=en-US),
-[Epic Games Store](https://store.epicgames.com/?lang=en-US).
+来源：[Epic Games Store 浏览](https://store.epicgames.com/browse?lang=en-US)、[商店首页](https://store.epicgames.com/?lang=en-US)。
 
 ### itch.io
 
-itch.io supports discovery across a highly diverse indie catalogue using tags,
-platform, price, genre, input method, session length, popularity, rating, and
-recency. itch.io has also documented an account-activity/tag recommendation
-algorithm and a “Fresh games” module intended to prevent stale
-recommendations. The trade-off is dependence on heterogeneous creator-supplied
-metadata and discovery-index eligibility. PlayFinder addresses a narrower
-Steam research setting where catalogue identity, candidate membership,
-training cutoff, user mapping, and ranking contracts are explicitly validated.
+itch.io 支持基于标签、平台、价格、类型、输入方式、游玩时长、热度、评分和时间浏览独立游戏，也记录了基于账户活动及标签的推荐算法和 Fresh games 模块。它依赖开发者提供的异质元数据以及发现索引的收录条件。PlayFinder 范围更窄，在 Steam 场景中校验目录身份、候选集、训练截止时间、用户映射和排序规则。
 
-Sources: [itch.io recommendations changelog](https://itch.io/blog/109774/itchio-changelog-library-recommendations-enhancements-improved-jam-browsing-more),
-[itch.io browse filters](https://itch.io/games/tag-indie-games),
-[itch.io discovery indexing](https://itch.io/docs/creators/getting-indexed.amp).
+来源：[推荐功能更新](https://itch.io/blog/109774/itchio-changelog-library-recommendations-enhancements-improved-jam-browsing-more)、[浏览筛选](https://itch.io/games/tag-indie-games)、[发现索引](https://itch.io/docs/creators/getting-indexed.amp)。
 
-## What is distinct about PlayFinder
+## 项目特点
 
-PlayFinder's contribution is the combination of:
+1. 共用 20,435 个候选物品和同一时间切分。
+2. 使用真实已见用户画像和固定的模型用户映射。
+3. 不同模型应用相同的已评价物品排除、预算、平台和元数据规则。
+4. 使用确定性 MMR 重排，不无限制地从目录追加兜底结果。
+5. 使用包含六种条件顺序的盲法被试内研究。
+6. 探索用户级留出集 NDCG@10 与实际满意度之间的关系。
 
-1. one shared 20,435-item candidate set and one temporal split;
-2. real seen-user profiles and fixed model-user mappings;
-3. identical reviewed-item, budget, platform, and metadata rules above every
-   model;
-4. deterministic MMR reranking rather than unbounded catalogue fallback;
-5. a blinded within-subject study with all six condition orders; and
-6. a planned user-level link between held-out NDCG@10 and observed satisfaction.
-
-This is a system and evaluation contribution, not evidence that PlayFinder
-already outperforms commercial stores. That conclusion depends on the formal
-participant results.
+这些特点说明系统和评测设计，不能证明该项目已经优于商业商店；用户研究结果需要结合样本和不确定性解释。

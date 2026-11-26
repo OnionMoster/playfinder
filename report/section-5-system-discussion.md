@@ -1,69 +1,21 @@
-# Section 5 — System-level discussion
+# 系统讨论
 
-## What the current system establishes
+## 系统能力
 
-The model-independent serving layer is operational and tested across
-Popularity, BPR, and Hybrid. It guarantees a common candidate namespace,
-training-period seen exclusion, hard filters, deterministic MMR, and stable
-profile assignment. This makes user-facing differences more attributable to
-ranking condition than to different post-processing code.
+统一服务层支持 Popularity、BPR 和 Hybrid，提供共同的候选物品空间、训练期已见物品排除、硬过滤、确定性 MMR 和稳定的画像分配。这样可减少不同后处理方式对推荐条件比较的干扰。
 
-## Limits that affect interpretation
+## 解释边界
 
-### Reviewed interactions are not ownership
+- **评价不等于拥有**：交互只表示评价或已见行为，只能声称排除了训练期评价或交互过的游戏。
+- **缺失元数据**：缺失的类型和平台保持缺失；类型过滤仅匹配明确类型，标签不会被转换成虚构类型。
+- **偏好支持范围**：Top-5 V2 使用 46 个有数据依据的画像，对 560 种三偏好组合中的 558 种达到 Jaccard≥0.5。两个不支持的组合需要在六个确定的第三选择位置禁用选项；这不是对原始训练数据理论上限的无条件结论。
+- **平台过滤**：有三款推荐游戏缺少平台信息，16 个画像／条件／平台组合在不限价格时不足六款。启用平台过滤时不猜测兼容性；结果不足六款时展示实际短列表，不追加兜底物品或放宽条件。
+- **在线与离线相关性**：20 人研究的 60 条匹配记录中 58 条 NDCG@10 为零。满意度 Spearman 为 −0.082，参与者聚类 bootstrap 95% 区间 [−0.194, 0.011]。指标变化太少，不能证明负相关，也不能证明两者无关。
+- **用户体验存在权衡**：BPR 在满意度、相关性、发现和约束匹配的描述性均值最高；Hybrid 停留更久、接受率最高、拒绝率最低，且修正后的物品冷启动表现较强。但主要满意度检验和 Holm 校正后的两两比较均不显著，不能得出某一模型在所有目标上占优。
 
-A confirmed that interactions represent reviewed/seen activity only. The
-system cannot claim that it removes every owned game. The correct claim is that
-it removes games reviewed or interacted with during the training period.
+## 后续决策
 
-### Missing metadata cannot be repaired by invention
-
-Missing source genres and platforms remain missing. Genre filters match only
-explicit genres; tags can support taste evidence and tag filters but do not
-become fabricated genres.
-
-### The supported taste domain is 558 combinations
-
-Top-5 V2 supplies 46 evidence-backed profiles and reaches Jaccard at least 0.5
-for 558 of 560 three-taste combinations. The two unsupported triples require
-six deterministic third-choice disables. This is a conditional policy limit,
-not a claim that the underlying training data has an unconditional 558/560
-theoretical ceiling.
-
-### Platform availability uses an honest-short-list policy
-
-All three ranking files satisfy their shared candidate and seen-exclusion
-contracts. Three recommended games have missing platform metadata, and sixteen
-profile/condition/platform cases contain fewer than six games at Any Price.
-The common policy never guesses compatibility: an item with missing platform
-metadata is excluded when a platform filter is active. When strict filters
-leave fewer than six games, the interface displays the honest short list and
-does not append fallback items or relax the participant's constraints.
-
-### Offline–online correlation is uninformative in this sample
-
-The final 20-participant study has 58 zero NDCG@10 values among 60 matched
-participant-condition rows. The satisfaction Spearman estimate is −0.082 with
-a participant-cluster bootstrap 95% CI [−0.194, 0.011]. This cannot establish a
-negative relationship or prove that satisfaction and NDCG are unrelated; the
-metric has too little variation in the sampled profiles.
-
-### Online outcomes show trade-offs, not one winner
-
-BPR is descriptively highest on satisfaction, relevance, discovery and
-constraint-fit means. Hybrid has the longest dwell, full acceptance, the lowest
-rejection rate, and the strongest corrected cold-item result. However, the
-primary satisfaction omnibus test is not significant and no Holm-adjusted
-pairwise comparison is significant. The system proposal should therefore be
-framed as a trade-off between subjective experience, engagement, coverage and
-cold-item robustness, not as evidence that one model dominates every goal.
-
-## Next system decisions
-
-1. Preserve the frozen rankings actually shown to participants.
-2. Report online/offline results with sample size, zero rate, uncertainty, and
-   no causal language.
-3. Treat the 20-person study as exploratory and plan a larger study with an
-   offline measure that has useful per-user variation.
-4. Evaluate a deployment policy that uses Hybrid/content signals for cold
-   items while retaining BPR where collaborative history is reliable.
+1. 保留参与者实际看到的冻结排序。
+2. 报告在线与离线结果时说明样本量、零值比例和不确定性，避免因果表述。
+3. 将 20 人研究视作探索性研究，扩大样本，并选用用户间有足够变化的离线指标。
+4. 评估冷物品使用 Hybrid／内容信号、协同历史可靠时使用 BPR 的策略。

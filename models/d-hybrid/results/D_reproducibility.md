@@ -1,42 +1,23 @@
-# D — Model Export Reproducibility Appendix
+# 混合模型导出复现记录
 
-For E / the final report. This document does not modify any delivered ranking;
-it records everything needed to reproduce `hybrid_top100.csv`. Fill the two
-`⟨…⟩` placeholder groups (locally-computed hashes and versions) for the complete
-version.
+本记录描述 `hybrid_top100.csv` 的生成，不改变既有排序。排序、训练权重和部分正式输入未包含在本作品集中。
 
----
+## 交付物与哈希
 
-## 1. Deliverables
+| 文件 | 说明 | SHA-256 |
+| --- | --- | --- |
+| `hybrid_top100.csv` | 46 个画像各 100 条 | `a636217ad842a0634d6d1c2809c1b7286a86beb79e2886046b44f598bf0523c3` |
+| `hybrid_bpr_delivery.pkl` | 训练后的交付模型权重 | `7c12445aa7e1477d79bf9eb4c8c1d0633bd92d3caf5baeb41779bedcf347747e` |
+| `hybrid.py` | 导出时的模型代码快照 | `1b42de3bd144199172b085dc720eb008e3d06893a1234e20f8e240eee181ff30` |
+| `export_hybrid_top100.py` | 导出时的脚本快照 | `55f3e7d56add9d4d5d96e801f74d55700500e98b30175c3db91ef005458ace95` |
 
-| File | Description | SHA-256 |
-|---|---|---|
-| `hybrid_top100.csv` | 46 profiles × 100, delivered ranking | `a636217ad842a0634d6d1c2809c1b7286a86beb79e2886046b44f598bf0523c3` |
-| `hybrid_bpr_delivery.pkl` | trained delivery-model checkpoint | `7c12445aa7e1477d79bf9eb4c8c1d0633bd92d3caf5baeb41779bedcf347747e` |
-| `hybrid.py` | model implementation | `1b42de3bd144199172b085dc720eb008e3d06893a1234e20f8e240eee181ff30` |
-| `export_hybrid_top100.py` | export script | `55f3e7d56add9d4d5d96e801f74d55700500e98b30175c3db91ef005458ace95` |
+源代码格式变化后哈希会变化；以上值用于识别导出时的文件快照。
 
-> Note: this project does not use git version control, so the SHA-256 of the
-> files above serves as the equivalent of a code commit/SHA. The SHA-256 of
-> `hybrid_top100.csv` was verified locally (see Section 6, self-checks). The
-> source-file hashes below are a snapshot of the code state at export time; if
-> the code is later re-formatted, recompute them (behaviour is unchanged as long
-> as the `hybrid_top100.csv` hash still matches).
+## 模型与参数
 
-## 2. Model
+模型为 PyTorch 重实现的 LightFM 风格混合分解模型，而非 LightFM 库本身；其 WARP 排名、采样和 SparseAdam 等细节有差异。交付模型 `hybrid_bpr` 关闭用户特征塔，用户侧仅使用身份嵌入。排序不使用口味、类型、用户组或测试期数据。
 
-- Type: hybrid factorization machine, a PyTorch reimplementation of a
-  LightFM-style model (not the LightFM library itself; differences documented in
-  the report's Method section: exact WARP rank, uniform violator sampling,
-  SparseAdam).
-- Delivery model: `hybrid_bpr` (user tower disabled, identity-only user
-  embedding).
-- The ranking uses **no** taste / genre / user_group / test-period data
-  (consistent with the handoff constraints).
-
-Hyperparameters (matching `hybrid_params.json`):
-
-```
+```text
 dim=64  loss=bpr  epochs=15  batch_size=4096  lr=0.02  n_neg=30
 n_candidates=8192  margin=1.0  use_confidence=True  positive_label_only=True
 sparse=True  amp=True
@@ -47,56 +28,16 @@ n_users=1,838,974  n_items=50,872  n_item_features=53,217
 final_train_loss ≈ 0.0098
 ```
 
-## 3. Randomness
+PyTorch 和 NumPy 随机种子均为 9727。
 
-- Random seed: **9727** (set for both `torch.manual_seed` and `np.random.seed`).
+## 数据与环境
 
-## 4. Data & Split
+使用 2026-07-24 冻结的 interactions、items、users 和 item_popularity Parquet。切分截止时间戳为 `1641340800`（2022-01-05），训练比例 0.8，训练期有 17,838,174 行。排除每个画像的全部训练期交互。候选集为 20,435 个 appid，按换行连接并带末尾换行的 SHA-256 为 `01b6bae167febed5b2012c3d8a348d0a3463d3460c9892e58b661653106246ed`。
 
-- Data version: task-A frozen output at `DataEngineering/output/`, frozen
-  2026-07-24 (interactions / items / users / item_popularity.parquet).
-- Split cutoff (timestamp): **1641340800** (2022-01-05), train_ratio = 0.8.
-- Training rows: **17,838,174** (timestamp ≤ cutoff).
-- Seen exclusion: each profile's full training-period interactions (from the
-  handoff `profile_seen_items.csv`).
-- Candidate set: 20,435 appids. SHA-256 (appids newline-joined, with trailing
-  newline) = `01b6bae167febed5b2012c3d8a348d0a3463d3460c9892e58b661653106246ed`
-  ✓ verified.
+记录环境：Windows、Anaconda、NVIDIA GeForce RTX 4070 SUPER 12GB、CUDA 12.4；torch 2.6.0+cu124、NumPy 1.26.4、pandas 2.3.3、PyArrow 25.0.0。
 
-## 5. Environment
+## 校验和复现条件
 
-- Device: NVIDIA GeForce RTX 4070 SUPER (12 GB), CUDA 12.4.
-- OS / environment: Windows, Anaconda, conda env `pf2`.
-- Key dependency versions:
-  - torch: **2.6.0+cu124**
-  - numpy: **1.26.4**
-  - pandas: **2.3.3**
-  - pyarrow: **25.0.0**
+导出自检通过：4,600 行，46 个画像各 100 行，每个画像排名连续且物品唯一，无训练期已见物品泄漏，分数有限且保持模型原始 BPR 尺度，约为 [1.98, 20.33]。记录的 15 轮训练约 12 分钟，评分少于 10 秒。
 
-## 6. Run Command & Log
-
-```
-conda activate pf2
-cd C:\Users\yueye\Desktop\COMP9727\Proj\PlayerFinder\models
-python export_hybrid_top100.py > export_log.txt 2>&1
-```
-
-- Log: `export_log.txt`
-- Self-checks (in-script asserts, all passed): 4600 rows; 46 profiles × 100;
-  ranks 1–100 contiguous and unique; 100 unique candidate appids per profile; no
-  seen leakage; scores finite and in the model's native BPR scale (range approx.
-  [1.98, 20.33], not normalized).
-- Training took ≈ 12 minutes (15 epochs, full data); scoring < 10 seconds.
-
-## 7. Reproduction Steps (for a third party)
-
-In the integrated repository, run from the repository root. Task-A parquet
-files belong in `data/`, B's evaluator is in `eval/`, and the export handoff is
-resolved from `study-data/staging/profile-policy-v2/a-v1.0-release/cd-handoff/`.
-
-1. Train `hybrid_bpr` using the data version and cutoff in Section 4 (or load
-   `hybrid_bpr_delivery.pkl` directly via `HybridRecommender.load(path)`).
-2. Using the candidate set and seen table from Section 4, call
-   `model.score(uid, candidates)` for each of the 46 requested model_user_ids,
-   exclude seen items, and take the top 100.
-3. Verify against the SHA-256 of `hybrid_top100.csv`.
+复现需要恢复处理后的 Parquet、冻结模型权重、候选集和画像已见记录；使用 `model.score(uid, candidates)` 对各画像评分并排除已见物品，取前 100 条，然后核对文件哈希。这些完整输入未包含在本仓库中。

@@ -1,72 +1,25 @@
-# Section 4.5 — User study
+# 用户研究
 
-## Design
+## 设计与指标
 
-The study used a blinded within-subject design. Twenty adult PC players
-completed Popularity, BPR, and Hybrid conditions while the
-interface labels them only as three recommendation rounds. Participant IDs
-cycle through all six possible condition orders.
+研究采用盲法被试内设计，20 名成年 PC 玩家依次体验 Popularity、BPR、Hybrid 三种条件；界面仅显示三轮推荐，参与者编号分配六种条件顺序。每轮使用同一画像与偏好：先找出愿意考虑的游戏，再按真实预算和平台筛选并决定接受或拒绝。每轮完成十道 1–7 分量表题，最后回答两道开放题。
 
-Each round uses the same assigned real profile and the same participant
-preferences. The participant completes two tasks: first identifying a game
-they would genuinely consider, then applying real budget and platform
-constraints to make a final accept/reject decision. After each round, the
-participant answers ten 1–7 Likert items. Two open questions follow the final
-round.
+行为指标包括曝光、点击、打开的不同游戏数、详情停留时间、喜欢、不喜欢、愿望单、不感兴趣、接受、拒绝和完成情况。主要主观指标为 Q10 总体满意度；主要离线指标为已见用户 `overall` 范围的用户级 NDCG@10。
 
-## Measures
+连续和有序指标使用 Friedman 检验和 Holm 校正的配对 Wilcoxon 检验；二元指标使用 Cochran's Q 和 Holm 校正的精确 McNemar 检验。条件均值采用 10,000 次参与者 bootstrap 的 95% 区间。在线与离线相关性采用 Spearman、Pearson 和参与者聚类 bootstrap 区间。同一参与者的三次观察并非独立，因此比较采用配对方法。
 
-Behavioural measures include impressions, game-card clicks, unique games
-opened, detail dwell time, likes, dislikes, wishlist changes, Not Interested,
-acceptance, rejection, and round completion. The primary subjective outcome is
-Q10 overall satisfaction. The primary offline measure is user-level NDCG@10
-from B's `seen_users_only`, `overall` evaluation scope.
+## 结果
 
-## Analysis
+收到 21 次会话，其中一次因参与者编号无效被排除；最终包含 20 名参与者、60 轮完整记录和 600 条有效量表回答。
 
-Condition summaries report completion, satisfaction, relevance, discovery
-quality, constraint fit, acceptance, rejection, games opened, and dwell time.
-Continuous and ordinal outcomes use a Friedman within-subject omnibus test and
-Holm-adjusted Wilcoxon signed-rank pairwise comparisons. Binary outcomes use
-Cochran's Q and Holm-adjusted exact McNemar comparisons. Condition means have
-10,000-replicate participant-bootstrap 95% intervals.
-
-Online/offline association is evaluated using Spearman and Pearson correlation
-with usable pair counts and participant-cluster bootstrap intervals.
-
-Three observations per participant are not independent, which is why the
-condition comparisons are paired. In the 60 matched online/offline rows, 58
-NDCG@10 values are zero. Coefficients are therefore presented with zero rates,
-sample sizes, and uncertainty rather than as a decisive validation of the
-offline metric.
-
-## Results
-
-Twenty-one sessions were received; one session with an invalid participant ID
-was excluded before analysis. The final sample contains 20 participants, 60
-complete participant-condition rounds, and 600 valid Likert responses. Every
-analysed participant completed A, B, and C once.
-
-| Condition | Satisfaction | Relevance | Discovery | Constraint fit | Accept | Reject | Dwell (s) |
-|---|---:|---:|---:|---:|---:|---:|---:|
+| 条件 | 满意度 | 相关性 | 发现 | 约束匹配 | 接受 | 拒绝 | 停留时间（秒） |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
 | A — Popularity | 4.85 | 4.95 | 4.925 | 5.175 | 0.95 | 0.90 | 5.38 |
-| B — BPR | **5.50** | **5.40** | **5.525** | **5.525** | 0.95 | 0.95 | 10.79 |
-| C — Hybrid | 5.30 | 5.275 | 5.30 | 5.15 | **1.00** | **0.85** | **13.11** |
+| B — BPR | 5.50 | 5.40 | 5.525 | 5.525 | 0.95 | 0.95 | 10.79 |
+| C — Hybrid | 5.30 | 5.275 | 5.30 | 5.15 | 1.00 | 0.85 | 13.11 |
 
-BPR is descriptively highest on the four subjective means, while Hybrid is
-highest on dwell and acceptance and lowest on rejection. These differences are
-not statistically decisive. For the primary Q10 outcome, Friedman
-χ²(2)=0.098, p=.952. No Holm-adjusted pairwise comparison is significant. The
-smallest unadjusted pairwise p-value is for Hybrid versus Popularity dwell time
-(p=.019), but the Holm-adjusted value is .058.
+BPR 的四项主观均值在描述性结果中最高；Hybrid 的停留时间和接受率最高、拒绝率最低。这些差异不足以构成统计上的决定性结论。Q10 的 Friedman χ²(2)=0.098、p=.952；Holm 校正后的两两比较均不显著。Hybrid 与 Popularity 停留时间的未校正 p=.019，校正后为 .058。
 
-For satisfaction versus offline NDCG@10, pooled Spearman ρ=−0.082 with a
-participant-cluster bootstrap 95% CI [−0.194, 0.011]; Pearson r=−0.023 with 95%
-CI [−0.116, 0.041]. Because 58/60 offline values are zero, this result is
-reported as unable to estimate the offline–online relationship, not as evidence
-of negative correlation.
+满意度与离线 NDCG@10 的汇总 Spearman ρ=−0.082，聚类 bootstrap 95% 区间 [−0.194, 0.011]；Pearson r=−0.023，区间 [−0.116, 0.041]。60 个离线值中有 58 个为零，因此无法据此可靠估计在线与离线的关系，也不能将结果解释为负相关证据。
 
-The principal limitations are the modest sample, zero-inflated offline metric,
-near-ceiling accept/reject outcomes, and shallow/variable detail-page
-interaction. Aggregate evidence is stored in `study/results/`; raw exports and
-the participant-condition table are excluded from submission.
+主要限制包括样本较小、离线指标大量为零、接受和拒绝接近上限，以及详情页交互较浅且差异较大。汇总结果保存在 `study/results/`；原始导出和参与者级表格不包含在本仓库中。

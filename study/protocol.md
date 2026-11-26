@@ -1,28 +1,17 @@
-# PlayFinder within-subject study protocol
+# 被试内用户研究方案
 
-## Research question
+## 研究问题与参与者
 
-How do Popularity, BPR, and Hybrid recommendations differ in perceived
-relevance, discovery quality, satisfaction, and observable interaction for PC
-players using the same profile, candidate set, exclusions, filters, and MMR?
+在画像、候选集、排除规则、过滤和 MMR 一致时，比较 Popularity、BPR、Hybrid 对 PC 玩家感知相关性、发现质量、满意度和可观察交互的影响。
 
-## Participants
+目标为 15–20 名成年 PC 玩家；要求至少每月玩一次 PC 游戏并能阅读界面。排除参与系统开发或知道条件与模型映射的人。仅记录研究编号和概括的游戏经验，不收集直接身份信息。
 
-- Target: 15–20 adult PC players.
-- Inclusion: plays PC games at least monthly and can read the study interface.
-- Exclusion: participated in building PlayFinder or knows the condition/model
-  mapping.
-- Record only a study ID and broad gaming-experience band. Do not collect
-  direct personal identifiers.
+## 设计与顺序
 
-## Design
+每名参与者体验全部三个条件，仅看到轮次而看不到模型名称。编号从 `P01` 起连续分配，不根据偏好挑选编号。
 
-- Within-subject: every participant uses all three conditions.
-- Blinded: participants see round numbers, not model names.
-- Counterbalanced: participant number selects one of six orders.
-
-| Participant number modulo 6 | Sequence |
-|---:|---|
+| 参与者编号除以 6 的余数 | 顺序 |
+| ---: | --- |
 | 1 | A → B → C |
 | 2 | A → C → B |
 | 3 | B → A → C |
@@ -30,111 +19,26 @@ players using the same profile, candidate set, exclusions, filters, and MMR?
 | 5 | C → A → B |
 | 0 | C → B → A |
 
-Assign IDs consecutively from `P01`. Do not choose IDs to give a participant a
-preferred order.
+## 问卷与流程
 
-## Questionnaire delivery
+十道量表题和最后两道开放题均由参与者在原型中填写。每轮十题全部作答后才能继续；页面在提交时、该轮 `round_completed` 前记录时间。`participant_id`、`round`、`condition` 来自研究状态，`preferred_condition` 根据分配顺序派生，关联键不由主持人手填。屏幕只显示轮次，导出数据才包含条件字母。`questionnaire.md` 保留前端使用的英文题目。
 
-The ten Likert items and the two final open questions are answered **inside the
-prototype**, not on paper and not in a spreadsheet. The moderator never types a
-questionnaire answer, a participant ID, a round number or a condition letter
-into a CSV.
+主持人依次说明研究比较推荐列表、解释数据按研究编号本地存储、取得同意并在 `participant-register.csv` 记录时间；要求参与者选择恰好三个偏好、真实预算和可用平台；输入分配的编号开始研究。每轮宣读两项任务，不推荐游戏、不解释隐藏模型；参与者完成后自行点击 **ANSWER THE TEN QUESTIONS** 并答题，主持人不念题或建议分数。第三轮后参与者自行填写两道开放题，不输入姓名、邮箱或 Steam 用户名。导出四个文件、确认编号和三轮完成后开始下一位参与者。
 
-- Finishing a round opens the ten items automatically. All ten must be answered
-  before the round can advance, so a round cannot be skipped or left partial.
-- Each submission is timestamped by the page at the moment the participant
-  submits, immediately before that round's `round_completed`. Answers therefore
-  cannot be back-filled after the session.
-- `participant_id`, `round` and `condition` are written from study state, and
-  `preferred_condition` is derived from the assigned sequence. The join keys are
-  never hand-entered.
-- Participants still see only the round ordinal. The condition letter appears in
-  the exports, never on screen.
+## 导出
 
-`questionnaire.md` remains the source of truth for the wording; the page renders
-those exact items and a regression test fails if they drift apart.
+每位参与者生成以 `playfinder-<participant>-<session>` 命名的四个文件：`.json` 为完整事件日志，`.csv` 为同一日志的 15 列版本，`-likert.csv` 每轮一行且表头与 `templates/likert-responses.csv` 相同，`-open-responses.csv` 一行且表头与对应模板相同。`study/analysis/analyze_study.py` 直接读取事件和量表 CSV。量表导出显示三轮完成数，低于 `3/3` 属于不完整会话；开放题未提交时其导出按钮禁用。
 
-## Moderator script
+主持人只手填 `participant-register.csv`，记录研究编号、顺序、年龄段、游戏频率、平台、同意时间、试运行标记和备注。
 
-1. Explain that the study compares recommendation lists, not the participant.
-2. Explain that interactions are stored locally and exported under a study ID.
-3. Obtain consent before opening the prototype, and record the consent time in
-   `participant-register.csv`.
-4. Ask the participant to choose exactly three tastes and their real budget and
-   playable platform(s).
-5. Enter the assigned participant ID and begin the study.
-6. For each round:
-   - read Task 1 and Task 2;
-   - do not recommend games or explain the hidden model;
-   - when the participant is finished, ask them to press
-     **ANSWER THE TEN QUESTIONS** and answer all ten themselves. Do not read the
-     items aloud or suggest a value.
-7. After Round 3 the two open questions appear automatically. Let the
-   participant type their own answers and remind them not to include their name,
-   email address or Steam username.
-8. Export all four files, confirm the participant ID and three completed rounds,
-   then start a new participant.
+## 时间
 
-## Exports
+介绍和同意约 2–3 分钟，偏好设置 2 分钟，每轮及其问卷 4–6 分钟，最终开放题 3 分钟，总计约 20–25 分钟。不严格限制浏览时间；长时间无操作时可提醒任务并记录干预。
 
-Every participant produces four files, all named
-`playfinder-<participant>-<session>`:
+## 试运行检查
 
-| File | Contents |
-|---|---|
-| `.json` | full event log |
-| `.csv` | the same event log, 15 columns |
-| `-likert.csv` | three rows, one per round, headers identical to `templates/likert-responses.csv` |
-| `-open-responses.csv` | one row, headers identical to `templates/open-responses.csv` |
+正式样本开始前进行一次不计入最终分析的试运行：检查分配顺序和三轮画像一致；卡片、过滤、详情、愿望单、反馈可用；轮次、曝光、点击、停留、反馈和完成事件齐全；每轮问卷阻止提前继续并记录提交，第三轮出现开放题；四个文件正常导出且量表显示 `3/3`；每次量表提交时间位于对应轮次并紧邻完成事件之前；问卷与事件能按 `participant_id + round + condition` 关联。
 
-`study/analysis/analyze_study.py` reads the event CSV and the Likert CSV
-directly, with no transformation. `EXPORT LIKERT CSV` shows how many of the
-three rounds have been answered and stays disabled until at least one exists;
-`EXPORT OPEN RESPONSES CSV` stays disabled until the two open questions are
-submitted. Treat a count below `3/3` as an incomplete session.
+## 数据处理
 
-Only `participant-register.csv` is still filled in by the moderator: study ID,
-sequence, age band, gaming frequency, platforms, consent time, the `pilot` flag
-and notes.
-
-## Timing
-
-- Introduction and consent: 2–3 minutes.
-- Onboarding: 2 minutes.
-- Each recommendation round and its ten questions: 4–6 minutes.
-- Final open questions: 3 minutes.
-- Expected total: 20–25 minutes.
-
-Do not impose a strict browsing time limit. Dwell time is an outcome. The
-moderator may remind a participant of the task after prolonged inactivity but
-must record the intervention in study notes.
-
-## Pilot gate
-
-Run one pilot that is not included in the final sample. Confirm:
-
-- the intended sequence is assigned;
-- all three rounds use the same profile;
-- cards, filters, details, wishlist, like/dislike, and Not Interested work;
-- `round_started`, impressions, clicks, dwell, feedback, and
-  `round_completed` are present;
-- the ten items appear after each round, block progression until complete, and
-  emit `round_survey_submitted`;
-- the two open questions appear after Round 3 and emit
-  `open_responses_submitted`;
-- all four files export successfully and the Likert export reports `3/3`;
-- each Likert `submitted_at` sits inside its own round, immediately before that
-  round's `round_completed`;
-- the Likert and open rows join to the event log on
-  `participant_id + round + condition`.
-
-## Ethics and data handling
-
-- Participation is voluntary and may stop at any time.
-- Do not ask participants to sign into Steam or disclose their library.
-- The chosen taste/profile is an experimental match, not a claim about
-  identity.
-- Interactions in A's data represent reviewed/seen activity, not ownership.
-- Store de-identified exports in a restricted team folder and report aggregate
-  results. Remove accidental identifiers from open-text responses before
-  submission.
+参与自愿且可随时停止；不要求登录 Steam 或披露游戏库。选择的偏好／画像只是实验匹配，不能当作身份声明。数据交互表示评价或已见行为，不等于拥有。去标识导出限制访问、只报告汇总结果；开放回答中的意外身份信息需在提交前移除。原始参与者数据不包含在本仓库中。

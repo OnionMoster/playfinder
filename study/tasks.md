@@ -1,36 +1,22 @@
-# Participant tasks
+# 参与者任务
 
-Read the same wording in every round.
+每轮使用相同措辞。
 
-## Task 1 — Find a game you would genuinely consider
+## 任务 1：寻找愿意考虑的游戏
 
-Explore the recommendation list as if you wanted a PC game to play next. Open
-any games that interest you. Use **Like**, **Wishlist**, **Dislike**, or
-**Not Interested** naturally.
+像寻找下一款 PC 游戏一样浏览推荐列表，打开感兴趣的游戏，自然使用 **Like**、**Wishlist**、**Dislike** 或 **Not Interested**。
 
-Finish Task 1 when you have either:
+找到至少一款愿意考虑的游戏，或判断所有可见推荐都不合适后，结束任务 1。
 
-- found at least one game you would genuinely consider; or
-- decided that none of the visible recommendations are suitable.
+## 任务 2：根据实际约束筛选
 
-## Task 2 — Make the list fit your real constraints
+使用预算与平台控件，使列表符合实际可游玩的条件。继续浏览并做出最终决定：用 **Like** 或 **Wishlist** 保留至少一款合适游戏，或用 **Dislike** 或 **Not Interested** 排除不合适的游戏。完成决定后告知主持人，并回答本轮十道问题。
 
-Use the budget and platform controls so the list reflects what you could
-actually play. Continue exploring and make a final decision:
+## 分析定义
 
-- keep at least one suitable game using **Like** or **Wishlist**; or
-- reject unsuitable games using **Dislike** or **Not Interested**.
+界面保留原始操作，分析时派生以下指标：
 
-Tell the moderator when you are satisfied with your final decision, then
-complete the ten questions for that round.
+- `accept = like OR wishlist_added`；
+- `reject = dislike OR not_interested`。
 
-## Analysis interpretation
-
-The interface preserves the raw actions. The analysis derives:
-
-- `accept = like OR wishlist_added`;
-- `reject = dislike OR not_interested`.
-
-Like and wishlist remain separate raw outcomes, as do dislike and Not
-Interested. A participant may produce both accept and reject events within the
-same round.
+喜欢与加入愿望单分别保留为原始结果，不喜欢与不感兴趣也分别保留。同一参与者同一轮可以同时出现接受和拒绝事件。

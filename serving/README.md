@@ -1,45 +1,18 @@
-# PlayFinder serving layer
+# 推荐服务层
 
-This directory is E's model-independent serving boundary. Model owners provide
-ranked Steam appids; E applies the same deterministic post-processing to
-Popularity, BPR, and Hybrid.
+本目录为不同模型提供统一的排序后处理逻辑，适用于 Popularity、BPR 和 Hybrid。
 
-## Request order
+## 处理顺序
 
-1. Select the ranking for the assigned `profile_id` and active condition.
-2. Remove every training-period reviewed/interacted item for that model user.
-3. Remove games marked **Not Interested** during the current study.
-4. Apply budget and platform as hard filters.
-5. Apply genre only to explicit source genres. Tags may be filtered as tags,
-   but are never converted into fabricated genres.
-6. Apply deterministic MMR to improve list diversity.
+1. 按用户画像和当前实验条件选取排序列表。
+2. 排除该用户在训练期评价或交互过的游戏。
+3. 排除本轮标记为“不感兴趣”的游戏。
+4. 根据预算和平台进行硬过滤。
+5. 类型过滤只使用原始数据中明确提供的类型；标签仅用于标签过滤，不会被当作类型。
+6. 使用确定性的 MMR 重排，提高列表多样性。
 
-The source of truth is `serving/index.mjs`, which exposes the tested
-implementation in `build/study-core.mjs`.
+入口 `serving/index.mjs` 导出 `build/study-core.mjs` 中经过测试的实现。交互数据只表示评价或已见行为，不能证明用户拥有某款游戏，也不能声称系统排除了全部已拥有的游戏。
 
-## Important semantic limitation
+## 延迟基准
 
-A confirmed that interactions mean reviewed/seen activity, not ownership.
-PlayFinder therefore cannot truthfully claim to remove every owned game.
-Participant-facing and report language must say **training-period
-reviewed/interacted games**.
-
-## Latency benchmark
-
-`serving/benchmark-real.mjs` measures a warm in-memory request from
-profile/condition lookup through exclusion, filtering, and MMR. It excludes
-one-time file loading and browser/network latency and reports overall plus
-per-condition mean, p50, p95, p99, and maximum latency.
-
-Run:
-
-```sh
-node serving/benchmark-real.mjs \
-  --input study-data/incoming/final \
-  --output serving/results/benchmark-real-formal.json
-```
-
-The formal benchmark may support the system engineering discussion when its
-definition and limitations are kept alongside the result. It measures warm
-local in-memory post-processing, not browser rendering, network transfer,
-process startup, model training, or file loading.
+`serving/benchmark-real.mjs` 测量已加载数据后的本地内存处理，包括画像和条件查询、排除、过滤及 MMR，并输出均值、p50、p95、p99 和最大耗时。它不包括文件初次加载、进程启动、网络传输、浏览器渲染或模型训练。正式输入未包含在作品集中，因此不能直接重跑该基准。已有结果见 `serving/results/benchmark-real-formal.json`。

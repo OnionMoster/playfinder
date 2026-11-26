@@ -1,3 +1,3 @@
-# Hybrid Recommender
+# 混合推荐模型
 
-`models/hybrid.py` implements a LightFM-style hybrid factorization model in PyTorch. The directory also contains cold-start experiments, an evaluation script and a Top-100 export script. The original processed datasets, model checkpoints and per-profile ranking outputs are not included; the saved aggregate results in `results/` are provided for inspection.
+`models/hybrid.py` 使用 PyTorch 实现了类似 LightFM 的混合分解模型。本目录还包含冷启动实验、评测脚本和 Top-100 导出脚本。原始处理后数据、模型权重及按用户画像生成的排序结果未包含在仓库中；可在 `results/` 查看已有汇总结果。

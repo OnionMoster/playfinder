@@ -1,64 +1,25 @@
-# Study analysis
+# 用户研究分析
 
-## Offline metrics
+## 离线指标
 
-`extract_offline_ndcg.py` deterministically extracts the 138 required
-profile-condition rows from B's unchanged `main_user_metric_values.csv`:
+`extract_offline_ndcg.py` 从用户级离线指标中提取 46 个画像、三种条件共 138 条 NDCG@10 记录，使用 `seen_users_only`、`overall` 范围。Popularity、BPR、Hybrid 分别只有 3/46、2/46、4/46 个画像的 NDCG@10 大于零，因此小样本用户级相关性易受大量零值和并列影响。
 
-- scenario: `seen_users_only`
-- scope: `overall`
-- metric: `ndcg_at_k`
-- k: `10`
-- 46 profiles × Popularity/BPR/Hybrid
+用户级输入及 `offline-ndcg-selected.csv` 未包含在本仓库中。
 
-The resulting `offline-ndcg-selected.csv` is an audit-sized input for the user
-study analysis.
+## 在线分析
 
-The selected cohort is highly zero-inflated:
+最终分析包含 20 名完整参与者和 60 轮参与者—条件记录。原始去标识记录不包含在本仓库中。具备这些输入时，可运行：
 
-- Popularity: 3/46 users have NDCG@10 greater than zero;
-- BPR: 2/46;
-- Hybrid: 4/46.
-
-This does not invalidate B's offline evaluation, but it makes a small-sample
-user-level correlation unstable and dominated by tied zeros.
-
-## Online analysis
-
-The final analysis used 20 complete participants (60 participant-condition
-rounds). De-identified source files are kept locally at:
-
-- `study/data/logs/*.csv`
-- `study/data/likert-responses.csv`
-- `study/data/open-responses.csv`
-
-Reproduce the aggregate outputs locally with:
-
-```sh
+```bash
 python3 study/analysis/analyze_study.py
 python3 study/analysis/run_within_subject_tests.py
 python3 study/analysis/plot_study_results.py
 ```
 
-Outputs are written to `study/results/`. The primary online comparison is Q10
-overall satisfaction across A/B/C using a Friedman test. Wilcoxon signed-rank
-pairwise comparisons are Holm-adjusted. Binary outcomes use Cochran's Q and
-exact McNemar comparisons. The online/offline analysis reports Spearman and
-Pearson coefficients, usable pair counts, offline zero rates, and
-participant-cluster bootstrap intervals. Correlations are descriptive and must
-not be described as causal.
+汇总输出位于 `study/results/`。主要结果是 Q10 总体满意度：采用 Friedman 检验比较三种条件，配对 Wilcoxon 检验使用 Holm 校正；二元指标使用 Cochran's Q 和精确 McNemar 检验。在线与离线相关性使用 Spearman、Pearson 和以参与者为单位的 bootstrap 区间；相关性仅作描述，不表示因果关系。
 
-## Final execution status
+## 结果与限制
 
-- 20 participants and 60 complete rounds were analysed.
-- The primary satisfaction difference is not significant: Friedman
-  χ²(2)=0.098, p=.952.
-- No Holm-adjusted pairwise difference is significant.
-- The pooled satisfaction–NDCG Spearman estimate is −0.082 with a
-  participant-cluster bootstrap 95% CI [−0.194, 0.011].
-- The matched offline NDCG zero rate is 96.7% (58/60), so the association is
-  reported as uninformative rather than negative.
-
-Committed outputs are aggregate CSV/JSON, figures, and the executed notebook.
-`study/data/` and `study/results/participant-condition-analysis.csv` are
-explicitly excluded from Git.
+- 主要满意度差异不显著：Friedman χ²(2)=0.098，p=.952；Holm 校正后两两比较均不显著。
+- 满意度与 NDCG 的汇总 Spearman 系数为 −0.082，参与者聚类 bootstrap 95% 区间为 [−0.194, 0.011]。
+- 60 条匹配记录中 58 条离线 NDCG 为零（96.7%），因此无法据此可靠判断在线与离线指标之间的关系。

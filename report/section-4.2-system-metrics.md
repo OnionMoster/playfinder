@@ -1,44 +1,22 @@
-# Section 4.2 — System-level metrics
+# 系统指标
 
-## Serving definition
+## 测量范围
 
-For every condition, a request selects the assigned profile's Top-100, removes
-training-period reviewed items and current-session Not Interested items,
-applies budget/platform/explicit metadata filters, and then performs
-deterministic MMR reranking. Model training and one-time data loading are
-outside the measured serving request.
+每次请求选取分配画像的 Top-100，排除训练期评价过的游戏和当前会话标记为不感兴趣的游戏，应用预算、平台及明确元数据过滤，然后进行确定性的 MMR 重排。模型训练和一次性数据加载不包含在测量范围内。
 
-## Formal real-data benchmark
+## 正式数据基准
 
-The benchmark used the formally validated package, all 46 profiles, all three
-real ranking files, five filter passes, and 690 warm in-memory requests.
+使用通过正式校验的数据、46 个画像、三种排序方式和五轮筛选，共测量 690 次预热后的本地内存请求：
 
-| Metric | Overall | Popularity | BPR | Hybrid |
-|---|---:|---:|---:|---:|
-| Runs | 690 | 230 | 230 | 230 |
-| Mean latency | 81.45 ms | 31.02 ms | 106.85 ms | 106.48 ms |
-| p50 latency | 18.88 ms | 12.21 ms | 27.12 ms | 30.28 ms |
-| p95 latency | 273.04 ms | 69.97 ms | 288.11 ms | 278.30 ms |
-| p99 latency | 300.68 ms | 75.04 ms | 304.65 ms | 297.53 ms |
-| Maximum | 317.80 ms | 82.09 ms | 317.80 ms | 306.31 ms |
+| 指标 | 总体 | Popularity | BPR | Hybrid |
+| --- | ---: | ---: | ---: | ---: |
+| 次数 | 690 | 230 | 230 | 230 |
+| 平均延迟 | 81.45 ms | 31.02 ms | 106.85 ms | 106.48 ms |
+| p50 延迟 | 18.88 ms | 12.21 ms | 27.12 ms | 30.28 ms |
+| p95 延迟 | 273.04 ms | 69.97 ms | 288.11 ms | 278.30 ms |
+| p99 延迟 | 300.68 ms | 75.04 ms | 304.65 ms | 297.53 ms |
+| 最大延迟 | 317.80 ms | 82.09 ms | 317.80 ms | 306.31 ms |
 
-These values support a limited “near real-time serving” statement for local
-in-memory post-processing: 95% of measured requests completed within 274 ms.
-They do not measure browser rendering, network transfer, cold process startup,
-or model training.
+95% 的测量请求在 274 ms 内完成；该结果只说明本地内存后处理的表现，不包括浏览器渲染、网络传输、冷启动和模型训练。严格过滤后列表可能包含 0–100 款游戏，不会为凑数而放宽约束。
 
-The post-filter list size ranged from 0 to 100 games. That range is not a
-latency problem. Under the approved common policy, strict participant
-constraints may produce an honest short list without fallback or filter
-relaxation.
-
-Source: `serving/results/benchmark-real-formal.json`, measured 2026-07-29 with
-Node.js v24.10.0 on macOS 26.5.2 arm64.
-
-## Final-report interpretation
-
-The benchmark is a service-layer microbenchmark, not a complete page-load or
-network measurement. The candidate identity is pinned by SHA-256
-`01b6bae167febed5b2012c3d8a348d0a3463d3460c9892e58b661653106246ed`.
-If the final submitted source changes, rerun the benchmark and record the new
-source commit or archive hash.
+来源：`serving/results/benchmark-real-formal.json`；2026-07-29 使用 Node.js v24.10.0、macOS 26.5.2 arm64 测得。候选集 SHA-256 为 `01b6bae167febed5b2012c3d8a348d0a3463d3460c9892e58b661653106246ed`。源代码变更后应重新测量并记录版本。

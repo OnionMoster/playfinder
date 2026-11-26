@@ -1,95 +1,44 @@
-# Cold-Start Investigation (D)
+# 物品冷启动实验排查
 
-Response to the five audit questions raised for the item cold-start experiment.
-All numbers below are from the actual run logs (`coldstart_item_log.txt`,
-`…_log2.txt`, `…_log3.txt`), full data, seed 9727.
+本文回答物品冷启动实验中的五个检查问题。数字来自全量数据、随机种子 9727 的实际运行日志。
 
-## TL;DR
+## 主要发现
 
-The originally reported figure (`Popularity NDCG@10 ≈ 0.2925` vs
-`Hybrid ≈ 0.0257`) contained **a leakage bug in the popularity baseline**, not
-in the hybrid model. After fixing it, the popularity floor drops to
-**0.0045** and the intended result holds: pure collaborative filtering collapses
-on cold items while the hybrid recovers ranking signal from content.
+最初报告的 Popularity NDCG@10 约 0.2925、Hybrid 约 0.0257，包含 **Popularity 基线的信息泄漏**，并非 Hybrid 模型泄漏。修正后热度基线降为 0.0045；在这一实验设置下，纯协同过滤对冷物品的排序表现接近零，而混合模型可通过内容恢复排序信号。
 
-| Condition | NDCG@10 | vs pure-id |
-|---|---|---|
-| `hybrid_content_only` (identity dropped) | **0.0488** | 81× |
-| `hybrid_cold` (deployment view, untrained id kept) | 0.0258 | 43× |
-| `pureid_cold` (BPR-MF, pure CF) | 0.0006 | 1× |
-| `popularity_cold` (leak-free genre-popularity floor) | 0.0045 | 7.5× |
+| 条件 | NDCG@10 | 相对纯 ID 基线 |
+| --- | ---: | ---: |
+| `hybrid_content_only`（移除身份特征） | 0.0488 | 81 倍 |
+| `hybrid_cold`（保留未训练身份特征的部署视角） | 0.0258 | 43 倍 |
+| `pureid_cold`（纯协同过滤 BPR-MF） | 0.0006 | 1 倍 |
+| `popularity_cold`（无泄漏类型热度基线） | 0.0045 | 7.5 倍 |
 
-## Q1 — Are cold items fully removed from training interactions?
+## 冷物品是否从训练集中移除
 
-Yes. 600 cold items are chosen (60 per popularity decile), and **every** training
-interaction touching them is deleted before any model is fitted:
+选取 600 个冷物品，每个热度十分位 60 个。在训练模型之前删除涉及这些物品的全部训练交互，共移除 671,634 行，剩余 17,166,540 行。Hybrid 和纯 ID 模型使用相同的删减训练集；冷物品的测试交互保留用于验证。
 
-```
-ablated 671,634 training rows (17,166,540 remain)
-```
+## 泄漏问题及修正
 
-Both the hybrid and the pure-id model are trained on this identical ablated set.
-The cold items' *test* interactions are untouched and serve as ground truth.
+第一版使用预生成的 `item_popularity.parquet` 对冷物品排序；该文件在删减前根据包含测试期的全量数据计算，因此冷物品的热度包含本应隐藏的交互，导致基线虚高至 0.2925。
 
-## Q2 — Did popularity wrongly use test-period or full popularity? (the bug)
+修正包括：
 
-**Yes — this was the bug.** The first version ranked cold items using the
-pre-shipped `item_popularity.parquet`, whose ranks were computed on the **full
-data including the test period, before ablation**. A cold item therefore carried
-a popularity rank derived from the very interactions we were supposed to have
-hidden. That inflated popularity to 0.2925.
+1. **纯 ID 基线的物品偏置泄漏**：留出物品的 ID 向量未训练，但其 `qb_` 偏置仍编码了删减前热度；现在同时将 `Q_` 和 `qb_` 置零，纯 ID 基线降至 0.0006。
+2. **热度基线泄漏**：不再使用全量热度排名，而仅在删减后的训练集上计算类型热度：以共享类型的非冷物品训练交互数均值对冷物品评分。基线从 0.2925 降至 0.0045。
 
-Two things were fixed:
+## 比较范围
 
-1. **Leaked item bias in the pure-id baseline.** A held-out item's id embedding
-   is untrained noise, but its learned bias term `qb_` still encoded pre-ablation
-   popularity. Zeroing only `Q_` left this bias leaking; we now zero `qb_` too, so
-   the pure-id model genuinely cannot rank cold items (0.0006).
-2. **Leaked popularity floor.** Replaced the pre-shipped global rank with a
-   *genre-popularity* floor computed **only on the ablated training set**: each
-   cold item is scored by the mean ablated-train interaction count of the non-cold
-   items sharing its genres. No held-out information is used. This drops the floor
-   from 0.2925 to 0.0045.
+各条件对同样的 600 个冷物品、113,261 名测试集中包含冷物品的用户以及相同分位真实值排序，只有模型或评分规则不同。
 
-## Q3 — Same test users, items and candidate set across methods?
+## 热度分布的影响
 
-Yes. All conditions rank the **same** 600 cold items, for the **same** set of
-113,261 evaluation users (those whose test set contains a cold item), using the
-same per-decile ground truth. Only the model / scoring rule differs.
+泄漏修正后，按十分位拆分显示 Hybrid 在第 0–7 分位约领先 6–11 倍；头部分位 9 的热度类信号更强。冷物品的测试交互仍偏向本身热门的游戏，因此应结合分布解释结果。以下为部分分位的 NDCG@10：
 
-## Q4 — Could the result be explained by a reasonable popularity distribution?
+| 热度十分位（0 为长尾，9 为头部） | `hybrid_cold` | `hybrid_content_only` | `pureid_cold` |
+| ---: | ---: | ---: | ---: |
+| 0 | 0.0734 | 0.0361 | 0.0099 |
+| 1 | 0.0849 | 0.0647 | 0.0007 |
+| 4 | 0.0769 | 0.0569 | 0.0011 |
+| 9 | 0.0269 | 0.0609 | 0.0001 |
 
-Partly, and this is worth stating honestly. Even after the leak fix, the
-per-decile breakdown shows hybrid winning by 6–11× on deciles 0–7 (long tail to
-mid), but the head decile (9) is where any popularity-like signal is strongest.
-This is expected: cold items' test interactions still skew toward intrinsically
-popular titles. The hybrid's advantage is **concentrated in the long tail**,
-which is exactly the segment the PlayFinder system exists to serve.
-
-```
-NDCG@10 by popularity decile (0 = long tail, 9 = head)
-        hybrid_cold  hybrid_content_only  pureid_cold
-0            0.0734               0.0361       0.0099
-1            0.0849               0.0647       0.0007
-4            0.0769               0.0569       0.0011
-9            0.0269               0.0609       0.0001
-```
-
-## Q5 — Hard-coded local path?
-
-`cold_start_item.py` derives the repository root from its own location and reads
-the four ignored task-A parquet files from `data/`. No absolute local path is
-hard-coded.
-
-## Conclusion
-
-The original hypothesis **is** supported once the popularity leakage is removed.
-Pure collaborative filtering (the model class C builds) collapses to ~0 on items
-with no training interactions; the hybrid recovers 43–81× that, with its
-advantage strongest in the long tail. The honest caveat is that a leak-free
-popularity floor is still non-trivial on the head of the distribution, because
-cold-item test interactions remain head-skewed — but popularity cannot
-personalise, whereas the hybrid can, across the whole catalogue.
-
-Result files: `hybrid_coldstart_item_results.csv`,
-`hybrid_coldstart_item_by_decile.csv`.
+`cold_start_item.py` 从自身位置定位仓库根目录，从 `data/` 读取所需 Parquet，不硬编码本机绝对路径。总体结论仅适用于此实验与基线定义；无泄漏热度基线对头部仍有一定作用，而 Hybrid 可以个性化。结果文件为 `hybrid_coldstart_item_results.csv` 和 `hybrid_coldstart_item_by_decile.csv`。
