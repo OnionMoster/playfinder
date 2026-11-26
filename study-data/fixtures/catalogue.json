@@ -1,0 +1,2402 @@
+[
+  {
+    "item_id": "1001",
+    "title": "Fixture Game 001",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 0,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Action",
+      "Roguelike"
+    ],
+    "tags": [
+      "Cozy",
+      "Fixture Token 0"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1002",
+    "title": "Fixture Game 002",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 1.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "RPG",
+      "Simulation"
+    ],
+    "tags": [
+      "Horror",
+      "Fixture Token 1"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1003",
+    "title": "Fixture Game 003",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 2.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Strategy",
+      "Puzzle"
+    ],
+    "tags": [
+      "Multiplayer",
+      "Fixture Token 2"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1004",
+    "title": "Fixture Game 004",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 3.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Adventure",
+      "Cozy"
+    ],
+    "tags": [
+      "Story Rich",
+      "Fixture Token 3"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1005",
+    "title": "Fixture Game 005",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 4.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Indie",
+      "Horror"
+    ],
+    "tags": [
+      "Open World",
+      "Fixture Token 4"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1006",
+    "title": "Fixture Game 006",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 5.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Roguelike",
+      "Action"
+    ],
+    "tags": [
+      "Survival",
+      "Fixture Token 5"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1007",
+    "title": "Fixture Game 007",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 6.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Simulation",
+      "RPG"
+    ],
+    "tags": [
+      "Turn-Based",
+      "Fixture Token 6"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1008",
+    "title": "Fixture Game 008",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 7.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Puzzle",
+      "Strategy"
+    ],
+    "tags": [
+      "Exploration",
+      "Fixture Token 7"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1009",
+    "title": "Fixture Game 009",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 8.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Cozy",
+      "Adventure"
+    ],
+    "tags": [
+      "Cozy",
+      "Fixture Token 8"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1010",
+    "title": "Fixture Game 010",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 9.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Horror",
+      "Indie"
+    ],
+    "tags": [
+      "Horror",
+      "Fixture Token 9"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1011",
+    "title": "Fixture Game 011",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 10.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Action",
+      "Roguelike"
+    ],
+    "tags": [
+      "Multiplayer",
+      "Fixture Token 10"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1012",
+    "title": "Fixture Game 012",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 11.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "RPG",
+      "Simulation"
+    ],
+    "tags": [
+      "Story Rich",
+      "Fixture Token 11"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1013",
+    "title": "Fixture Game 013",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 12.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Strategy",
+      "Puzzle"
+    ],
+    "tags": [
+      "Open World",
+      "Fixture Token 0"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1014",
+    "title": "Fixture Game 014",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 0,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Adventure",
+      "Cozy"
+    ],
+    "tags": [
+      "Survival",
+      "Fixture Token 1"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1015",
+    "title": "Fixture Game 015",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 14.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Indie",
+      "Horror"
+    ],
+    "tags": [
+      "Turn-Based",
+      "Fixture Token 2"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1016",
+    "title": "Fixture Game 016",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 15.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Roguelike",
+      "Action"
+    ],
+    "tags": [
+      "Exploration",
+      "Fixture Token 3"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1017",
+    "title": "Fixture Game 017",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 16.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Simulation",
+      "RPG"
+    ],
+    "tags": [
+      "Cozy",
+      "Fixture Token 4"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1018",
+    "title": "Fixture Game 018",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 17.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Puzzle",
+      "Strategy"
+    ],
+    "tags": [
+      "Horror",
+      "Fixture Token 5"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1019",
+    "title": "Fixture Game 019",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 18.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Cozy",
+      "Adventure"
+    ],
+    "tags": [
+      "Multiplayer",
+      "Fixture Token 6"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1020",
+    "title": "Fixture Game 020",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 19.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Horror",
+      "Indie"
+    ],
+    "tags": [
+      "Story Rich",
+      "Fixture Token 7"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1021",
+    "title": "Fixture Game 021",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 20.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Action",
+      "Roguelike"
+    ],
+    "tags": [
+      "Open World",
+      "Fixture Token 8"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1022",
+    "title": "Fixture Game 022",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 21.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "RPG",
+      "Simulation"
+    ],
+    "tags": [
+      "Survival",
+      "Fixture Token 9"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1023",
+    "title": "Fixture Game 023",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 22.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Strategy",
+      "Puzzle"
+    ],
+    "tags": [
+      "Turn-Based",
+      "Fixture Token 10"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1024",
+    "title": "Fixture Game 024",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 23.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Adventure",
+      "Cozy"
+    ],
+    "tags": [
+      "Exploration",
+      "Fixture Token 11"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1025",
+    "title": "Fixture Game 025",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 24.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Indie",
+      "Horror"
+    ],
+    "tags": [
+      "Cozy",
+      "Fixture Token 0"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1026",
+    "title": "Fixture Game 026",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 25.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Roguelike",
+      "Action"
+    ],
+    "tags": [
+      "Horror",
+      "Fixture Token 1"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1027",
+    "title": "Fixture Game 027",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 0,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Simulation",
+      "RPG"
+    ],
+    "tags": [
+      "Multiplayer",
+      "Fixture Token 2"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1028",
+    "title": "Fixture Game 028",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 27.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Puzzle",
+      "Strategy"
+    ],
+    "tags": [
+      "Story Rich",
+      "Fixture Token 3"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1029",
+    "title": "Fixture Game 029",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 28.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Cozy",
+      "Adventure"
+    ],
+    "tags": [
+      "Open World",
+      "Fixture Token 4"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1030",
+    "title": "Fixture Game 030",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 29.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Horror",
+      "Indie"
+    ],
+    "tags": [
+      "Survival",
+      "Fixture Token 5"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1031",
+    "title": "Fixture Game 031",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 30.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Action",
+      "Roguelike"
+    ],
+    "tags": [
+      "Turn-Based",
+      "Fixture Token 6"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1032",
+    "title": "Fixture Game 032",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 31.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "RPG",
+      "Simulation"
+    ],
+    "tags": [
+      "Exploration",
+      "Fixture Token 7"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1033",
+    "title": "Fixture Game 033",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 32.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Strategy",
+      "Puzzle"
+    ],
+    "tags": [
+      "Cozy",
+      "Fixture Token 8"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1034",
+    "title": "Fixture Game 034",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 33.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Adventure",
+      "Cozy"
+    ],
+    "tags": [
+      "Horror",
+      "Fixture Token 9"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1035",
+    "title": "Fixture Game 035",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 34.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Indie",
+      "Horror"
+    ],
+    "tags": [
+      "Multiplayer",
+      "Fixture Token 10"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1036",
+    "title": "Fixture Game 036",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 35.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Roguelike",
+      "Action"
+    ],
+    "tags": [
+      "Story Rich",
+      "Fixture Token 11"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1037",
+    "title": "Fixture Game 037",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 36.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Simulation",
+      "RPG"
+    ],
+    "tags": [
+      "Open World",
+      "Fixture Token 0"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1038",
+    "title": "Fixture Game 038",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 37.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Puzzle",
+      "Strategy"
+    ],
+    "tags": [
+      "Survival",
+      "Fixture Token 1"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1039",
+    "title": "Fixture Game 039",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 38.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Cozy",
+      "Adventure"
+    ],
+    "tags": [
+      "Turn-Based",
+      "Fixture Token 2"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1040",
+    "title": "Fixture Game 040",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 0,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Horror",
+      "Indie"
+    ],
+    "tags": [
+      "Exploration",
+      "Fixture Token 3"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1041",
+    "title": "Fixture Game 041",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 40.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Action",
+      "Roguelike"
+    ],
+    "tags": [
+      "Cozy",
+      "Fixture Token 4"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1042",
+    "title": "Fixture Game 042",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 41.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "RPG",
+      "Simulation"
+    ],
+    "tags": [
+      "Horror",
+      "Fixture Token 5"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1043",
+    "title": "Fixture Game 043",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 42.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Strategy",
+      "Puzzle"
+    ],
+    "tags": [
+      "Multiplayer",
+      "Fixture Token 6"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1044",
+    "title": "Fixture Game 044",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 43.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Adventure",
+      "Cozy"
+    ],
+    "tags": [
+      "Story Rich",
+      "Fixture Token 7"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1045",
+    "title": "Fixture Game 045",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 44.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Indie",
+      "Horror"
+    ],
+    "tags": [
+      "Open World",
+      "Fixture Token 8"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1046",
+    "title": "Fixture Game 046",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 45.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Roguelike",
+      "Action"
+    ],
+    "tags": [
+      "Survival",
+      "Fixture Token 9"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1047",
+    "title": "Fixture Game 047",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 46.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Simulation",
+      "RPG"
+    ],
+    "tags": [
+      "Turn-Based",
+      "Fixture Token 10"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1048",
+    "title": "Fixture Game 048",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 47.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Puzzle",
+      "Strategy"
+    ],
+    "tags": [
+      "Exploration",
+      "Fixture Token 11"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1049",
+    "title": "Fixture Game 049",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 48.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Cozy",
+      "Adventure"
+    ],
+    "tags": [
+      "Cozy",
+      "Fixture Token 0"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1050",
+    "title": "Fixture Game 050",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 49.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Horror",
+      "Indie"
+    ],
+    "tags": [
+      "Horror",
+      "Fixture Token 1"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1051",
+    "title": "Fixture Game 051",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 50.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Action",
+      "Roguelike"
+    ],
+    "tags": [
+      "Multiplayer",
+      "Fixture Token 2"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1052",
+    "title": "Fixture Game 052",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 51.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "RPG",
+      "Simulation"
+    ],
+    "tags": [
+      "Story Rich",
+      "Fixture Token 3"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1053",
+    "title": "Fixture Game 053",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 0,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Strategy",
+      "Puzzle"
+    ],
+    "tags": [
+      "Open World",
+      "Fixture Token 4"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1054",
+    "title": "Fixture Game 054",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 53.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Adventure",
+      "Cozy"
+    ],
+    "tags": [
+      "Survival",
+      "Fixture Token 5"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1055",
+    "title": "Fixture Game 055",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 54.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Indie",
+      "Horror"
+    ],
+    "tags": [
+      "Turn-Based",
+      "Fixture Token 6"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1056",
+    "title": "Fixture Game 056",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 55.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Roguelike",
+      "Action"
+    ],
+    "tags": [
+      "Exploration",
+      "Fixture Token 7"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1057",
+    "title": "Fixture Game 057",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 56.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Simulation",
+      "RPG"
+    ],
+    "tags": [
+      "Cozy",
+      "Fixture Token 8"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1058",
+    "title": "Fixture Game 058",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 57.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Puzzle",
+      "Strategy"
+    ],
+    "tags": [
+      "Horror",
+      "Fixture Token 9"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1059",
+    "title": "Fixture Game 059",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 58.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Cozy",
+      "Adventure"
+    ],
+    "tags": [
+      "Multiplayer",
+      "Fixture Token 10"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1060",
+    "title": "Fixture Game 060",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 59.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Horror",
+      "Indie"
+    ],
+    "tags": [
+      "Story Rich",
+      "Fixture Token 11"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1061",
+    "title": "Fixture Game 061",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 60.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Action",
+      "Roguelike"
+    ],
+    "tags": [
+      "Open World",
+      "Fixture Token 0"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1062",
+    "title": "Fixture Game 062",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 0.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "RPG",
+      "Simulation"
+    ],
+    "tags": [
+      "Survival",
+      "Fixture Token 1"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1063",
+    "title": "Fixture Game 063",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 1.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Strategy",
+      "Puzzle"
+    ],
+    "tags": [
+      "Turn-Based",
+      "Fixture Token 2"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1064",
+    "title": "Fixture Game 064",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 2.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Adventure",
+      "Cozy"
+    ],
+    "tags": [
+      "Exploration",
+      "Fixture Token 3"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1065",
+    "title": "Fixture Game 065",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 3.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Indie",
+      "Horror"
+    ],
+    "tags": [
+      "Cozy",
+      "Fixture Token 4"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1066",
+    "title": "Fixture Game 066",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 0,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Roguelike",
+      "Action"
+    ],
+    "tags": [
+      "Horror",
+      "Fixture Token 5"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1067",
+    "title": "Fixture Game 067",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 5.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Simulation",
+      "RPG"
+    ],
+    "tags": [
+      "Multiplayer",
+      "Fixture Token 6"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1068",
+    "title": "Fixture Game 068",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 6.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Puzzle",
+      "Strategy"
+    ],
+    "tags": [
+      "Story Rich",
+      "Fixture Token 7"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1069",
+    "title": "Fixture Game 069",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 7.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Cozy",
+      "Adventure"
+    ],
+    "tags": [
+      "Open World",
+      "Fixture Token 8"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1070",
+    "title": "Fixture Game 070",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 8.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Horror",
+      "Indie"
+    ],
+    "tags": [
+      "Survival",
+      "Fixture Token 9"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1071",
+    "title": "Fixture Game 071",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 9.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Action",
+      "Roguelike"
+    ],
+    "tags": [
+      "Turn-Based",
+      "Fixture Token 10"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1072",
+    "title": "Fixture Game 072",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 10.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "RPG",
+      "Simulation"
+    ],
+    "tags": [
+      "Exploration",
+      "Fixture Token 11"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1073",
+    "title": "Fixture Game 073",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 11.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Strategy",
+      "Puzzle"
+    ],
+    "tags": [
+      "Cozy",
+      "Fixture Token 0"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1074",
+    "title": "Fixture Game 074",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 12.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Adventure",
+      "Cozy"
+    ],
+    "tags": [
+      "Horror",
+      "Fixture Token 1"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1075",
+    "title": "Fixture Game 075",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 13.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Indie",
+      "Horror"
+    ],
+    "tags": [
+      "Multiplayer",
+      "Fixture Token 2"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1076",
+    "title": "Fixture Game 076",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 14.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Roguelike",
+      "Action"
+    ],
+    "tags": [
+      "Story Rich",
+      "Fixture Token 3"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1077",
+    "title": "Fixture Game 077",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 15.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Simulation",
+      "RPG"
+    ],
+    "tags": [
+      "Open World",
+      "Fixture Token 4"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1078",
+    "title": "Fixture Game 078",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 16.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Puzzle",
+      "Strategy"
+    ],
+    "tags": [
+      "Survival",
+      "Fixture Token 5"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1079",
+    "title": "Fixture Game 079",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 0,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Cozy",
+      "Adventure"
+    ],
+    "tags": [
+      "Turn-Based",
+      "Fixture Token 6"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1080",
+    "title": "Fixture Game 080",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 18.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Horror",
+      "Indie"
+    ],
+    "tags": [
+      "Exploration",
+      "Fixture Token 7"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1081",
+    "title": "Fixture Game 081",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 19.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Action",
+      "Roguelike"
+    ],
+    "tags": [
+      "Cozy",
+      "Fixture Token 8"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1082",
+    "title": "Fixture Game 082",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 20.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "RPG",
+      "Simulation"
+    ],
+    "tags": [
+      "Horror",
+      "Fixture Token 9"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1083",
+    "title": "Fixture Game 083",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 21.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Strategy",
+      "Puzzle"
+    ],
+    "tags": [
+      "Multiplayer",
+      "Fixture Token 10"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1084",
+    "title": "Fixture Game 084",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 22.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Adventure",
+      "Cozy"
+    ],
+    "tags": [
+      "Story Rich",
+      "Fixture Token 11"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1085",
+    "title": "Fixture Game 085",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 23.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Indie",
+      "Horror"
+    ],
+    "tags": [
+      "Open World",
+      "Fixture Token 0"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1086",
+    "title": "Fixture Game 086",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 24.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Roguelike",
+      "Action"
+    ],
+    "tags": [
+      "Survival",
+      "Fixture Token 1"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1087",
+    "title": "Fixture Game 087",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 25.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Simulation",
+      "RPG"
+    ],
+    "tags": [
+      "Turn-Based",
+      "Fixture Token 2"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1088",
+    "title": "Fixture Game 088",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 26.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Puzzle",
+      "Strategy"
+    ],
+    "tags": [
+      "Exploration",
+      "Fixture Token 3"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1089",
+    "title": "Fixture Game 089",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 27.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Cozy",
+      "Adventure"
+    ],
+    "tags": [
+      "Cozy",
+      "Fixture Token 4"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1090",
+    "title": "Fixture Game 090",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 28.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Horror",
+      "Indie"
+    ],
+    "tags": [
+      "Horror",
+      "Fixture Token 5"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1091",
+    "title": "Fixture Game 091",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 29.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Action",
+      "Roguelike"
+    ],
+    "tags": [
+      "Multiplayer",
+      "Fixture Token 6"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1092",
+    "title": "Fixture Game 092",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 0,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "RPG",
+      "Simulation"
+    ],
+    "tags": [
+      "Story Rich",
+      "Fixture Token 7"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1093",
+    "title": "Fixture Game 093",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 31.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Strategy",
+      "Puzzle"
+    ],
+    "tags": [
+      "Open World",
+      "Fixture Token 8"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1094",
+    "title": "Fixture Game 094",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 32.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Adventure",
+      "Cozy"
+    ],
+    "tags": [
+      "Survival",
+      "Fixture Token 9"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1095",
+    "title": "Fixture Game 095",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 33.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Indie",
+      "Horror"
+    ],
+    "tags": [
+      "Turn-Based",
+      "Fixture Token 10"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1096",
+    "title": "Fixture Game 096",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 34.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Roguelike",
+      "Action"
+    ],
+    "tags": [
+      "Exploration",
+      "Fixture Token 11"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1097",
+    "title": "Fixture Game 097",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 35.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Simulation",
+      "RPG"
+    ],
+    "tags": [
+      "Cozy",
+      "Fixture Token 0"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1098",
+    "title": "Fixture Game 098",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 36.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Puzzle",
+      "Strategy"
+    ],
+    "tags": [
+      "Horror",
+      "Fixture Token 1"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1099",
+    "title": "Fixture Game 099",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 37.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Cozy",
+      "Adventure"
+    ],
+    "tags": [
+      "Multiplayer",
+      "Fixture Token 2"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1100",
+    "title": "Fixture Game 100",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 38.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Horror",
+      "Indie"
+    ],
+    "tags": [
+      "Story Rich",
+      "Fixture Token 3"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1101",
+    "title": "Fixture Game 101",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 39.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Action",
+      "Roguelike"
+    ],
+    "tags": [
+      "Open World",
+      "Fixture Token 4"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1102",
+    "title": "Fixture Game 102",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 40.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "RPG",
+      "Simulation"
+    ],
+    "tags": [
+      "Survival",
+      "Fixture Token 5"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1103",
+    "title": "Fixture Game 103",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 41.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Strategy",
+      "Puzzle"
+    ],
+    "tags": [
+      "Turn-Based",
+      "Fixture Token 6"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1104",
+    "title": "Fixture Game 104",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 42.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Adventure",
+      "Cozy"
+    ],
+    "tags": [
+      "Exploration",
+      "Fixture Token 7"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1105",
+    "title": "Fixture Game 105",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 0,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Indie",
+      "Horror"
+    ],
+    "tags": [
+      "Cozy",
+      "Fixture Token 8"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1106",
+    "title": "Fixture Game 106",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 44.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Roguelike",
+      "Action"
+    ],
+    "tags": [
+      "Horror",
+      "Fixture Token 9"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1107",
+    "title": "Fixture Game 107",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 45.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Simulation",
+      "RPG"
+    ],
+    "tags": [
+      "Multiplayer",
+      "Fixture Token 10"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1108",
+    "title": "Fixture Game 108",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 46.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Puzzle",
+      "Strategy"
+    ],
+    "tags": [
+      "Story Rich",
+      "Fixture Token 11"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1109",
+    "title": "Fixture Game 109",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 47.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Cozy",
+      "Adventure"
+    ],
+    "tags": [
+      "Open World",
+      "Fixture Token 0"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1110",
+    "title": "Fixture Game 110",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 48.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Horror",
+      "Indie"
+    ],
+    "tags": [
+      "Survival",
+      "Fixture Token 1"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1111",
+    "title": "Fixture Game 111",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 49.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Action",
+      "Roguelike"
+    ],
+    "tags": [
+      "Turn-Based",
+      "Fixture Token 2"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1112",
+    "title": "Fixture Game 112",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 50.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "RPG",
+      "Simulation"
+    ],
+    "tags": [
+      "Exploration",
+      "Fixture Token 3"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1113",
+    "title": "Fixture Game 113",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 51.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Strategy",
+      "Puzzle"
+    ],
+    "tags": [
+      "Cozy",
+      "Fixture Token 4"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1114",
+    "title": "Fixture Game 114",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 52.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Adventure",
+      "Cozy"
+    ],
+    "tags": [
+      "Horror",
+      "Fixture Token 5"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1115",
+    "title": "Fixture Game 115",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 53.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Indie",
+      "Horror"
+    ],
+    "tags": [
+      "Multiplayer",
+      "Fixture Token 6"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1116",
+    "title": "Fixture Game 116",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 54.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Roguelike",
+      "Action"
+    ],
+    "tags": [
+      "Story Rich",
+      "Fixture Token 7"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1117",
+    "title": "Fixture Game 117",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 55.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Simulation",
+      "RPG"
+    ],
+    "tags": [
+      "Open World",
+      "Fixture Token 8"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1118",
+    "title": "Fixture Game 118",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 0,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Puzzle",
+      "Strategy"
+    ],
+    "tags": [
+      "Survival",
+      "Fixture Token 9"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1119",
+    "title": "Fixture Game 119",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 57.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Cozy",
+      "Adventure"
+    ],
+    "tags": [
+      "Turn-Based",
+      "Fixture Token 10"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  },
+  {
+    "item_id": "1120",
+    "title": "Fixture Game 120",
+    "description": "Obviously fictional fixture metadata for pipeline development only.",
+    "price": 58.99,
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "genres": [
+      "Horror",
+      "Indie"
+    ],
+    "tags": [
+      "Exploration",
+      "Fixture Token 11"
+    ],
+    "explanation": "Fixture recommendation — not model output."
+  }
+]

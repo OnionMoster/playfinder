@@ -1,0 +1,33 @@
+{
+  "dataset": "A official output",
+  "sample_per_group_requested": 3000,
+  "sample_seed": 42,
+  "sampled_users_total": 9000,
+  "scenario_sizes": {
+    "all_test_users": 5348,
+    "seen_users_only": 5119,
+    "new_users_only": 229
+  },
+  "train_rows": 17838174,
+  "test_rows": 4448786,
+  "train_users": 1851519,
+  "test_users": 1232896,
+  "cutoff_timestamp": 1641340800,
+  "cutoff_date": "2022-01-05",
+  "k_values": [
+    5,
+    10,
+    20,
+    30,
+    40
+  ],
+  "notes": [
+    "所有评测均基于 A 任务交付的正式 parquet 输出。",
+    "场景包括 all_test_users、seen_users_only 和 new_users_only。",
+    "AUC、RMSE、MAE 作为诊断指标，在 sampled cohort 的测试交互上计算。",
+    "serendipity 以 popularity baseline 在相同 K 下的推荐列表作为参照。",
+    "popularity baseline 使用训练集正反馈统计，并用 A 提供的 item_popularity.parquet 做全局流行度 tie-break。",
+    "评测阶段会统一将 recommend() 返回的 item_id 转成字符串做匹配，避免 numpy/int/string 类型不一致造成静默错误。",
+    "B 任务的 evaluate 只负责评测，不负责替外部模型做训练。"
+  ]
+}

@@ -1,0 +1,4 @@
+condition,participant_conditions,completed_rounds,satisfaction_mean,perceived_relevance_mean,discovery_quality_mean,constraint_fit_mean,acceptance_rate,rejection_rate,dwell_seconds_mean,offline_ndcg_at_10_mean
+A,20,20,4.85,4.95,4.925,5.175,0.95,0.9,5.37755,0.0
+B,20,20,5.5,5.4,5.525,5.525,0.95,0.95,10.7852,0.01388624438735545
+C,20,20,5.3,5.275,5.3,5.15,1.0,0.85,13.11155,0.0

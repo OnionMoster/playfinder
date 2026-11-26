@@ -1,0 +1,121 @@
+profile_id,model_user_id,taste_1,taste_2,taste_3,train_positive_count
+fixture-profile-001,fixture-user-001,Action,RPG,Strategy,12
+fixture-profile-002,fixture-user-002,Action,Strategy,Adventure,13
+fixture-profile-003,fixture-user-003,Action,Adventure,Indie,14
+fixture-profile-004,fixture-user-004,Action,Indie,Roguelike,15
+fixture-profile-005,fixture-user-005,Action,Roguelike,Simulation,16
+fixture-profile-006,fixture-user-006,Action,Simulation,Puzzle,17
+fixture-profile-007,fixture-user-007,Action,Puzzle,Cozy,18
+fixture-profile-008,fixture-user-008,Action,Cozy,Horror,19
+fixture-profile-009,fixture-user-009,Action,Horror,Multiplayer,20
+fixture-profile-010,fixture-user-010,Action,Multiplayer,Story Rich,21
+fixture-profile-011,fixture-user-011,Action,Story Rich,Open World,22
+fixture-profile-012,fixture-user-012,Action,Open World,Survival,23
+fixture-profile-013,fixture-user-013,Action,Survival,Turn-Based,24
+fixture-profile-014,fixture-user-014,Action,Turn-Based,Exploration,25
+fixture-profile-015,fixture-user-015,Action,Exploration,RPG,26
+fixture-profile-016,fixture-user-016,RPG,Strategy,Adventure,27
+fixture-profile-017,fixture-user-017,RPG,Adventure,Indie,28
+fixture-profile-018,fixture-user-018,RPG,Indie,Roguelike,29
+fixture-profile-019,fixture-user-019,RPG,Roguelike,Simulation,30
+fixture-profile-020,fixture-user-020,RPG,Simulation,Puzzle,31
+fixture-profile-021,fixture-user-021,RPG,Puzzle,Cozy,32
+fixture-profile-022,fixture-user-022,RPG,Cozy,Horror,33
+fixture-profile-023,fixture-user-023,RPG,Horror,Multiplayer,34
+fixture-profile-024,fixture-user-024,RPG,Multiplayer,Story Rich,35
+fixture-profile-025,fixture-user-025,RPG,Story Rich,Open World,36
+fixture-profile-026,fixture-user-026,RPG,Open World,Survival,37
+fixture-profile-027,fixture-user-027,RPG,Survival,Turn-Based,38
+fixture-profile-028,fixture-user-028,RPG,Turn-Based,Exploration,39
+fixture-profile-029,fixture-user-029,RPG,Exploration,Action,40
+fixture-profile-030,fixture-user-030,Strategy,Adventure,Indie,12
+fixture-profile-031,fixture-user-031,Strategy,Indie,Roguelike,13
+fixture-profile-032,fixture-user-032,Strategy,Roguelike,Simulation,14
+fixture-profile-033,fixture-user-033,Strategy,Simulation,Puzzle,15
+fixture-profile-034,fixture-user-034,Strategy,Puzzle,Cozy,16
+fixture-profile-035,fixture-user-035,Strategy,Cozy,Horror,17
+fixture-profile-036,fixture-user-036,Strategy,Horror,Multiplayer,18
+fixture-profile-037,fixture-user-037,Strategy,Multiplayer,Story Rich,19
+fixture-profile-038,fixture-user-038,Strategy,Story Rich,Open World,20
+fixture-profile-039,fixture-user-039,Strategy,Open World,Survival,21
+fixture-profile-040,fixture-user-040,Strategy,Survival,Turn-Based,22
+fixture-profile-041,fixture-user-041,Strategy,Turn-Based,Exploration,23
+fixture-profile-042,fixture-user-042,Strategy,Exploration,Action,24
+fixture-profile-043,fixture-user-043,Adventure,Indie,Roguelike,25
+fixture-profile-044,fixture-user-044,Adventure,Roguelike,Simulation,26
+fixture-profile-045,fixture-user-045,Adventure,Simulation,Puzzle,27
+fixture-profile-046,fixture-user-046,Adventure,Puzzle,Cozy,28
+fixture-profile-047,fixture-user-047,Adventure,Cozy,Horror,29
+fixture-profile-048,fixture-user-048,Adventure,Horror,Multiplayer,30
+fixture-profile-049,fixture-user-049,Adventure,Multiplayer,Story Rich,31
+fixture-profile-050,fixture-user-050,Adventure,Story Rich,Open World,32
+fixture-profile-051,fixture-user-051,Adventure,Open World,Survival,33
+fixture-profile-052,fixture-user-052,Adventure,Survival,Turn-Based,34
+fixture-profile-053,fixture-user-053,Adventure,Turn-Based,Exploration,35
+fixture-profile-054,fixture-user-054,Adventure,Exploration,Action,36
+fixture-profile-055,fixture-user-055,Indie,Roguelike,Simulation,37
+fixture-profile-056,fixture-user-056,Indie,Simulation,Puzzle,38
+fixture-profile-057,fixture-user-057,Indie,Puzzle,Cozy,39
+fixture-profile-058,fixture-user-058,Indie,Cozy,Horror,40
+fixture-profile-059,fixture-user-059,Indie,Horror,Multiplayer,12
+fixture-profile-060,fixture-user-060,Indie,Multiplayer,Story Rich,13
+fixture-profile-061,fixture-user-061,Indie,Story Rich,Open World,14
+fixture-profile-062,fixture-user-062,Indie,Open World,Survival,15
+fixture-profile-063,fixture-user-063,Indie,Survival,Turn-Based,16
+fixture-profile-064,fixture-user-064,Indie,Turn-Based,Exploration,17
+fixture-profile-065,fixture-user-065,Indie,Exploration,Action,18
+fixture-profile-066,fixture-user-066,Roguelike,Simulation,Puzzle,19
+fixture-profile-067,fixture-user-067,Roguelike,Puzzle,Cozy,20
+fixture-profile-068,fixture-user-068,Roguelike,Cozy,Horror,21
+fixture-profile-069,fixture-user-069,Roguelike,Horror,Multiplayer,22
+fixture-profile-070,fixture-user-070,Roguelike,Multiplayer,Story Rich,23
+fixture-profile-071,fixture-user-071,Roguelike,Story Rich,Open World,24
+fixture-profile-072,fixture-user-072,Roguelike,Open World,Survival,25
+fixture-profile-073,fixture-user-073,Roguelike,Survival,Turn-Based,26
+fixture-profile-074,fixture-user-074,Roguelike,Turn-Based,Exploration,27
+fixture-profile-075,fixture-user-075,Roguelike,Exploration,Action,28
+fixture-profile-076,fixture-user-076,Simulation,Puzzle,Cozy,29
+fixture-profile-077,fixture-user-077,Simulation,Cozy,Horror,30
+fixture-profile-078,fixture-user-078,Simulation,Horror,Multiplayer,31
+fixture-profile-079,fixture-user-079,Simulation,Multiplayer,Story Rich,32
+fixture-profile-080,fixture-user-080,Simulation,Story Rich,Open World,33
+fixture-profile-081,fixture-user-081,Simulation,Open World,Survival,34
+fixture-profile-082,fixture-user-082,Simulation,Survival,Turn-Based,35
+fixture-profile-083,fixture-user-083,Simulation,Turn-Based,Exploration,36
+fixture-profile-084,fixture-user-084,Simulation,Exploration,Action,37
+fixture-profile-085,fixture-user-085,Puzzle,Cozy,Horror,38
+fixture-profile-086,fixture-user-086,Puzzle,Horror,Multiplayer,39
+fixture-profile-087,fixture-user-087,Puzzle,Multiplayer,Story Rich,40
+fixture-profile-088,fixture-user-088,Puzzle,Story Rich,Open World,12
+fixture-profile-089,fixture-user-089,Puzzle,Open World,Survival,13
+fixture-profile-090,fixture-user-090,Puzzle,Survival,Turn-Based,14
+fixture-profile-091,fixture-user-091,Puzzle,Turn-Based,Exploration,15
+fixture-profile-092,fixture-user-092,Puzzle,Exploration,Action,16
+fixture-profile-093,fixture-user-093,Cozy,Horror,Multiplayer,17
+fixture-profile-094,fixture-user-094,Cozy,Multiplayer,Story Rich,18
+fixture-profile-095,fixture-user-095,Cozy,Story Rich,Open World,19
+fixture-profile-096,fixture-user-096,Cozy,Open World,Survival,20
+fixture-profile-097,fixture-user-097,Cozy,Survival,Turn-Based,21
+fixture-profile-098,fixture-user-098,Cozy,Turn-Based,Exploration,22
+fixture-profile-099,fixture-user-099,Cozy,Exploration,Action,23
+fixture-profile-100,fixture-user-100,Horror,Multiplayer,Story Rich,24
+fixture-profile-101,fixture-user-101,Horror,Story Rich,Open World,25
+fixture-profile-102,fixture-user-102,Horror,Open World,Survival,26
+fixture-profile-103,fixture-user-103,Horror,Survival,Turn-Based,27
+fixture-profile-104,fixture-user-104,Horror,Turn-Based,Exploration,28
+fixture-profile-105,fixture-user-105,Horror,Exploration,Action,29
+fixture-profile-106,fixture-user-106,Multiplayer,Story Rich,Open World,30
+fixture-profile-107,fixture-user-107,Multiplayer,Open World,Survival,31
+fixture-profile-108,fixture-user-108,Multiplayer,Survival,Turn-Based,32
+fixture-profile-109,fixture-user-109,Multiplayer,Turn-Based,Exploration,33
+fixture-profile-110,fixture-user-110,Multiplayer,Exploration,Action,34
+fixture-profile-111,fixture-user-111,Story Rich,Open World,Survival,35
+fixture-profile-112,fixture-user-112,Story Rich,Survival,Turn-Based,36
+fixture-profile-113,fixture-user-113,Story Rich,Turn-Based,Exploration,37
+fixture-profile-114,fixture-user-114,Story Rich,Exploration,Action,38
+fixture-profile-115,fixture-user-115,Open World,Survival,Turn-Based,39
+fixture-profile-116,fixture-user-116,Open World,Turn-Based,Exploration,40
+fixture-profile-117,fixture-user-117,Open World,Exploration,Action,12
+fixture-profile-118,fixture-user-118,Survival,Turn-Based,Exploration,13
+fixture-profile-119,fixture-user-119,Survival,Exploration,Action,14
+fixture-profile-120,fixture-user-120,Turn-Based,Exploration,Action,15

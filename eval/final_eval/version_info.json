@@ -1,0 +1,69 @@
+{
+  "created_at_utc": "2026-07-27T09:05:16.442657+00:00",
+  "split": {
+    "train_ratio": 0.8,
+    "sample_per_group": 3000,
+    "seed": 42,
+    "cutoff_timestamp": 1641340800,
+    "cutoff_date": "2022-01-05",
+    "train_rows": 17838174,
+    "test_rows": 4448786,
+    "train_users": 1851519,
+    "test_users": 1232896,
+    "scenario_sizes": {
+      "all_test_users": 5348,
+      "seen_users_only": 5119,
+      "new_users_only": 229
+    }
+  },
+  "id_semantics": {
+    "item_id_is_steam_appid": true,
+    "evidence": {
+      "items_sample": [
+        13500,
+        22364,
+        113020
+      ],
+      "item_popularity_sample": [
+        440,
+        252490,
+        1091500
+      ]
+    }
+  },
+  "condition_a": {
+    "type": "per_profile_popularity",
+    "profile_id_equals_user_id": true,
+    "is_global_list": false,
+    "seen_exclusion_policy": "exclude training-period seen items for the same profile",
+    "same_profile_and_exclusion_policy_as_bpr_and_hybrid": true
+  },
+  "candidate_policy": {
+    "main_experiment_name": "shared_train_positive_catalogue",
+    "catalogue_size": 20435,
+    "catalogue_construction": "unique item_id with label=1 and timestamp<=cutoff",
+    "ranking_candidate_policy": "popularity and hybrid recommend only from the shared 20,435-item train-positive catalogue; C BPR already uses this catalogue",
+    "diagnostic_score_policy": "score() is still computed on B's held-out test rows; out-of-catalogue items receive 0.0 for popularity/hybrid, matching C's BPR behaviour",
+    "tie_break_policy": "sort by training positive count desc, training interaction count desc, item_id asc",
+    "removed_temporal_leakage": true,
+    "previous_leakage_source": "A item_popularity.parquet popularity_rank used future/global data as tie-break"
+  },
+  "source_files": {
+    "a_output_dir": "data",
+    "c_results": "models/c-cf-mf/results/final_results.csv",
+    "c_user_metrics": "models/c-cf-mf/results/final_user_metric_values.csv",
+    "d_delivered_results": "models/d-hybrid/results/hybrid_results.csv",
+    "d_delivered_user_metrics": "models/d-hybrid/results/hybrid_user_metric_values.csv",
+    "d_code_used_for_shared_rerun": "models/d-hybrid/models/hybrid.py"
+  },
+  "outputs": [
+    "popularity_top100.csv",
+    "popularity_shared_results.csv",
+    "popularity_shared_user_metric_values.csv",
+    "hybrid_shared_results.csv",
+    "hybrid_shared_user_metric_values.csv",
+    "main_results.csv",
+    "main_user_metric_values.csv",
+    "main_significance_tests.csv"
+  ]
+}

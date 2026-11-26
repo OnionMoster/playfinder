@@ -1,0 +1,52 @@
+{
+  "itemcf": {
+    "trial_id": "itemcf_k600",
+    "params": {
+      "name": "itemcf",
+      "n_neighbors": 600,
+      "similarity": "cosine",
+      "n_jobs": 1
+    },
+    "selection_metrics": {
+      "ndcg_at_10": 0.008448,
+      "recall_at_10": 0.012324,
+      "catalogue_coverage": 0.054234
+    }
+  },
+  "als": {
+    "trial_id": "als_f32_r0.1_a2.5_i15",
+    "params": {
+      "name": "als",
+      "factors": 32,
+      "regularization": 0.1,
+      "alpha": 2.5,
+      "iterations": 15,
+      "num_threads": 1,
+      "random_state": 42,
+      "calculate_training_loss": false
+    },
+    "selection_metrics": {
+      "ndcg_at_10": 0.031311,
+      "recall_at_10": 0.045164,
+      "catalogue_coverage": 0.007981
+    }
+  },
+  "bpr": {
+    "trial_id": "bpr_f64_lr0.005_r0.003_i400",
+    "params": {
+      "name": "bpr",
+      "factors": 64,
+      "learning_rate": 0.005,
+      "regularization": 0.003,
+      "iterations": 400,
+      "verify_negative_samples": true,
+      "num_threads": 1,
+      "random_state": 42
+    },
+    "selection_metrics": {
+      "ndcg_at_10": 0.022993,
+      "recall_at_10": 0.0355,
+      "catalogue_coverage": 0.018753
+    }
+  }
+}

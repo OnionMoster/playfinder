@@ -1,0 +1,14 @@
+{
+  "status": "within-subject-analysis-complete",
+  "participants": 20,
+  "complete_cases_per_outcome": 20,
+  "primary_outcome": "q10_satisfaction",
+  "primary_test": "Friedman chi-square",
+  "primary_statistic": 0.09836065573772729,
+  "primary_p_value": 0.9520094403852634,
+  "primary_significant_0_05": false,
+  "multiplicity": "Holm adjustment across outcomes and within each outcome's three pairwise comparisons",
+  "interpretation_rule": "Pairwise differences are interpreted only after the omnibus result and with Holm-adjusted p-values.",
+  "bootstrap_iterations": 10000,
+  "random_seed": 9727
+}

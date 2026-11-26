@@ -1,0 +1,1968 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PLAYFINDER</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:#060606;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  ::selection{background:#e8a13c;color:#060606;}
+  a{color:#f4f2ee;text-decoration:none;}
+  a:hover{color:#e8a13c;}
+  @keyframes pfFade{from{opacity:0}to{opacity:1}}
+  @keyframes pfUp{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
+  @keyframes pfMask{from{clip-path:inset(0 0 100% 0);transform:translateY(12px)}to{clip-path:inset(0 0 0 0);transform:none}}
+  @keyframes pfPan{0%{transform:scale(1.06) translate(0,0)}50%{transform:scale(1.12) translate(-1.5%,1.5%)}100%{transform:scale(1.06) translate(0,0)}}
+  @keyframes pfInRight{from{opacity:0;transform:translateX(34px)}to{opacity:1;transform:none}}
+  @keyframes pfInLeft{from{opacity:0;transform:translateX(-34px)}to{opacity:1;transform:none}}
+  :focus-visible{outline:2px solid #e8a13c;outline-offset:3px;}
+  .pf-range{-webkit-appearance:none;appearance:none;width:100%;height:2px;background:rgba(244,242,238,.18);outline:none;cursor:pointer;}
+  .pf-range::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:20px;height:20px;border-radius:50%;background:#e8a13c;border:none;cursor:pointer;transition:transform .15s;}
+  .pf-range::-webkit-slider-thumb:hover{transform:scale(1.25);}
+  .pf-range::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:#e8a13c;border:none;cursor:pointer;}
+  .pf-range:disabled{opacity:.25;}
+  .pf-scroll::-webkit-scrollbar{width:8px;height:8px;}
+  .pf-scroll::-webkit-scrollbar-thumb{background:rgba(244,242,238,.15);border-radius:8px;}
+  .pf-pid{width:100%;background:none;border:none;border-bottom:1px solid rgba(244,242,238,.14);color:#f4f2ee;font-family:'Archivo',sans-serif;font-weight:900;letter-spacing:-.03em;font-size:clamp(2.2rem,6vw,4.5rem);padding:6px 0 14px;outline:none;text-transform:uppercase;}
+  .pf-pid::placeholder{color:#4f4c47;}
+  .pf-pid:focus{border-bottom-color:#e8a13c;}
+  @media (prefers-reduced-motion: reduce){*{animation:none !important;transition-duration:.001ms !important;}}
+</style>
+</helmet>
+
+<div style="--bg:#060606;--panel:#0b0b0b;--ink:#f4f2ee;--g2:#928e87;--g3:#4f4c47;--line:rgba(244,242,238,.14);--line-soft:rgba(244,242,238,.07);--accent:{{ accent }};--rframe:clamp(16px,2vw,26px);min-height:100vh;background:var(--bg);color:var(--ink);font-family:'Archivo',system-ui,sans-serif;padding:clamp(7px,1.3vw,16px);">
+<div style="border:1px solid var(--line);border-radius:var(--rframe);min-height:calc(100vh - clamp(14px,2.6vw,32px));position:relative;overflow:hidden;">
+<div aria-live="polite" role="status" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;">{{ liveRegion }}</div>
+<sc-if value="{{ fixtureMode }}">
+<div role="alert" style="position:relative;z-index:50;background:#7d1b1b;color:#fff6f6;text-align:center;font-family:'Space Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.12em;padding:9px 16px;">FIXTURE / NOT FOR FORMAL STUDY</div>
+</sc-if>
+<sc-if value="{{ provisionalMode }}">
+<div role="alert" style="position:relative;z-index:50;background:#6b4a0d;color:#fff7df;text-align:center;font-family:'Space Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.1em;padding:9px 16px;">PROVISIONAL PROFILE POLICY / NOT FORMAL STUDY</div>
+</sc-if>
+
+<!-- ============ ONBOARDING ============ -->
+<sc-if value="{{ showOnboarding }}" hint-placeholder-val="{{ true }}">
+<section style="min-height:calc(100vh - clamp(14px,2.6vw,32px));display:flex;flex-direction:column;padding:clamp(22px,4vw,64px);animation:pfFade .7s ease both;">
+  <header style="display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--line-soft);padding-bottom:18px;">
+    <button type="button" onClick="{{ onWordmark }}" aria-label="Return to PlayFinder start" style="background:none;border:none;padding:0;cursor:pointer;color:var(--ink);font-family:'Archivo',sans-serif;font-weight:900;letter-spacing:-.03em;font-size:clamp(15px,1.3vw,19px);transition:opacity .2s;" style-hover="opacity:.6;">PLAYFINDER</button>
+    <span style="font-family:'Space Mono',monospace;font-size:12px;color:var(--g2);letter-spacing:.12em;">SETUP · {{ stageLabel }} / 03</span>
+  </header>
+
+  <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:clamp(24px,4vw,56px) 0;max-width:1200px;">
+    <sc-if value="{{ step1CancelShow }}">
+      <button type="button" onClick="{{ onCancelEdit }}" style="{{ metaBack }}" style-hover="color:var(--ink);">← CANCEL &amp; RETURN TO RECOMMENDATIONS</button>
+    </sc-if>
+    <span style="font-family:'Space Mono',monospace;font-size:13px;color:var(--accent);letter-spacing:.18em;margin-bottom:14px;">{{ stageKicker }}</span>
+    <h1 ref="{{ headingRef }}" tabindex="-1" style="outline:none;font-size:clamp(2.6rem,7vw,6rem);font-weight:900;letter-spacing:-.045em;line-height:.92;margin:0 0 10px;text-wrap:balance;">{{ stageTitle }}</h1>
+    <p style="font-size:clamp(1rem,1.4vw,1.2rem);color:var(--g2);max-width:52ch;margin:0 0 clamp(28px,4vw,48px);line-height:1.5;">{{ stageSub }}</p>
+
+    <!-- 01 taste -->
+    <sc-if value="{{ isStage1 }}">
+    <div style="animation:{{ stageAnim }};">
+      <div style="display:flex;flex-wrap:wrap;gap:clamp(10px,1vw,18px) clamp(20px,2.4vw,44px);max-width:1100px;">
+        <sc-for list="{{ tasteOptions }}" as="opt" hint-placeholder-count="12">
+          <button type="button" onClick="{{ opt.onClick }}" disabled="{{ opt.disabled }}" aria-pressed="{{ opt.pressed }}" aria-label="{{ opt.ariaLabel }}" title="{{ opt.title }}" style="{{ opt.style }}" style-hover="color:var(--ink);transform:translateY(-2px);">{{ opt.label }}</button>
+        </sc-for>
+      </div>
+      <sc-if value="{{ tastePolicyActive }}">
+        <p role="note" style="max-width:72ch;margin:22px 0 0;color:var(--g2);font-family:'Space Mono',monospace;font-size:11px;line-height:1.6;letter-spacing:.03em;">{{ tastePolicyNote }}</p>
+      </sc-if>
+      <sc-if value="{{ tasteLockActive }}">
+        <p role="note" style="max-width:72ch;margin:14px 0 0;color:var(--accent);font-family:'Space Mono',monospace;font-size:11px;line-height:1.6;letter-spacing:.03em;">Taste is locked during an active study to keep all three rounds comparable. Start a new participant to choose a different taste profile.</p>
+      </sc-if>
+      <div style="display:flex;align-items:center;gap:22px;margin-top:clamp(30px,4vw,52px);flex-wrap:wrap;">
+        <span style="font-family:'Space Mono',monospace;font-size:14px;color:{{ counterColor }};letter-spacing:.08em;">{{ tasteCount }} / 3 selected</span>
+        <button type="button" onClick="{{ onContinue1 }}" disabled="{{ continue1Disabled }}" style="{{ continue1Style }}" style-hover="background:var(--accent);color:#060606;border-color:var(--accent);">CONTINUE →</button>
+      </div>
+    </div>
+    </sc-if>
+
+    <!-- 02 budget -->
+    <sc-if value="{{ isStage2 }}">
+    <div style="animation:{{ stageAnim }};max-width:640px;">
+      <div style="font-size:clamp(3rem,7vw,5.5rem);font-weight:900;letter-spacing:-.04em;line-height:1;margin-bottom:30px;color:{{ budgetColor }};">{{ budgetDisplay }}</div>
+      <input type="range" class="pf-range" min="5" max="60" step="5" value="{{ budgetValue }}" onChange="{{ onBudgetInput }}" disabled="{{ anyPrice }}" aria-label="Maximum price in US dollars" aria-valuetext="{{ budgetDisplay }}">
+      <div style="display:flex;justify-content:space-between;font-family:'Space Mono',monospace;font-size:12px;color:var(--g3);margin-top:12px;letter-spacing:.08em;"><span>$5 USD</span><span>$60 USD</span></div>
+      <button type="button" onClick="{{ onAnyPrice }}" aria-pressed="{{ anyPrice }}" style="{{ anyPriceStyle }}" style-hover="color:var(--ink);border-color:var(--ink);">ANY PRICE</button>
+      <div style="display:flex;gap:14px;margin-top:clamp(30px,4vw,52px);flex-wrap:wrap;">
+        <button type="button" onClick="{{ onBack }}" style="{{ ghostBtn }}" style-hover="color:var(--ink);border-color:var(--ink);">← BACK</button>
+        <button type="button" onClick="{{ onContinue2 }}" style="{{ solidBtn }}" style-hover="background:var(--accent);color:#060606;border-color:var(--accent);">CONTINUE →</button>
+      </div>
+    </div>
+    </sc-if>
+
+    <!-- 03 platform -->
+    <sc-if value="{{ isStage3 }}">
+    <div style="animation:{{ stageAnim }};">
+      <div style="display:flex;flex-wrap:wrap;gap:clamp(14px,1.4vw,26px) clamp(24px,3vw,56px);">
+        <sc-for list="{{ platformOptions }}" as="opt" hint-placeholder-count="3">
+          <button type="button" onClick="{{ opt.onClick }}" aria-pressed="{{ opt.pressed }}" style="{{ opt.style }}" style-hover="color:var(--ink);">{{ opt.label }}</button>
+        </sc-for>
+      </div>
+      <div style="display:flex;align-items:center;gap:20px;margin-top:clamp(30px,4vw,52px);flex-wrap:wrap;">
+        <span style="font-family:'Space Mono',monospace;font-size:13px;color:{{ platformCountColor }};letter-spacing:.08em;">{{ platformCount }} platform(s) selected</span>
+        <button type="button" onClick="{{ onBack }}" style="{{ ghostBtn }}" style-hover="color:var(--ink);border-color:var(--ink);">← BACK</button>
+        <button type="button" onClick="{{ onFinish }}" disabled="{{ finishDisabled }}" style="{{ finishStyle }}" style-hover="background:var(--accent);color:#060606;border-color:var(--accent);">{{ finishLabel }}</button>
+      </div>
+    </div>
+    </sc-if>
+  </div>
+
+  <footer style="display:flex;justify-content:space-between;border-top:1px solid var(--line-soft);padding-top:16px;font-family:'Space Mono',monospace;font-size:11px;color:var(--g3);letter-spacing:.1em;">
+    <span>ANONYMOUS SESSION · DEVICE-LOCAL ONLY</span><span>PROTOTYPE 01</span>
+  </footer>
+</section>
+</sc-if>
+
+<!-- ============ PARTICIPANT SETUP ============ -->
+<sc-if value="{{ showParticipant }}">
+<section style="min-height:calc(100vh - clamp(14px,2.6vw,32px));display:flex;flex-direction:column;padding:clamp(22px,4vw,64px);animation:pfFade .7s ease both;">
+  <header style="display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--line-soft);padding-bottom:18px;">
+    <button type="button" onClick="{{ onWordmark }}" aria-label="Return to PlayFinder start" style="background:none;border:none;padding:0;cursor:pointer;color:var(--ink);font-family:'Archivo',sans-serif;font-weight:900;letter-spacing:-.03em;font-size:clamp(15px,1.3vw,19px);transition:opacity .2s;" style-hover="opacity:.6;">PLAYFINDER</button>
+    <span style="font-family:'Space Mono',monospace;font-size:12px;color:var(--g2);letter-spacing:.12em;">SETUP · PARTICIPANT</span>
+  </header>
+
+  <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:clamp(24px,4vw,56px) 0;max-width:900px;">
+    <button type="button" onClick="{{ onParticipantBack }}" style="{{ metaBack }}" style-hover="color:var(--ink);">← BACK</button>
+    <span style="font-family:'Space Mono',monospace;font-size:13px;color:var(--accent);letter-spacing:.18em;margin-bottom:14px;">PARTICIPANT SETUP</span>
+    <h1 ref="{{ participantHeadingRef }}" tabindex="-1" style="outline:none;font-size:clamp(2.4rem,6vw,5rem);font-weight:900;letter-spacing:-.045em;line-height:.94;margin:0 0 10px;text-wrap:balance;">Enter your Participant ID to begin.</h1>
+    <p style="font-size:clamp(1rem,1.4vw,1.2rem);color:var(--g2);max-width:52ch;margin:0 0 clamp(28px,4vw,48px);line-height:1.5;">Your Participant ID determines the order of the three recommendation rounds.</p>
+
+    <div style="max-width:520px;animation:pfInRight .42s cubic-bezier(.22,1,.36,1) both;">
+      <label for="pf-participant-id" style="display:block;font-family:'Space Mono',monospace;font-size:11px;color:var(--g3);letter-spacing:.14em;margin-bottom:10px;">PARTICIPANT ID</label>
+      <input id="pf-participant-id" class="pf-pid" type="text" inputmode="text" autocomplete="off" spellcheck="false" placeholder="P01" value="{{ participantDraft }}" onChange="{{ onParticipantInput }}" onKeyDown="{{ onParticipantKey }}" aria-describedby="pf-pid-help">
+      <p id="pf-pid-help" style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.08em;line-height:1.6;color:{{ participantHintColor }};margin:14px 0 0;min-height:2.6em;">{{ participantHint }}</p>
+      <div style="display:flex;gap:14px;margin-top:clamp(26px,3vw,40px);flex-wrap:wrap;">
+        <button type="button" onClick="{{ onParticipantStart }}" disabled="{{ participantDisabled }}" style="{{ participantBtnStyle }}" style-hover="background:var(--accent);color:#060606;border-color:var(--accent);">BEGIN STUDY →</button>
+      </div>
+    </div>
+  </div>
+
+  <footer style="display:flex;justify-content:space-between;border-top:1px solid var(--line-soft);padding-top:16px;font-family:'Space Mono',monospace;font-size:11px;color:var(--g3);letter-spacing:.1em;">
+    <span>ANONYMOUS SESSION · DEVICE-LOCAL ONLY</span><span>PROTOTYPE 01</span>
+  </footer>
+</section>
+</sc-if>
+
+<!-- ============ PER-ROUND QUESTIONNAIRE ============ -->
+<!-- Participant-facing: round ordinal only. The condition letter is never rendered. -->
+<sc-if value="{{ showSurvey }}">
+<section style="min-height:calc(100vh - clamp(14px,2.6vw,32px));display:flex;flex-direction:column;padding:clamp(22px,4vw,64px);animation:pfFade .5s ease both;">
+  <header style="display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--line-soft);padding-bottom:18px;">
+    <span style="font-family:'Archivo',sans-serif;font-weight:900;letter-spacing:-.03em;font-size:clamp(15px,1.3vw,19px);">PLAYFINDER</span>
+    <span style="font-family:'Space Mono',monospace;font-size:12px;color:var(--g2);letter-spacing:.12em;">{{ surveyRoundLabel }} · QUESTIONNAIRE</span>
+  </header>
+
+  <div style="flex:1;padding:clamp(24px,4vw,48px) 0;max-width:900px;width:100%;">
+    <span style="font-family:'Space Mono',monospace;font-size:13px;color:var(--accent);letter-spacing:.18em;">{{ surveyKicker }}</span>
+    <h1 ref="{{ surveyHeadingRef }}" tabindex="-1" style="outline:none;font-size:clamp(2rem,5vw,3.6rem);font-weight:900;letter-spacing:-.045em;line-height:.98;margin:14px 0 10px;text-wrap:balance;">How was this round?</h1>
+    <p style="font-size:clamp(.98rem,1.3vw,1.15rem);color:var(--g2);max-width:56ch;margin:0 0 clamp(24px,3.4vw,40px);line-height:1.5;">Answer all ten statements about the round you just finished. 1 = strongly disagree, 7 = strongly agree.</p>
+
+    <div style="display:grid;gap:clamp(20px,2.4vw,30px);">
+      <sc-for list="{{ surveyItems }}" as="it" hint-placeholder-count="10">
+        <fieldset role="radiogroup" style="border:none;padding:0;margin:0;border-top:1px solid var(--line-soft);padding-top:clamp(14px,1.6vw,20px);">
+          <legend style="font-size:clamp(1rem,1.35vw,1.2rem);font-weight:700;letter-spacing:-.01em;line-height:1.35;color:var(--ink);padding:0;margin-bottom:14px;">{{ it.label }}</legend>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;">
+            <sc-for list="{{ it.options }}" as="opt" hint-placeholder-count="7">
+              <button type="button" role="radio" aria-checked="{{ opt.checked }}" aria-label="{{ opt.ariaLabel }}" title="{{ opt.title }}" onClick="{{ opt.onClick }}" style="{{ opt.style }}" style-hover="border-color:var(--ink);color:var(--ink);">{{ opt.value }}</button>
+            </sc-for>
+          </div>
+        </fieldset>
+      </sc-for>
+    </div>
+
+    <div style="display:flex;align-items:center;gap:20px;margin-top:clamp(28px,3.4vw,44px);flex-wrap:wrap;border-top:1px solid var(--line-soft);padding-top:clamp(20px,2.4vw,28px);">
+      <span aria-live="polite" style="font-family:'Space Mono',monospace;font-size:13px;color:{{ surveyCountColor }};letter-spacing:.08em;">{{ surveyAnsweredLabel }}</span>
+      <button type="button" onClick="{{ onSurveyBack }}" style="{{ ghostBtn }}" style-hover="color:var(--ink);border-color:var(--ink);">← KEEP BROWSING</button>
+      <button type="button" onClick="{{ onSurveySubmit }}" disabled="{{ surveySubmitDisabled }}" style="{{ surveySubmitStyle }}" style-hover="background:var(--accent);color:#060606;border-color:var(--accent);">{{ surveySubmitLabel }}</button>
+    </div>
+  </div>
+</section>
+</sc-if>
+
+<!-- ============ FINAL OPEN QUESTIONS ============ -->
+<sc-if value="{{ showOpenQuestions }}">
+<section style="min-height:calc(100vh - clamp(14px,2.6vw,32px));display:flex;flex-direction:column;padding:clamp(22px,4vw,64px);animation:pfFade .5s ease both;">
+  <header style="display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--line-soft);padding-bottom:18px;">
+    <span style="font-family:'Archivo',sans-serif;font-weight:900;letter-spacing:-.03em;font-size:clamp(15px,1.3vw,19px);">PLAYFINDER</span>
+    <span style="font-family:'Space Mono',monospace;font-size:12px;color:var(--g2);letter-spacing:.12em;">FINAL QUESTIONS</span>
+  </header>
+
+  <div style="flex:1;padding:clamp(24px,4vw,48px) 0;max-width:820px;width:100%;">
+    <span style="font-family:'Space Mono',monospace;font-size:13px;color:var(--accent);letter-spacing:.18em;">ALL THREE ROUNDS COMPLETE</span>
+    <h1 ref="{{ openHeadingRef }}" tabindex="-1" style="outline:none;font-size:clamp(2rem,5vw,3.6rem);font-weight:900;letter-spacing:-.045em;line-height:.98;margin:14px 0 10px;text-wrap:balance;">Two last questions.</h1>
+    <p style="font-size:clamp(.98rem,1.3vw,1.15rem);color:var(--g2);max-width:56ch;margin:0 0 clamp(24px,3.4vw,40px);line-height:1.5;">There are no right answers. Please do not include your name, email address or Steam username.</p>
+
+    <fieldset role="radiogroup" style="border:none;padding:0;margin:0 0 clamp(24px,3vw,34px);border-top:1px solid var(--line-soft);padding-top:clamp(14px,1.6vw,20px);">
+      <legend style="font-size:clamp(1rem,1.35vw,1.2rem);font-weight:700;line-height:1.35;padding:0;margin-bottom:14px;">Which round did you prefer?</legend>
+      <div style="display:flex;flex-wrap:wrap;gap:10px;">
+        <sc-for list="{{ preferredRoundOptions }}" as="opt" hint-placeholder-count="3">
+          <button type="button" role="radio" aria-checked="{{ opt.checked }}" onClick="{{ opt.onClick }}" style="{{ opt.style }}" style-hover="border-color:var(--ink);color:var(--ink);">{{ opt.label }}</button>
+        </sc-for>
+      </div>
+    </fieldset>
+
+    <div style="display:grid;gap:clamp(22px,2.6vw,32px);">
+      <sc-for list="{{ openItems }}" as="it" hint-placeholder-count="2">
+        <div style="border-top:1px solid var(--line-soft);padding-top:clamp(14px,1.6vw,20px);">
+          <label for="{{ it.id }}" style="display:block;font-size:clamp(1rem,1.35vw,1.2rem);font-weight:700;line-height:1.35;margin-bottom:14px;">{{ it.label }}</label>
+          <textarea id="{{ it.id }}" rows="4" value="{{ it.value }}" onChange="{{ it.onChange }}" placeholder="{{ it.placeholder }}" style="width:100%;background:none;border:1px solid var(--line);border-radius:6px;color:var(--ink);font-family:'Archivo',sans-serif;font-size:1rem;line-height:1.5;padding:14px;outline:none;resize:vertical;"></textarea>
+        </div>
+      </sc-for>
+    </div>
+
+    <div style="display:flex;align-items:center;gap:20px;margin-top:clamp(28px,3.4vw,44px);flex-wrap:wrap;border-top:1px solid var(--line-soft);padding-top:clamp(20px,2.4vw,28px);">
+      <span aria-live="polite" style="font-family:'Space Mono',monospace;font-size:13px;color:{{ openCountColor }};letter-spacing:.08em;">{{ openAnsweredLabel }}</span>
+      <button type="button" onClick="{{ onOpenSubmit }}" disabled="{{ openSubmitDisabled }}" style="{{ openSubmitStyle }}" style-hover="background:var(--accent);color:#060606;border-color:var(--accent);">FINISH &amp; SAVE →</button>
+    </div>
+  </div>
+</section>
+</sc-if>
+
+<!-- ============ MAIN ============ -->
+<sc-if value="{{ showMain }}">
+<div style="animation:pfFade .6s ease both;">
+
+  <!-- nav -->
+  <nav style="display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:clamp(16px,2vw,26px) clamp(20px,3vw,44px);border-bottom:1px solid var(--line-soft);position:sticky;top:0;background:rgba(6,6,6,.82);backdrop-filter:blur(14px);z-index:40;">
+    <button type="button" onClick="{{ onWordmark }}" aria-label="Return to PlayFinder start" style="justify-self:start;background:none;border:none;padding:0;cursor:pointer;color:var(--ink);font-family:'Archivo',sans-serif;font-weight:900;letter-spacing:-.03em;font-size:clamp(15px,1.3vw,19px);transition:opacity .2s;" style-hover="opacity:.6;">PLAYFINDER</button>
+    <button type="button" onClick="{{ onHowItWorks }}" style="justify-self:center;background:none;border:none;color:var(--g2);font-family:'Archivo',sans-serif;font-size:13px;font-weight:600;letter-spacing:.14em;cursor:pointer;padding:8px;" style-hover="color:var(--ink);">HOW IT WORKS</button>
+    <div style="justify-self:end;display:flex;align-items:center;gap:18px;">
+      <span title="Anonymous study session" style="font-family:'Space Mono',monospace;font-size:10px;color:var(--g3);letter-spacing:.1em;border:1px solid var(--line-soft);border-radius:100px;padding:5px 11px;">◦ {{ sessionShort }}</span>
+      <button type="button" onClick="{{ onEditPrefs }}" style="background:none;border:none;color:var(--g2);font-family:'Archivo',sans-serif;font-size:13px;font-weight:600;letter-spacing:.14em;cursor:pointer;padding:8px;" style-hover="color:var(--ink);">EDIT PREFERENCES</button>
+    </div>
+  </nav>
+
+  <!-- hero -->
+  <header style="padding:clamp(48px,8vw,120px) clamp(20px,3vw,44px) clamp(30px,4vw,52px);">
+    <div style="display:flex;align-items:center;gap:clamp(14px,2vw,24px);flex-wrap:wrap;margin-bottom:18px;animation:pfUp .7s cubic-bezier(.22,1,.36,1) both;">
+      <span style="font-family:'Space Mono',monospace;font-size:13px;color:var(--accent);letter-spacing:.18em;">// PERSONAL RECOMMENDATIONS</span>
+      <sc-if value="{{ inStudy }}">
+        <span style="font-family:'Space Mono',monospace;font-size:13px;color:var(--g2);letter-spacing:.14em;border:1px solid var(--line-soft);border-radius:100px;padding:5px 14px;white-space:nowrap;">{{ roundLabel }}</span>
+        <div role="img" aria-label="{{ roundLabel }}" style="display:flex;gap:8px;align-items:center;">
+          <sc-for list="{{ roundDots }}" as="d" hint-placeholder-count="3">
+            <span style="{{ d.style }}"></span>
+          </sc-for>
+        </div>
+      </sc-if>
+    </div>
+    <h1 ref="{{ roundHeadingRef }}" tabindex="-1" style="outline:none;font-size:clamp(3rem,9vw,8rem);font-weight:900;letter-spacing:-.05em;line-height:.88;margin:0;max-width:16ch;text-wrap:balance;animation:pfUp .8s cubic-bezier(.22,1,.36,1) .06s both;">Recommended for You</h1>
+    <p style="font-size:clamp(1.05rem,1.6vw,1.4rem);color:var(--g2);max-width:46ch;margin:26px 0 0;line-height:1.45;animation:pfUp .8s cubic-bezier(.22,1,.36,1) .14s both;">Games selected around your taste, budget and platform.</p>
+  </header>
+
+  <!-- editorial filter -->
+  <section ref="{{ dockRef }}" onPointerMove="{{ onDockMove }}" onPointerLeave="{{ onDockLeave }}" style="padding:clamp(30px,4vw,56px) clamp(20px,3vw,44px);border-top:1px solid var(--line-soft);">
+    <div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:16px;margin-bottom:clamp(24px,3vw,40px);">
+      <h2 style="font-size:clamp(2rem,5vw,4rem);font-weight:900;letter-spacing:-.04em;line-height:1;margin:0;color:var(--g3);">Filter <span style="color:var(--ink);">by</span></h2>
+      <span aria-live="polite" style="font-family:'Space Mono',monospace;font-size:13px;color:var(--g2);letter-spacing:.08em;">{{ matchCountLabel }}</span>
+    </div>
+
+    <div style="display:grid;gap:clamp(18px,2vw,28px);">
+      <sc-for list="{{ filterGroupsLead }}" as="grp" hint-placeholder-count="1">
+        <div style="display:flex;gap:clamp(14px,2vw,32px);align-items:baseline;flex-wrap:wrap;border-top:1px solid var(--line-soft);padding-top:clamp(14px,1.6vw,20px);">
+          <span style="font-family:'Space Mono',monospace;font-size:11px;color:var(--g3);letter-spacing:.12em;min-width:112px;flex-shrink:0;padding-top:6px;">{{ grp.label }}</span>
+          <div style="display:flex;flex-wrap:wrap;gap:clamp(10px,1vw,14px) clamp(16px,1.6vw,28px);">
+            <sc-for list="{{ grp.words }}" as="w" hint-placeholder-count="6">
+              <button type="button" onClick="{{ w.onClick }}" disabled="{{ w.disabled }}" data-dock="1" aria-pressed="{{ w.active }}" style="{{ w.style }}" style-hover="color:var(--ink);" style-focus="transform:translateY(-3px) scale(1.05);color:var(--ink);">{{ w.label }}</button>
+            </sc-for>
+          </div>
+        </div>
+      </sc-for>
+
+      <!-- GENRE: facets scoped to the current result pool, zero-count options hidden unless selected -->
+      <div style="display:flex;gap:clamp(14px,2vw,32px);align-items:baseline;flex-wrap:wrap;border-top:1px solid var(--line-soft);padding-top:clamp(14px,1.6vw,20px);">
+        <div style="display:flex;flex-direction:column;gap:5px;min-width:112px;max-width:150px;flex-shrink:0;padding-top:6px;">
+          <span style="font-family:'Space Mono',monospace;font-size:11px;color:var(--g3);letter-spacing:.12em;">GENRE</span>
+          <span style="font-family:'Space Mono',monospace;font-size:9.5px;color:var(--g3);letter-spacing:.04em;line-height:1.5;">{{ genreFacetNote }}</span>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:clamp(10px,1vw,14px) clamp(16px,1.6vw,28px);">
+          <sc-for list="{{ genreFacetWords }}" as="w" hint-placeholder-count="6">
+            <button type="button" onClick="{{ w.onClick }}" data-dock="1" aria-pressed="{{ w.active }}" aria-label="{{ w.ariaLabel }}" style="{{ w.style }}" style-hover="color:var(--ink);" style-focus="transform:translateY(-3px) scale(1.05);color:var(--ink);">{{ w.label }}<span aria-hidden="true" style="{{ w.countStyle }}">{{ w.countLabel }}</span></button>
+          </sc-for>
+        </div>
+      </div>
+
+      <!-- TAGS: same result-pool scope, selected always visible, collapsed to a small default list -->
+      <div style="display:flex;gap:clamp(14px,2vw,32px);align-items:baseline;flex-wrap:wrap;border-top:1px solid var(--line-soft);padding-top:clamp(14px,1.6vw,20px);">
+        <div style="display:flex;flex-direction:column;gap:5px;min-width:112px;max-width:150px;flex-shrink:0;padding-top:6px;">
+          <span style="font-family:'Space Mono',monospace;font-size:11px;color:var(--g3);letter-spacing:.12em;">TAGS</span>
+          <span style="font-family:'Space Mono',monospace;font-size:9.5px;color:var(--g3);letter-spacing:.04em;line-height:1.5;">{{ tagFacetNote }}</span>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:clamp(10px,1vw,14px) clamp(16px,1.6vw,28px);">
+          <sc-for list="{{ tagFacetWords }}" as="w" hint-placeholder-count="16">
+            <button type="button" onClick="{{ w.onClick }}" data-dock="1" aria-pressed="{{ w.active }}" aria-label="{{ w.ariaLabel }}" style="{{ w.style }}" style-hover="color:var(--ink);" style-focus="transform:translateY(-3px) scale(1.05);color:var(--ink);">{{ w.label }}<span aria-hidden="true" style="{{ w.countStyle }}">{{ w.countLabel }}</span></button>
+          </sc-for>
+          <button type="button" onClick="{{ onToggleTags }}" aria-expanded="{{ tagsExpanded }}" style="{{ tagToggleStyle }}" style-hover="color:var(--ink);border-color:var(--ink);">{{ tagToggleLabel }}</button>
+        </div>
+      </div>
+
+      <sc-for list="{{ filterGroupsTail }}" as="grp" hint-placeholder-count="2">
+        <div style="display:flex;gap:clamp(14px,2vw,32px);align-items:baseline;flex-wrap:wrap;border-top:1px solid var(--line-soft);padding-top:clamp(14px,1.6vw,20px);">
+          <span style="font-family:'Space Mono',monospace;font-size:11px;color:var(--g3);letter-spacing:.12em;min-width:112px;flex-shrink:0;padding-top:6px;">{{ grp.label }}</span>
+          <div style="display:flex;flex-wrap:wrap;gap:clamp(10px,1vw,14px) clamp(16px,1.6vw,28px);">
+            <sc-for list="{{ grp.words }}" as="w" hint-placeholder-count="6">
+              <button type="button" onClick="{{ w.onClick }}" disabled="{{ w.disabled }}" data-dock="1" aria-pressed="{{ w.active }}" style="{{ w.style }}" style-hover="color:var(--ink);" style-focus="transform:translateY(-3px) scale(1.05);color:var(--ink);">{{ w.label }}</button>
+            </sc-for>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- grid / empty -->
+  <section style="padding:clamp(16px,2vw,28px) clamp(20px,3vw,44px) clamp(40px,5vw,72px);">
+    <sc-if value="{{ hasResults }}">
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,340px),1fr));gap:clamp(28px,3vw,56px) clamp(24px,2.4vw,40px);">
+        <sc-for list="{{ games }}" as="g" hint-placeholder-count="6">
+          <article data-game-id="{{ g.id }}" data-round="{{ g.round }}" data-cond="{{ g.cond }}" ref="{{ cardRef }}" style="{{ g.revealStyle }}">
+            <!-- media -->
+            <button type="button" onClick="{{ g.onOpen }}" aria-label="{{ g.openLabel }}" style="display:block;width:100%;padding:0;border:1px solid var(--line-soft);border-radius:3px;overflow:hidden;background:none;cursor:pointer;position:relative;aspect-ratio:{{ g.aspect }};" style-hover="border-color:var(--line);">
+              <div style="{{ g.artStyle }}" style-hover="transform:scale(1.05);"></div>
+              <span style="position:absolute;top:14px;left:16px;font-family:'Space Mono',monospace;font-size:11px;color:rgba(244,242,238,.5);letter-spacing:.14em;">{{ g.artLabel }}</span>
+              <span style="position:absolute;bottom:10px;right:16px;font-family:'Archivo',sans-serif;font-weight:900;font-size:clamp(3rem,7vw,5rem);line-height:.8;color:rgba(244,242,238,.06);letter-spacing:-.04em;pointer-events:none;">{{ g.num }}</span>
+              <span style="position:absolute;inset:0;display:flex;align-items:flex-end;padding:16px;opacity:0;transition:opacity .3s;background:linear-gradient(0deg,rgba(6,6,6,.7),transparent 55%);font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.14em;color:var(--ink);" style-hover="opacity:1;">VIEW GAME →</span>
+            </button>
+            <!-- meta -->
+            <div style="display:flex;justify-content:space-between;align-items:baseline;gap:14px;margin-top:16px;{{ g.metaAlign }}">
+              <div style="display:flex;align-items:baseline;gap:12px;min-width:0;">
+                <span style="font-family:'Space Mono',monospace;font-size:12px;color:var(--g3);flex-shrink:0;">{{ g.num }}</span>
+                <h3 style="font-size:clamp(1.2rem,1.6vw,1.6rem);font-weight:800;letter-spacing:-.02em;margin:0;line-height:1.05;">{{ g.title }}</h3>
+              </div>
+              <span style="font-family:'Space Mono',monospace;font-size:14px;color:{{ g.priceColor }};flex-shrink:0;">{{ g.priceLabel }}</span>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:12px;font-family:'Space Mono',monospace;font-size:11px;color:var(--g2);letter-spacing:.06em;">
+              <span style="color:var(--g3);">{{ g.tagLine }}</span>
+              <span style="color:var(--g3);">{{ g.platformLine }}</span>
+            </div>
+            <p style="font-size:.92rem;color:var(--g2);margin:14px 0 0;line-height:1.4;border-left:1px solid var(--accent);padding-left:12px;">{{ g.explanation }}</p>
+            <!-- feedback -->
+            <div role="group" aria-label="Feedback for {{ g.title }}" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;">
+              <button type="button" onClick="{{ g.onLike }}" aria-pressed="{{ g.liked }}" style="{{ g.likeStyle }}" style-hover="color:var(--ink);border-color:var(--ink);">▲ Like</button>
+              <button type="button" onClick="{{ g.onDislike }}" aria-pressed="{{ g.disliked }}" style="{{ g.dislikeStyle }}" style-hover="color:var(--ink);border-color:var(--ink);">▼ Dislike</button>
+              <button type="button" onClick="{{ g.onWishlist }}" aria-pressed="{{ g.wished }}" style="{{ g.wishStyle }}" style-hover="color:var(--ink);border-color:var(--ink);">{{ g.wishLabel }}</button>
+              <button type="button" onClick="{{ g.onNotInterested }}" style="{{ ghostChip }}" style-hover="color:var(--ink);border-color:var(--ink);">✕ Not interested</button>
+            </div>
+            <span aria-live="polite" style="display:block;height:14px;font-family:'Space Mono',monospace;font-size:11px;color:var(--accent);letter-spacing:.1em;margin-top:8px;opacity:{{ g.confirmOpacity }};transition:opacity .25s;">{{ g.confirm }}</span>
+          </article>
+        </sc-for>
+      </div>
+
+      <!-- show more -->
+      <div style="display:flex;justify-content:center;margin-top:clamp(48px,6vw,88px);">
+        <sc-if value="{{ canShowMore }}">
+          <button type="button" onClick="{{ onShowMore }}" style="background:none;border:none;color:var(--ink);cursor:pointer;font-family:'Archivo',sans-serif;font-weight:900;font-size:clamp(1.4rem,3vw,2.4rem);letter-spacing:-.02em;display:flex;align-items:center;gap:18px;padding:12px;" style-hover="color:var(--accent);">
+            <span style="font-family:'Space Mono',monospace;font-size:13px;color:var(--g3);letter-spacing:.1em;">{{ remainingLabel }}</span> SHOW NEXT 6 ↓
+          </button>
+        </sc-if>
+        <sc-if value="{{ allShown }}">
+          <span style="font-family:'Space Mono',monospace;font-size:13px;color:var(--g3);letter-spacing:.12em;">— YOU'VE SEEN EVERY MATCH —</span>
+        </sc-if>
+      </div>
+    </sc-if>
+
+    <!-- empty state -->
+    <sc-if value="{{ isEmpty }}">
+      <div style="padding:clamp(48px,8vw,120px) 0;text-align:center;">
+        <div style="font-size:clamp(2rem,5vw,4rem);font-weight:900;letter-spacing:-.04em;color:var(--g3);margin-bottom:16px;">No matches.</div>
+        <p style="color:var(--g2);max-width:40ch;margin:0 auto 28px;line-height:1.5;">Nothing fits every filter at once. Loosen a constraint to widen the field.</p>
+        <button type="button" onClick="{{ onClearAll }}" style="{{ solidBtn }}" style-hover="background:var(--accent);color:#060606;border-color:var(--accent);">CLEAR FILTERS</button>
+      </div>
+    </sc-if>
+
+    <!-- round progression -->
+    <sc-if value="{{ showContinue }}">
+      <div style="margin-top:clamp(48px,6vw,88px);border-top:1px solid var(--line-soft);padding-top:clamp(32px,4vw,56px);display:flex;flex-direction:column;align-items:center;gap:18px;text-align:center;">
+        <span style="font-family:'Space Mono',monospace;font-size:12px;color:var(--g3);letter-spacing:.14em;">{{ roundLabel }} · FINISHED HERE?</span>
+        <button type="button" onClick="{{ onAskContinue }}" style="{{ solidBtn }}" style-hover="background:var(--accent);color:#060606;border-color:var(--accent);">{{ continueLabel }}</button>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ showComplete }}">
+      <div style="margin-top:clamp(48px,6vw,88px);border-top:1px solid var(--line-soft);padding-top:clamp(32px,4vw,56px);display:flex;flex-direction:column;align-items:center;gap:22px;text-align:center;">
+        <h2 style="font-size:clamp(1.8rem,4vw,3rem);font-weight:900;letter-spacing:-.04em;line-height:1;margin:0;text-wrap:balance;">RECOMMENDATION ROUNDS COMPLETE</h2>
+        <p style="color:var(--g2);max-width:44ch;margin:0;line-height:1.5;">Thank you. Your responses for all three rounds are saved on this device.</p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;">
+          <button type="button" onClick="{{ onStudyPanel }}" style="{{ solidBtn }}" style-hover="background:var(--accent);color:#060606;border-color:var(--accent);">OPEN STUDY DATA</button>
+          <button type="button" onClick="{{ onExportJson }}" style="{{ ghostBtn }}" style-hover="color:var(--ink);border-color:var(--ink);">EXPORT JSON</button>
+          <button type="button" onClick="{{ onExportCsv }}" style="{{ ghostBtn }}" style-hover="color:var(--ink);border-color:var(--ink);">EXPORT CSV</button>
+          <button type="button" onClick="{{ onExportLikert }}" disabled="{{ likertExportDisabled }}" style="{{ likertExportStyle }}" style-hover="color:var(--ink);border-color:var(--ink);">{{ likertExportLabel }}</button>
+          <button type="button" onClick="{{ onExportOpen }}" disabled="{{ openExportDisabled }}" style="{{ openExportStyle }}" style-hover="color:var(--ink);border-color:var(--ink);">{{ openExportLabel }}</button>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:10px;margin-top:clamp(18px,2.4vw,30px);border-top:1px solid var(--line-soft);padding-top:clamp(18px,2.4vw,30px);width:100%;max-width:460px;">
+          <span style="font-family:'Space Mono',monospace;font-size:11px;color:var(--g3);letter-spacing:.14em;">RESEARCHER · EXPORT BEFORE CONTINUING</span>
+          <button type="button" onClick="{{ onNewParticipant }}" style="{{ newParticipantBtn }}" style-hover="color:#ffd9d9;border-color:#8a2a2a;">START NEW PARTICIPANT</button>
+        </div>
+      </div>
+    </sc-if>
+  </section>
+
+  <!-- footer -->
+  <footer style="border-top:1px solid var(--line);padding:clamp(56px,8vw,120px) clamp(20px,3vw,44px) clamp(28px,3vw,40px);position:relative;">
+    <div style="text-align:center;max-width:40ch;margin:0 auto clamp(40px,6vw,80px);">
+      <p style="font-size:clamp(1.4rem,2.6vw,2.2rem);font-weight:700;letter-spacing:-.02em;line-height:1.2;margin:0 0 22px;text-wrap:balance;">A quieter way to discover your next game.</p>
+      <p style="font-family:'Space Mono',monospace;font-size:11px;color:var(--g3);letter-spacing:.06em;line-height:1.6;margin:0;">Anonymous interaction data is stored on this device only.</p>
+    </div>
+    <div style="display:flex;justify-content:center;gap:clamp(20px,3vw,44px);flex-wrap:wrap;margin-bottom:clamp(48px,7vw,96px);font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.1em;">
+      <button type="button" onClick="{{ onEditPrefs }}" style="{{ footLink }}" style-hover="color:var(--ink);">EDIT PREFERENCES</button>
+      <button type="button" onClick="{{ onRestart }}" style="{{ footLink }}" style-hover="color:var(--ink);">RESTART RECOMMENDATIONS</button>
+      <button type="button" onClick="{{ onStudyPanel }}" style="{{ footLink }}" style-hover="color:var(--ink);">STUDY DATA</button>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:16px;">
+      <span style="font-size:clamp(3.5rem,15vw,13rem);font-weight:900;letter-spacing:-.06em;line-height:.8;">PLAY</span>
+      <span style="font-family:'Space Mono',monospace;font-size:11px;color:var(--g3);letter-spacing:.12em;padding-bottom:8px;white-space:nowrap;">{{ footerStamp }}</span>
+      <span style="font-size:clamp(3.5rem,15vw,13rem);font-weight:900;letter-spacing:-.06em;line-height:.8;color:var(--accent);">FINDER</span>
+    </div>
+  </footer>
+</div>
+</sc-if>
+
+<!-- ============ DETAIL DRAWER ============ -->
+<sc-if value="{{ detailOpen }}">
+<div onClick="{{ onCloseDetail }}" style="position:fixed;inset:0;background:rgba(6,6,6,.72);backdrop-filter:blur(6px);z-index:60;animation:pfFade .3s ease both;"></div>
+<aside role="dialog" aria-modal="true" aria-label="{{ detail.title }} details" onKeyDown="{{ onDrawerKey }}" class="pf-scroll" style="position:fixed;top:0;right:0;bottom:0;width:min(680px,94vw);background:var(--panel);border-left:1px solid var(--line);z-index:61;overflow-y:auto;animation:pfMask .5s cubic-bezier(.22,1,.36,1) both;">
+  <div style="position:sticky;top:0;display:flex;justify-content:space-between;align-items:center;gap:14px;padding:20px clamp(22px,3vw,40px);background:var(--panel);border-bottom:1px solid var(--line-soft);z-index:2;">
+    <button type="button" ref="{{ closeRef }}" onClick="{{ onDetailBack }}" style="background:none;border:none;padding:0;cursor:pointer;color:var(--g2);font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.1em;transition:color .2s;" style-hover="color:var(--ink);">← BACK TO RECOMMENDATIONS</button>
+    <span style="font-family:'Space Mono',monospace;font-size:12px;color:var(--g3);letter-spacing:.12em;white-space:nowrap;">GAME · {{ detail.num }}</span>
+    <button type="button" onClick="{{ onCloseDetail }}" aria-label="Close details" style="background:none;border:1px solid var(--line);border-radius:100px;color:var(--ink);cursor:pointer;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.1em;padding:8px 16px;flex-shrink:0;" style-hover="background:var(--ink);color:#060606;">CLOSE ✕</button>
+  </div>
+  <div style="position:relative;aspect-ratio:16/9;overflow:hidden;border-bottom:1px solid var(--line-soft);">
+    <div style="{{ detail.artStyle }}"></div>
+    <span style="position:absolute;bottom:14px;left:clamp(22px,3vw,40px);font-family:'Space Mono',monospace;font-size:11px;color:rgba(244,242,238,.55);letter-spacing:.14em;">▶ TRAILER · MUTED PREVIEW · POSTER FALLBACK SHOWN</span>
+  </div>
+  <div style="padding:clamp(24px,3vw,44px);">
+    <div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;">
+      <h2 style="font-size:clamp(2rem,4vw,3.2rem);font-weight:900;letter-spacing:-.04em;line-height:.95;margin:0;">{{ detail.title }}</h2>
+      <span style="font-family:'Space Mono',monospace;font-size:18px;color:var(--accent);">{{ detail.priceLabel }}</span>
+    </div>
+    <p style="font-size:1.05rem;color:var(--g2);line-height:1.55;margin:22px 0;">{{ detail.description }}</p>
+    <p style="font-size:.95rem;color:var(--ink);line-height:1.4;border-left:1px solid var(--accent);padding-left:14px;margin:22px 0;">{{ detail.explanation }}</p>
+    <dl style="display:grid;grid-template-columns:auto 1fr;gap:14px 24px;font-family:'Space Mono',monospace;font-size:12px;margin:26px 0;border-top:1px solid var(--line-soft);padding-top:22px;">
+      <dt style="color:var(--g3);letter-spacing:.1em;">GENRES</dt><dd style="margin:0;color:var(--g2);">{{ detail.genreLine }}</dd>
+      <dt style="color:var(--g3);letter-spacing:.1em;">TAGS</dt><dd style="margin:0;color:var(--g2);">{{ detail.tagLine }}</dd>
+      <dt style="color:var(--g3);letter-spacing:.1em;">PLATFORMS</dt><dd style="margin:0;color:var(--g2);">{{ detail.platformLine }}</dd>
+    </dl>
+    <div role="group" aria-label="Feedback" style="display:flex;flex-wrap:wrap;gap:10px;margin-top:8px;">
+      <button type="button" onClick="{{ detail.onLike }}" aria-pressed="{{ detail.liked }}" style="{{ detail.likeStyle }}" style-hover="color:var(--ink);border-color:var(--ink);">▲ Like</button>
+      <button type="button" onClick="{{ detail.onDislike }}" aria-pressed="{{ detail.disliked }}" style="{{ detail.dislikeStyle }}" style-hover="color:var(--ink);border-color:var(--ink);">▼ Dislike</button>
+      <button type="button" onClick="{{ detail.onWishlist }}" aria-pressed="{{ detail.wished }}" style="{{ detail.wishStyle }}" style-hover="color:var(--ink);border-color:var(--ink);">{{ detail.wishLabel }}</button>
+      <button type="button" onClick="{{ detail.onNotInterested }}" style="{{ ghostChip }}" style-hover="color:var(--ink);border-color:var(--ink);">✕ Not interested</button>
+    </div>
+  </div>
+</aside>
+</sc-if>
+
+<!-- ============ HOW IT WORKS ============ -->
+<sc-if value="{{ howOpen }}">
+<div onClick="{{ onCloseHow }}" style="position:fixed;inset:0;background:rgba(6,6,6,.8);backdrop-filter:blur(8px);z-index:60;animation:pfFade .3s ease both;display:flex;align-items:center;justify-content:center;padding:24px;">
+  <div role="dialog" aria-modal="true" aria-label="How it works" onClick="{{ stopProp }}" style="max-width:560px;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:clamp(28px,4vw,48px);animation:pfUp .4s cubic-bezier(.22,1,.36,1) both;">
+    <h2 style="font-size:clamp(1.8rem,3vw,2.4rem);font-weight:900;letter-spacing:-.03em;margin:0 0 18px;">How it works</h2>
+    <ol style="margin:0;padding-left:22px;color:var(--g2);line-height:1.6;font-size:.98rem;display:grid;gap:12px;">
+      <li>Tell us your taste, budget and platform once.</li>
+      <li>We surface six games composed around those preferences.</li>
+      <li>Games reviewed or interacted with during the training period are excluded; this is not ownership data.</li>
+      <li>Genre filters match only explicit source genres. Tags may support taste matching, but are never treated as genres.</li>
+      <li>Refine with the editorial filters — genres, tags, price and platform combine.</li>
+      <li>Like, dislike, wishlist or dismiss any game to shape the set.</li>
+      <li>Everything stays anonymous and on this device.</li>
+    </ol>
+    <button type="button" onClick="{{ onCloseHow }}" style="margin-top:28px;{{ solidBtn }}" style-hover="background:var(--accent);color:#060606;border-color:var(--accent);">GOT IT</button>
+  </div>
+</div>
+</sc-if>
+
+<!-- ============ CONFIRM DIALOG ============ -->
+<sc-if value="{{ confirmOpen }}">
+<div onClick="{{ onConfirmCancel }}" style="position:fixed;inset:0;background:rgba(6,6,6,.85);backdrop-filter:blur(8px);z-index:80;animation:pfFade .25s ease both;display:flex;align-items:center;justify-content:center;padding:20px;overflow-y:auto;">
+  <div role="dialog" aria-modal="true" aria-label="{{ confirmTitle }}" onKeyDown="{{ onDrawerKey }}" onClick="{{ stopProp }}" style="max-width:520px;width:100%;background:var(--panel);border:1px solid {{ confirmBorder }};border-radius:8px;padding:clamp(26px,4vw,44px);animation:pfUp .35s cubic-bezier(.22,1,.36,1) both;">
+    <h2 ref="{{ confirmRef }}" tabindex="-1" style="outline:none;font-size:clamp(1.5rem,3vw,2.1rem);font-weight:900;letter-spacing:-.03em;margin:0 0 16px;line-height:1.05;text-wrap:balance;">{{ confirmTitle }}</h2>
+    <p style="color:var(--g2);line-height:1.6;margin:0;font-size:1rem;white-space:pre-line;">{{ confirmBody }}</p>
+    <div style="display:flex;gap:12px;margin-top:clamp(26px,3vw,36px);flex-wrap:wrap;">
+      <button type="button" onClick="{{ onConfirmCancel }}" style="{{ ghostBtn }}" style-hover="color:var(--ink);border-color:var(--ink);">BACK</button>
+      <button type="button" onClick="{{ onConfirmAccept }}" style="{{ confirmAcceptStyle }}" style-hover="opacity:.85;">{{ confirmAcceptLabel }}</button>
+    </div>
+  </div>
+</div>
+</sc-if>
+
+<!-- ============ STUDY PANEL ============ -->
+<sc-if value="{{ studyOpen }}">
+<div onClick="{{ onCloseStudy }}" style="position:fixed;inset:0;background:rgba(6,6,6,.7);z-index:70;animation:pfFade .25s ease both;"></div>
+<aside role="dialog" aria-modal="true" aria-label="Researcher study panel" class="pf-scroll" style="position:fixed;top:0;left:0;bottom:0;width:min(420px,92vw);background:#080808;border-right:1px solid var(--accent);z-index:71;overflow-y:auto;padding:clamp(22px,3vw,36px);animation:pfMask .4s cubic-bezier(.22,1,.36,1) both;">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:26px;">
+      <button type="button" ref="{{ studyCloseRef }}" onClick="{{ onCloseStudy }}" style="background:none;border:none;padding:0;cursor:pointer;color:var(--accent);font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.14em;transition:opacity .2s;" style-hover="opacity:.7;">← BACK · STUDY DATA</button>
+      <button type="button" onClick="{{ onCloseStudy }}" aria-label="Close study data panel" style="background:none;border:1px solid var(--line);border-radius:100px;color:var(--ink);cursor:pointer;font-family:'Space Mono',monospace;font-size:11px;padding:6px 12px;flex-shrink:0;" style-hover="background:var(--ink);color:#060606;">CLOSE ✕</button>
+    </div>
+    <dl style="font-family:'Space Mono',monospace;font-size:12px;display:grid;grid-template-columns:auto 1fr;gap:12px 18px;margin:0 0 24px;">
+      <dt style="color:var(--g3);">SESSION</dt><dd style="margin:0;color:var(--ink);word-break:break-all;">{{ sessionId }}</dd>
+      <dt style="color:var(--g3);">PARTICIPANT</dt><dd style="margin:0;color:var(--ink);">{{ participantLabel }}</dd>
+      <dt style="color:var(--g3);">SEQUENCE</dt><dd style="margin:0;color:var(--accent);letter-spacing:.2em;">{{ sequenceLabel }}</dd>
+      <dt style="color:var(--g3);">ROUND</dt><dd style="margin:0;color:var(--ink);">{{ roundStatusLabel }}</dd>
+      <dt style="color:var(--g3);">CONDITION</dt><dd style="margin:0;color:var(--ink);">{{ conditionStatusLabel }}</dd>
+      <dt style="color:var(--g3);">EVENTS</dt><dd style="margin:0;color:var(--ink);">{{ eventCount }}</dd>
+      <dt style="color:var(--g3);">FEEDBACK</dt><dd style="margin:0;color:var(--ink);">{{ feedbackCount }} games (this condition)</dd>
+    </dl>
+
+    <div style="border-top:1px solid var(--line-soft);padding-top:14px;margin-bottom:20px;">
+      <div style="font-family:'Space Mono',monospace;font-size:10px;color:var(--g3);letter-spacing:.14em;margin-bottom:10px;">EVENTS PER ROUND</div>
+      <sc-for list="{{ roundStats }}" as="r" hint-placeholder-count="3">
+        <div style="display:flex;justify-content:space-between;gap:10px;font-family:'Space Mono',monospace;font-size:11px;padding:4px 0;border-bottom:1px solid var(--line-soft);"><span style="color:var(--ink);">{{ r.label }}</span><span style="color:var(--g2);">{{ r.count }}</span></div>
+      </sc-for>
+    </div>
+
+    <div style="border-top:1px solid var(--line-soft);padding-top:14px;margin-bottom:22px;">
+      <div style="font-family:'Space Mono',monospace;font-size:10px;color:var(--g3);letter-spacing:.14em;margin-bottom:10px;">FEEDBACK PER CONDITION</div>
+      <sc-for list="{{ condStats }}" as="c" hint-placeholder-count="3">
+        <div style="display:flex;justify-content:space-between;gap:10px;font-family:'Space Mono',monospace;font-size:11px;padding:4px 0;border-bottom:1px solid var(--line-soft);"><span style="color:var(--ink);">{{ c.label }}</span><span style="color:var(--g2);">{{ c.detail }}</span></div>
+      </sc-for>
+    </div>
+
+    <div style="display:grid;gap:10px;">
+      <button type="button" onClick="{{ onExportJson }}" style="{{ panelBtn }}" style-hover="border-color:var(--accent);color:var(--accent);">EXPORT JSON</button>
+      <button type="button" onClick="{{ onExportCsv }}" style="{{ panelBtn }}" style-hover="border-color:var(--accent);color:var(--accent);">EXPORT CSV</button>
+      <button type="button" onClick="{{ onExportLikert }}" disabled="{{ likertExportDisabled }}" style="{{ panelBtn }}" style-hover="border-color:var(--accent);color:var(--accent);">{{ likertExportLabel }}</button>
+      <button type="button" onClick="{{ onExportOpen }}" disabled="{{ openExportDisabled }}" style="{{ panelBtn }}" style-hover="border-color:var(--accent);color:var(--accent);">{{ openExportLabel }}</button>
+      <button type="button" onClick="{{ onRestartOnboarding }}" style="{{ panelBtn }}" style-hover="border-color:var(--accent);color:var(--accent);">RESTART ONBOARDING</button>
+      <button type="button" onClick="{{ onNewParticipant }}" style="{{ panelBtnDanger }}" style-hover="background:#3a1111;">START NEW PARTICIPANT</button>
+      <button type="button" onClick="{{ onClearData }}" style="{{ panelBtnDanger }}" style-hover="background:#3a1111;">CLEAR STUDY DATA</button>
+    </div>
+    <div class="pf-scroll" style="margin-top:26px;border-top:1px solid var(--line-soft);padding-top:16px;max-height:30vh;overflow-y:auto;font-family:'Space Mono',monospace;font-size:10px;color:var(--g2);line-height:1.7;">
+      <sc-for list="{{ recentEvents }}" as="e" hint-placeholder-count="6">
+        <div style="display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid var(--line-soft);padding:4px 0;"><span style="color:var(--ink);">{{ e.type }}</span><span style="color:var(--g3);">{{ e.time }}</span></div>
+      </sc-for>
+    </div>
+    <p style="font-family:'Space Mono',monospace;font-size:10px;color:var(--g3);line-height:1.6;margin-top:20px;">No names, emails, IP addresses or personal identifiers are collected. Toggle this panel with Shift + D.</p>
+</aside>
+</sc-if>
+
+<template id="__bundler_thumbnail" data-bg-color="#060606">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#060606"/>
+    <rect x="40" y="40" width="1120" height="720" rx="26" fill="none" stroke="rgba(244,242,238,0.14)" stroke-width="1.5"/>
+    <text x="600" y="380" text-anchor="middle" font-family="Archivo, sans-serif" font-weight="900" font-size="150" letter-spacing="-6" fill="#f4f2ee">PLAY</text>
+    <text x="600" y="520" text-anchor="middle" font-family="Archivo, sans-serif" font-weight="900" font-size="150" letter-spacing="-6" fill="#e8a13c">FINDER</text>
+  </svg>
+</template>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;accentColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#e8a13c&quot;,&quot;options&quot;:[&quot;#e8a13c&quot;,&quot;#7fd1b9&quot;,&quot;#d97a6c&quot;,&quot;#9d8df1&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Theme&quot;},&quot;startAtMain&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;}}">
+class Component extends DCLogic {
+  // ============================================================
+  // DATA — build-time injected, validated and available offline
+  // ============================================================
+  GENRES = ['Action','RPG','Strategy','Adventure','Indie','Roguelike','Simulation','Puzzle','Horror','Multiplayer'];
+  TAGS = ['Cozy','Story Rich','Open World','Survival','Turn-Based','Exploration','Atmospheric','Tactical','Fast-Paced','Relaxing','Sci-Fi','Fantasy','Pixel Art','Retro'];
+  TASTE = ['Action','RPG','Strategy','Adventure','Indie','Roguelike','Simulation','Puzzle','Cozy','Horror','Multiplayer','Story Rich','Open World','Survival','Turn-Based','Exploration'];
+  PLATFORMS = ['Windows','macOS','Linux'];
+  PRICE_OPTIONS = [{label:'Any',val:Infinity},{label:'Up to $10',val:10},{label:'Up to $20',val:20},{label:'Up to $40',val:40},{label:'Up to $60',val:60}];
+  STUDY_PAYLOAD = {"__PLAYFINDER_STUDY_PAYLOAD__":true};
+  PREPARED_TASTE_POLICY = {
+    id:'top-5-enumerated-v2',
+    supportedCombinationCount:558,
+    totalCombinationCount:560,
+    jaccardThreshold:.5,
+    disabledThirdTasteMapping:[
+      {prefix:['Roguelike','Cozy'],disabledThirdTaste:'Open World'},
+      {prefix:['Roguelike','Open World'],disabledThirdTaste:'Cozy'},
+      {prefix:['Cozy','Open World'],disabledThirdTaste:'Roguelike'},
+      {prefix:['Cozy','Survival'],disabledThirdTaste:'Turn-Based'},
+      {prefix:['Cozy','Turn-Based'],disabledThirdTaste:'Survival'},
+      {prefix:['Survival','Turn-Based'],disabledThirdTaste:'Cozy'}
+    ]
+  };
+
+  // ---- questionnaire (verbatim from study/questionnaire.md) ----
+  // Administered inside the page immediately after each round so the recorded
+  // submission time is the real answering time and so participant_id, round and
+  // condition are filled from study state instead of being typed by a moderator.
+  LIKERT_ITEMS = [
+    {key:'q1_relevance',        text:'The recommended games matched my interests.'},
+    {key:'q2_consider_playing', text:'The list contained games I would genuinely consider playing.'},
+    {key:'q3_variety',          text:'The recommendations included useful variety rather than feeling repetitive.'},
+    {key:'q4_discovery',        text:'The list helped me discover games I did not already know well.'},
+    {key:'q5_confidence',       text:'I felt confident choosing a game from this list.'},
+    {key:'q6_budget_fit',       text:'The recommendations fit my budget after I used the filters.'},
+    {key:'q7_platform_fit',     text:'The recommendations fit the platform or platforms I selected.'},
+    {key:'q8_ease',             text:'It was easy to narrow the list to suitable games.'},
+    {key:'q9_transparency',     text:'I could understand why these games might have been shown to me.'},
+    {key:'q10_satisfaction',    text:'Overall, I was satisfied with this recommendation round.'}
+  ];
+  LIKERT_SCALE = [
+    {value:1,label:'Strongly disagree'},{value:2,label:'Disagree'},{value:3,label:'Somewhat disagree'},
+    {value:4,label:'Neither agree nor disagree'},{value:5,label:'Somewhat agree'},{value:6,label:'Agree'},
+    {value:7,label:'Strongly agree'}
+  ];
+  OPEN_ITEMS = [
+    {key:'choice_factors', text:'What most influenced which games you accepted or rejected?'},
+    {key:'preferred_round_reason_and_improvement', text:'Which of the three rounds did you prefer, why, and what would you improve?'}
+  ];
+
+  // ---- experimental conditions (researcher-facing only) ----
+  CONDITION_MODELS = { A:'popularity', B:'bpr', C:'hybrid' };
+  COUNTERBALANCE_SEQUENCES = [
+    ['A','B','C'],
+    ['A','C','B'],
+    ['B','A','C'],
+    ['B','C','A'],
+    ['C','A','B'],
+    ['C','B','A']
+  ];
+  // PILOT MOCK RANKINGS ONLY — replace with real model outputs before the formal user study.
+  // Each array holds the same 24 catalogue IDs in a different ranked order.
+  // Swap the arrays (or feed rankingFor() from a fetched Top-100 list) to plug in real outputs.
+  PILOT_RANKINGS_UNUSED = {
+    A: ['game-10','game-01','game-19','game-04','game-13','game-06','game-17','game-24','game-03','game-12','game-05','game-20','game-22','game-09','game-02','game-16','game-11','game-21','game-07','game-18','game-08','game-14','game-23','game-15'],
+    B: ['game-02','game-11','game-23','game-14','game-21','game-16','game-08','game-04','game-20','game-06','game-15','game-09','game-03','game-18','game-07','game-12','game-22','game-01','game-13','game-24','game-05','game-19','game-10','game-17'],
+    C: ['game-04','game-10','game-06','game-02','game-13','game-20','game-16','game-01','game-21','game-11','game-24','game-03','game-17','game-05','game-14','game-19','game-07','game-23','game-12','game-08','game-18','game-22','game-09','game-15']
+  };
+
+  buildGames(){
+    const W='Windows',M='macOS',L='Linux';
+    const G=(id,title,price,genres,tags,platforms,explanation,description,aspect,feat)=>({id,title,price,genres,tags,platforms,explanation,description,aspect:aspect||'16 / 10',featured:!!feat});
+    const raw=[
+      G('game-01','Hollowmark',24.99,['Action','Roguelike','Multiplayer'],['Fast-Paced','Atmospheric'],[W,M,L],'Because you like fast roguelikes','A ruined cathedral rebuilds itself each run; you fight downward through its collapsing memory.','21 / 9',true),
+      G('game-02','Verdant Hours',14.99,['Simulation','Indie'],['Cozy','Relaxing'],[W,M],'A calmer, lower-priced discovery','Tend a rooftop garden through four honest seasons with no clocks and no pressure.','4 / 3'),
+      G('game-03','Ashen Vector',34.99,['Strategy'],['Turn-Based','Tactical','Sci-Fi'],[W,L],'Matches your interest in tactical strategy','Command a dwindling fleet across a dead solar system, one careful turn at a time.'),
+      G('game-04','The Long Quiet',0,['Adventure','Indie'],['Story Rich','Atmospheric'],[W,M,L],'A free story-rich discovery','A walk home that keeps getting longer, narrated by everyone you never called back.','16 / 10',true),
+      G('game-05','Salt & Signal',19.99,['Adventure','Multiplayer'],['Exploration','Open World'],[W],'Popular with players who enjoy exploration','Map a drowned archipelago by radio, trading coordinates with strangers you never see.'),
+      G('game-06','Nullwood',27.99,['Horror','Adventure'],['Atmospheric','Story Rich'],[W,M],'Recommended for atmospheric horror','A forest that only exists at dusk, and a house that remembers being a person.','4 / 3'),
+      G('game-07','Paper Kingdoms',21.99,['Strategy','Simulation'],['Turn-Based','Fantasy'],[W,M,L],'Because you like turn-based strategy','Fold and refold a nation of origami subjects who tear if you rule too hard.'),
+      G('game-08','Drift Capital',12.99,['Simulation'],['Relaxing','Open World'],[W,M],'A lower-priced open-world sim','Pilot a lazy cargo dirigible between floating markets and never once hurry.','21 / 9'),
+      G('game-09','Ember Reflex',9.99,['Action','Multiplayer'],['Fast-Paced','Retro','Pixel Art'],[W,L],'Because you like fast action','One-hit duels at 120fps in a neon-free, ink-black arena. Reflex is everything.'),
+      G('game-10','Moonwake',29.99,['RPG'],['Story Rich','Fantasy','Open World'],[W,M,L],'Recommended for open-world RPG fans','A pilgrimage across a tidally-locked world, chasing dawn that never arrives.','16 / 10',true),
+      G('game-11','Ceramic Sky',16.99,['Indie','Puzzle'],['Cozy','Relaxing'],[W,M],'A cozy, low-priced discovery','Repair a shattered porcelain heaven, one hand-painted shard rotated into place.','4 / 3'),
+      G('game-12','Iron Liturgy',39.99,['Strategy','RPG'],['Tactical','Turn-Based','Fantasy'],[W],'Matches your tactical, turn-based taste','Lead a heretic order through grid-based sieges where faith is a resource you spend.'),
+      G('game-13','Hush Protocol',24.99,['Horror'],['Atmospheric','Story Rich','Sci-Fi'],[W,M],'Recommended for atmospheric sci-fi horror','A derelict listening station wakes up. It has been waiting a very long time for you.','21 / 9'),
+      G('game-14','Field Notes',5.99,['Adventure','Indie'],['Exploration','Cozy'],[W,M,L],'A low-priced exploration discovery','Sketch every creature in a quiet valley before the last train leaves at nightfall.'),
+      G('game-15','Vanta Run',3.99,['Action','Roguelike'],['Fast-Paced','Pixel Art'],[W,L],'Because you like fast roguelikes','Endless downhill sprint through collapsing silhouettes. Three lanes. No mercy.','4 / 3'),
+      G('game-16','The Gardener\u2019s Almanac',22.99,['Simulation'],['Cozy','Relaxing','Story Rich'],[W,M],'Popular with cozy sim players','Inherit a failing seed library and the letters of the botanist who kept it alive.'),
+      G('game-17','Cold Harbor',44.99,['Strategy','Simulation'],['Survival','Open World'],[W,L],'Matches your survival, open-world taste','Keep a frozen port town breathing through one impossible, resource-starved winter.','16 / 10'),
+      G('game-18','Origami War',17.99,['Strategy'],['Turn-Based','Tactical'],[W,M,L],'Because you like turn-based tactics','Two paper armies, one shared sheet. Every move you make also reshapes their board.'),
+      G('game-19','Neon Sabbath',26.99,['Action','RPG','Multiplayer'],['Fast-Paced','Fantasy'],[W],'Recommended for action-RPG fans','A city of clergy-assassins where combos are prayers and levelling up is a sin.','4 / 3'),
+      G('game-20','Tidewatcher',19.99,['Adventure'],['Exploration','Atmospheric','Story Rich'],[W,M],'Popular with exploration players','Man a lighthouse that guides ships that sank a century ago safely back to port.','21 / 9'),
+      G('game-21','Sunder & Sew',11.99,['Indie','RPG'],['Story Rich','Pixel Art'],[W,M,L],'A low-priced story-rich RPG','A tailor mends a torn kingdom literally \u2014 stitch its people\u2019s broken days shut.'),
+      G('game-22','Blackline Transit',32.99,['Simulation','Strategy'],['Open World','Sci-Fi'],[W,L],'Matches your sci-fi simulation taste','Design the subway of a vertical megacity that keeps growing while you sleep.','16 / 10'),
+      G('game-23','Quiet Little Town',8.99,['Indie','Simulation'],['Cozy','Relaxing'],[W,M],'A cozy, low-priced discovery','Run the only shop in a town of six residents who each visit exactly once a day.','4 / 3'),
+      G('game-24','Grave Fathom',29.99,['Horror','Roguelike'],['Atmospheric','Survival'],[W,L],'Recommended for survival horror','Descend a flooding trench where the dark pressures back and the light runs out.')
+    ];
+    raw.forEach((g,i)=>{g.hue=Math.round((i*137.5)%360);});
+    return raw;
+  }
+  GAMES = (this.STUDY_PAYLOAD.catalogue||[]).map((g,i)=>({
+    ...g,
+    id:String(g.id),
+    genres:Array.isArray(g.genres)?g.genres:[],
+    tags:Array.isArray(g.tags)?g.tags:[],
+    platforms:Array.isArray(g.platforms)?g.platforms:[],
+    hue:Math.round((i*137.5)%360),
+    aspect:g.aspect||'16 / 10',
+    featured:!!g.featured
+  }));
+  STUDY_PROFILES = this.STUDY_PAYLOAD.profiles||[];
+
+  // ============================================================
+  // STATE + PERSISTENCE (versioned v2 keys; legacy keys left intact)
+  // ============================================================
+  LS_LEGACY = {prefs:'pf_prefs',feedback:'pf_feedback',logs:'pf_logs',session:'pf_session',onboarded:'pf_onboarded'};
+  LS = {
+    session:'playfinder.study.v2.session',
+    participant:'playfinder.study.v2.participant',
+    sequence:'playfinder.study.v2.sequence',
+    activeRound:'playfinder.study.v2.activeRound',
+    preferences:'playfinder.study.v2.preferences',
+    conditionState:'playfinder.study.v2.conditionState',
+    logs:'playfinder.study.v2.logs',
+    completed:'playfinder.study.v2.completed',
+    openResponses:'playfinder.study.v2.openResponses'
+  };
+
+  read(k,f){ try{ const v=localStorage.getItem(k); return v==null?f:JSON.parse(v); }catch(e){ return f; } }
+  write(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
+  del(k){ try{ localStorage.removeItem(k); }catch(e){} }
+
+  // ---- validation helpers (malformed LocalStorage must never crash the app) ----
+  validPrefs(p){
+    const d={taste:[],budget:40,anyPrice:false,platforms:['Windows'],assignedProfileId:null};
+    if(!p || typeof p!=='object') return d;
+    const assigned = this.STUDY_PROFILES.some(x=>x.profileId===p.assignedProfileId)?p.assignedProfileId:null;
+    return {
+      taste: Array.isArray(p.taste)? p.taste.filter(t=>this.TASTE.includes(t)) : [],
+      budget: (typeof p.budget==='number' && isFinite(p.budget))? p.budget : 40,
+      anyPrice: !!p.anyPrice,
+      platforms: Array.isArray(p.platforms)? p.platforms.filter(x=>this.PLATFORMS.includes(x)) : ['Windows'],
+      assignedProfileId:assigned
+    };
+  }
+  tastePolicy(){
+    const raw=this.STUDY_PAYLOAD.tastePolicy;
+    const allowedStatus=['provisional_export_freeze','approved_supported_domain','formal_supported_domain'];
+    if(!raw || raw.id!==this.PREPARED_TASTE_POLICY.id || !allowedStatus.includes(raw.status)) return null;
+    const mapping=Array.isArray(raw.disabledThirdTasteMapping) && raw.disabledThirdTasteMapping.length
+      ? raw.disabledThirdTasteMapping : this.PREPARED_TASTE_POLICY.disabledThirdTasteMapping;
+    return {
+      ...this.PREPARED_TASTE_POLICY,
+      ...raw,
+      formal:raw.formal===true && this.STUDY_PAYLOAD.mode==='formal',
+      disabledThirdTasteMapping:mapping
+    };
+  }
+  tastePolicyBlock(taste,selected){
+    const policy=this.tastePolicy(), chosen=[...new Set(selected||[])];
+    if(!policy || chosen.length!==2 || chosen.includes(taste)) return '';
+    const blocked=policy.disabledThirdTasteMapping.some(row=>
+      row && row.disabledThirdTaste===taste && Array.isArray(row.prefix) &&
+      row.prefix.length===2 && row.prefix.every(value=>chosen.includes(value)));
+    return blocked
+      ? `${taste} is unavailable with ${chosen.join(' + ')} under the ${policy.formal?'approved':'provisional'} 558-combination profile policy.`
+      : '';
+  }
+  jaccard(a,b){ const A=new Set(a),B=new Set(b); let n=0; A.forEach(x=>{if(B.has(x))n++;}); const u=new Set([...A,...B]).size; return u?n/u:0; }
+  matchProfile(taste){
+    if(new Set(taste).size!==3) return null;
+    return this.STUDY_PROFILES.slice().sort((a,b)=>{
+      const d=this.jaccard(taste,b.tastes)-this.jaccard(taste,a.tastes);
+      return d || a.profileId.localeCompare(b.profileId);
+    })[0]||null;
+  }
+  assignedProfile(){ return this.STUDY_PROFILES.find(p=>p.profileId===this.state.prefs.assignedProfileId)||null; }
+  freshCond(prefs){
+    const p=this.validPrefs(prefs);
+    return {feedback:{}, filters:{genres:[],tags:[],maxPrice: p.anyPrice?Infinity:p.budget, platforms:[...p.platforms]}, visibleCount:6, visibleBatch:1, impressions:{}, scrollPosition:0, detailId:null, roundStarted:false, survey:null};
+  }
+  // A stored survey is only trusted when all ten items are present and every value
+  // is an integer inside the documented 1-7 scale. Anything else is discarded so a
+  // corrupted key can never enter an export as a partial or out-of-range response.
+  validSurvey(s){
+    if(!s || typeof s!=='object') return null;
+    const out={};
+    for(const item of this.LIKERT_ITEMS){
+      const v=s[item.key];
+      if(!Number.isInteger(v) || v<1 || v>7) return null;
+      out[item.key]=v;
+    }
+    out.submittedAt = typeof s.submittedAt==='string'? s.submittedAt : null;
+    return out.submittedAt? out : null;
+  }
+  freshCondSet(prefs){ return {A:this.freshCond(prefs), B:this.freshCond(prefs), C:this.freshCond(prefs)}; }
+  serializeCS(cs){
+    const out={};
+    ['A','B','C'].forEach(c=>{ const s=cs[c]||this.freshCond(); out[c]={...s, filters:{...s.filters, maxPrice: s.filters.maxPrice===Infinity?'any':s.filters.maxPrice}}; });
+    return out;
+  }
+  deserializeCS(raw, prefs){
+    const base=this.freshCondSet(prefs);
+    if(!raw || typeof raw!=='object') return base;
+    ['A','B','C'].forEach(c=>{
+      const s=raw[c]; if(!s || typeof s!=='object') return;
+      const f=(s.filters && typeof s.filters==='object')? s.filters : {};
+      base[c]={
+        feedback:(s.feedback && typeof s.feedback==='object')? s.feedback : {},
+        filters:{
+          genres: Array.isArray(f.genres)? f.genres : [],
+          tags: Array.isArray(f.tags)? f.tags : [],
+          maxPrice: (f.maxPrice==='any'||f.maxPrice==null)? Infinity : (typeof f.maxPrice==='number'? f.maxPrice : Infinity),
+          platforms: Array.isArray(f.platforms)? f.platforms : []
+        },
+        visibleCount: (typeof s.visibleCount==='number' && s.visibleCount>=6)? s.visibleCount : 6,
+        visibleBatch: (typeof s.visibleBatch==='number' && s.visibleBatch>=1)? s.visibleBatch : 1,
+        impressions: (s.impressions && typeof s.impressions==='object')? s.impressions : {},
+        scrollPosition: (typeof s.scrollPosition==='number')? s.scrollPosition : 0,
+        detailId: typeof s.detailId==='string'? s.detailId : null,
+        roundStarted: !!s.roundStarted,
+        survey: this.validSurvey(s.survey)
+      };
+    });
+    return base;
+  }
+  // Final open responses. preferredRound must be 1-3; the condition letter is never
+  // stored here because it is derived from the assigned sequence at export time.
+  validOpen(o){
+    if(!o || typeof o!=='object') return null;
+    const round=o.preferredRound;
+    if(!(round===1||round===2||round===3)) return null;
+    const out={preferredRound:round, submittedAt: typeof o.submittedAt==='string'? o.submittedAt : null};
+    for(const item of this.OPEN_ITEMS) out[item.key] = typeof o[item.key]==='string'? o[item.key] : '';
+    return out.submittedAt? out : null;
+  }
+  validSequence(s){ return (typeof s==='string' && /^[ABC]{3}$/.test(s) && new Set(s).size===3)? s : null; }
+  parseParticipant(input){
+    const raw=String(input==null?'':input).trim().toUpperCase();
+    const m=raw.match(/^P(\d+)$/);
+    if(!m) return null;
+    const n=parseInt(m[1],10);
+    if(!isFinite(n) || n<1) return null;
+    return {id:raw, number:n};              // raw preserves leading zeroes ("P01")
+  }
+  sequenceFor(participantNumber){
+    const idx=(participantNumber-1)%6;
+    return this.COUNTERBALANCE_SEQUENCES[idx].join('');
+  }
+
+  constructor(props){
+    super(props);
+    // PLAYFINDER.dc.html is the maintainable build source. It intentionally
+    // contains no real profiles or rankings. If someone opens that source file
+    // directly, send them to the generated standalone beside it instead of
+    // allowing onboarding to fail silently at the final step.
+    const sourceMarkerKey='__PLAYFINDER_'+'STUDY_PAYLOAD__';
+    if(this.STUDY_PAYLOAD[sourceMarkerKey]===true){
+      try{
+        if(/\.dc\.html$/i.test(window.location.pathname)){
+          const standalone=new URL('PLAYFINDER.html',window.location.href);
+          setTimeout(()=>window.location.replace(standalone.href),0);
+        }
+      }catch(e){}
+    }
+    // --- shared, versioned state (falls back to legacy prototype data where safe) ---
+    const legacyPrefs=this.read(this.LS_LEGACY.prefs,null);
+    const prefs=this.validPrefs(this.read(this.LS.preferences, legacyPrefs));
+    const hasPrefs = !!(this.read(this.LS.preferences,null) || legacyPrefs);
+    let session=this.read(this.LS.session, this.read(this.LS_LEGACY.session,null));
+    if(typeof session!=='string' || !session){ session=this.newSession(); this._firstSession=true; }
+    this.write(this.LS.session,session);
+
+    const pInfo=this.parseParticipant(this.read(this.LS.participant,null));
+    const participantId=pInfo?pInfo.id:'';
+    let sequence=this.validSequence(this.read(this.LS.sequence,null));
+    if(pInfo && !sequence) sequence=this.sequenceFor(pInfo.number);
+    if(!pInfo) sequence=null;
+
+    let round=this.read(this.LS.activeRound,1);
+    if(!(round===1||round===2||round===3)) round=1;
+    const completed=!!this.read(this.LS.completed,false);
+    const conditionState=this.deserializeCS(this.read(this.LS.conditionState,null), prefs);
+    const openResponses=this.validOpen(this.read(this.LS.openResponses,null));
+    const logs=(()=>{ const l=this.read(this.LS.logs,[]); return Array.isArray(l)?l:[]; })();
+    this._logs=logs;
+
+    const onboarded=hasPrefs && (prefs.taste||[]).length===3 && !!prefs.assignedProfileId;
+    const startMain=!!props.startAtMain;
+
+    this.state = {
+      onboarded,
+      showOnboarding: !onboarded && !startMain,
+      showParticipant: (onboarded || startMain) && !participantId,
+      stage:1,
+      onboardingSource:'first',
+      navDir:'fwd',
+      draft:{taste:[...prefs.taste], budget:prefs.budget, anyPrice:prefs.anyPrice, platforms:[...prefs.platforms],assignedProfileId:prefs.assignedProfileId},
+      prefs,
+      participantId,
+      participantDraft: participantId,
+      participantError:'',
+      sequence,
+      round,
+      completed,
+      conditionState,
+      logs,
+      session,
+      detailId:null,
+      studyOpen:false,
+      howOpen:false,
+      confirmKind:null,
+      confirm:{},
+      revealed:{},
+      tagsExpanded:false,
+      reduceMotion:false,
+      // ---- in-page questionnaire ----
+      surveyOpen:false,          // per-round Likert screen is showing
+      surveyDraft:{},            // answers for the round currently being rated
+      openOpen:false,            // final two open questions are showing
+      openDraft:{preferredRound:null},
+      openResponses
+    };
+    this._roundStarted={};      // dedupe round_started per round ordinal
+    this._roundCompleted={};    // dedupe round_completed per round ordinal
+    this._studyCompletedLogged=completed;
+    this._obsGen=0;             // invalidates delayed IO callbacks across round changes
+  }
+
+  newSession(){ return 'anon-'+Math.random().toString(36).slice(2,8)+Date.now().toString(36).slice(-5); }
+
+  // ============================================================
+  // CONDITION / ROUND ACCESSORS
+  // ============================================================
+  inStudy(){ return !!this.state.participantId && !!this.state.sequence; }
+  activeCondition(){ const s=this.state.sequence; return s? s[(this.state.round||1)-1] : 'A'; }
+  activeModel(){ return this.CONDITION_MODELS[this.activeCondition()]; }
+  cs(cond){ const c=cond||this.activeCondition(); return this.state.conditionState[c] || this.freshCond(this.state.prefs); }
+  patchCS(patch, cond, extraState){
+    const c=cond||this.activeCondition();
+    const all={...this.state.conditionState, [c]:{...this.cs(c), ...patch}};
+    this.write(this.LS.conditionState, this.serializeCS(all));
+    this.setState(Object.assign({conditionState:all}, extraState||{}));
+  }
+
+  // ============================================================
+  // NAVIGATION + HISTORY API
+  // ============================================================
+  navToken(){ const s=this.state; if(s.showOnboarding) return 'ob-'+s.stage+'-'+(s.onboardingSource||'first'); if(s.showParticipant) return 'psetup'; if(s.detailId) return 'detail-'+s.detailId; if(s.studyOpen) return 'study'; return 'rec'; }
+  stateName(t){ if(!t) return 'recommendations'; if(t.indexOf('ob-')===0) return 'onboarding-step-'+t.split('-')[1]; if(t==='psetup') return 'participant-setup'; if(t.indexOf('detail-')===0) return 'game-detail'; if(t==='study') return 'study-panel'; return 'recommendations'; }
+  pushState(token){ if(this._applyingPop) return; if(this._curToken===token) return; try{ history.pushState({pf:token},''); this._curToken=token; }catch(e){} }
+  closeOverlay(method){ this._navMethod=method; try{ history.back(); }catch(e){ this._applyingPop=true; this.applyToken('rec'); this._curToken='rec'; this._applyingPop=false; } }
+  // Restore application state from a history token (popstate-driven). Never pushes, never touches round/sequence.
+  applyToken(token){
+    const from=this.navToken();
+    const method=this._navMethod||'browser-back'; this._navMethod=null;
+    if(token===from) return;
+    const leavingDetail=from.indexOf('detail-')===0 && token.indexOf('detail-')!==0;
+    const leavingStudy=from==='study' && token!=='study';
+    const obFrom=from.indexOf('ob-')===0?+from.split('-')[1]:0;
+    const obTo=token.indexOf('ob-')===0?+token.split('-')[1]:0;
+    if(this._suppressNav){ this._suppressNav=false; }
+    else if(leavingDetail){ const ms=this.endDwell(); this.log('detail_back',{gameId:this.state.detailId,dwellTimeMs:ms,fromState:'game-detail',toState:this.stateName(token),method}); this.log('game_detail_closed',{gameId:this.state.detailId,method}); }
+    else if(leavingStudy){ this.log('study_panel_closed',{fromState:'study-panel',toState:this.stateName(token),method}); }
+    else if(obFrom && obTo && obTo<obFrom){ this.log('onboarding_back',{fromState:this.stateName(from),toState:this.stateName(token),method}); }
+    else { this.log('navigation_back',{fromState:this.stateName(from),toState:this.stateName(token),method}); }
+    const patch={howOpen:false, confirmKind:null, navDir:'back'};
+    if(token.indexOf('ob-')===0){ const p=token.split('-'); patch.showOnboarding=true; patch.showParticipant=false; patch.stage=+p[1]; patch.onboardingSource=p[2]||'first'; patch.detailId=null; patch.studyOpen=false; this._focusHeading=true; }
+    else if(token==='psetup'){ patch.showOnboarding=false; patch.showParticipant=true; patch.detailId=null; patch.studyOpen=false; }
+    else if(token.indexOf('detail-')===0){ patch.showOnboarding=false; patch.showParticipant=false; patch.studyOpen=false; const id=token.slice(7); patch.detailId=id; if(from.indexOf('detail-')!==0){ this.startDwell(id); this.log('game_detail_opened',{gameId:id,method}); } }
+    else if(token==='study'){ patch.showOnboarding=false; patch.showParticipant=false; patch.detailId=null; patch.studyOpen=true; }
+    else { patch.showOnboarding=false; patch.showParticipant=false; patch.detailId=null; patch.studyOpen=false; }
+    this.setState(patch);
+  }
+  // PLAYFINDER wordmark → onboarding step 1. Preserves session, participant, sequence, logs and all A/B/C state.
+  onWordmark(){
+    const alreadyStep1=this.state.showOnboarding && this.state.stage===1;
+    if(alreadyStep1){ try{window.scrollTo(0,0);}catch(e){} this._focusHeading=true; this.forceUpdate(); return; }
+    const from=this.navToken();
+    if(this.state.detailId){ this.endDwell(); this.log('game_detail_closed',{gameId:this.state.detailId,method:'wordmark'}); }
+    this.log('wordmark_home',{fromState:this.stateName(from),toState:'onboarding-step-1',method:'wordmark',gameId:this.state.detailId||null});
+    const p=this.state.prefs;
+    this.setState({showOnboarding:true, showParticipant:false, stage:1, onboardingSource:'wordmark', detailId:null, studyOpen:false, howOpen:false, confirmKind:null, navDir:'back', draft:{taste:[...(p.taste||[])],budget:p.budget??40,anyPrice:!!p.anyPrice,platforms:[...(p.platforms||[])],assignedProfileId:p.assignedProfileId}});
+    this._focusHeading=true; try{ window.scrollTo(0,0); }catch(e){}
+    this.pushState('ob-1-wordmark');
+  }
+  cancelEdit(){
+    const p=this.state.prefs; const from=this.navToken();
+    this.log('preferences_cancelled',{fromState:this.stateName(from),toState:'recommendations',method:'visible-button'});
+    this.setState({draft:{taste:[...(p.taste||[])],budget:p.budget??40,anyPrice:!!p.anyPrice,platforms:[...(p.platforms||[])],assignedProfileId:p.assignedProfileId}});
+    this._suppressNav=true; this.closeOverlay('visible-button');
+  }
+  obBack(){ this.setState({navDir:'back'}); this.closeOverlay('visible-button'); }
+
+  // ---- Dock magnification: transform-only, rAF, pointer-distance, no state updates ----
+  onDockMove=(e)=>{ if(!this._dockEnabled || this.state.reduceMotion) return; this._px=e.clientX; this._py=e.clientY; if(this._dockRaf) return; this._dockRaf=requestAnimationFrame(()=>{ this._dockRaf=0; this.dockPaint(); }); };
+  onDockLeave=()=>{ if(this._dockRaf){ cancelAnimationFrame(this._dockRaf); this._dockRaf=0; } const r=this._dockEl; if(!r) return; r.querySelectorAll('[data-dock]').forEach(el=>{ el.style.transform=''; el.style.zIndex=''; }); };
+  dockPaint(){ const root=this._dockEl; if(!root) return; const R=150; root.querySelectorAll('[data-dock]').forEach(el=>{ if(el.disabled){ el.style.transform=''; el.style.zIndex=''; return; } const b=el.getBoundingClientRect(); const cx=b.left+b.width/2, cy=b.top+b.height/2; const d=Math.hypot(this._px-cx,this._py-cy); const infl=Math.max(0,1-d/R); if(infl<=0.001){ el.style.transform=''; el.style.zIndex=''; return; } const scale=1+infl*0.10, ty=infl*-6; el.style.transform='translateY('+ty.toFixed(2)+'px) scale('+scale.toFixed(3)+')'; el.style.zIndex=String(10+Math.round(infl*40)); }); }
+  dockRef=(el)=>{ this._dockEl=el; };
+  headingRef=(el)=>{ this._obHeading=el; };
+  participantHeadingRef=(el)=>{ this._pHeading=el; };
+  roundHeadingRef=(el)=>{ this._roundHeading=el; };
+  surveyHeadingRef=(el)=>{ this._surveyHeading=el; };
+  openHeadingRef=(el)=>{ this._openHeading=el; };
+  studyCloseRef=(el)=>{ this._studyCloseBtn=el; };
+  confirmRef=(el)=>{ this._confirmHeading=el; };
+
+  // ============================================================
+  // EVENT LOGGING — one logger, full study schema
+  // ============================================================
+  log(eventType, extra){
+    const st=this.state;
+    const inStudy=this.inStudy();
+    const cond=inStudy?this.activeCondition():null;
+    const ev = Object.assign({
+      sessionId: st.session,
+      participantId: st.participantId||null,
+      sequence: st.sequence||null,
+      round: inStudy? st.round : null,
+      condition: cond,
+      internalModel: cond? this.CONDITION_MODELS[cond] : null,
+      eventType,
+      gameId: null,
+      visibleBatch: this.cs().visibleBatch,
+      timestamp: new Date().toISOString(),
+      dwellTimeMs: null,
+      activeFilters: this.snapshotFilters(),
+      // ---- onboarding profile fields (kept separate from activeFilters) ----
+      preferenceValue: null,
+      preferenceSelected: null,
+      preferencesSnapshot: this.prefsSnapshot()
+    }, extra||{});
+    this._logs = this._logs.concat(ev);     // instance array is the source of truth (batched setState safe)
+    this.write(this.LS.logs, this._logs);
+    this.setState({logs:this._logs});
+  }
+  snapshotFilters(cond){ const f=this.cs(cond).filters; return {genres:[...f.genres],tags:[...f.tags],maxPrice:f.maxPrice===Infinity?'any':f.maxPrice,platforms:[...f.platforms]}; }
+  // Participant profile snapshot. Callers that have just built a new preferences/draft
+  // object pass it in, so an event never records stale pre-click state. Arrays are cloned
+  // so later edits cannot mutate historical events; malformed input falls back to defaults.
+  prefsSnapshot(p){
+    const v=this.validPrefs(p||this.state.prefs);
+    return {taste:[...v.taste], budget:v.budget, anyPrice:v.anyPrice, platforms:[...v.platforms],assignedProfileId:v.assignedProfileId};
+  }
+  // Older v2 logs restored from LocalStorage predate the three preference fields. Exports
+  // normalise them to null rather than inventing selections that were never recorded, and
+  // the stored events themselves are left untouched.
+  exportEvents(){
+    return this._logs.map(e=>{
+      if(!e || typeof e!=='object') return e;
+      if('preferenceValue' in e && 'preferenceSelected' in e && 'preferencesSnapshot' in e) return e;
+      const out={...e};
+      if(!('preferenceValue' in out)) out.preferenceValue=null;
+      if(!('preferenceSelected' in out)) out.preferenceSelected=null;
+      if(!('preferencesSnapshot' in out)) out.preferencesSnapshot=null;
+      return out;
+    });
+  }
+
+  // ============================================================
+  // LIFECYCLE
+  // ============================================================
+  componentDidMount(){
+    try{ this.setState({reduceMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches}); }catch(e){}
+    if(this._firstSession) this.log('session_started');
+    if(this.state.showOnboarding) this.log('onboarding_started');
+    if(this.inStudy() && !this.state.showOnboarding && !this.state.showParticipant) this.logRoundStarted();
+
+    this.makeIO();
+
+    this._onVis = ()=>{ if(document.hidden){ this.pauseDwell(); } else { this.resumeDwell(); } };
+    document.addEventListener('visibilitychange', this._onVis);
+
+    this._onKey = (e)=>{
+      if(e.key==='Escape'){
+        if(this.state.confirmKind) this.setState({confirmKind:null});
+        else if(this.state.detailId) this.closeOverlay('escape-key');
+        else if(this.state.howOpen) this.setState({howOpen:false});
+        else if(this.state.studyOpen) this.closeOverlay('escape-key');
+      }
+      if((e.key==='D'||e.key==='d') && e.shiftKey && !this.isTyping(e.target)){ e.preventDefault(); this.toggleStudy(); }
+    };
+    window.addEventListener('keydown', this._onKey);
+
+    try{ history.replaceState({pf:this.navToken()},''); this._curToken=this.navToken(); }catch(e){}
+    this._onPop=(e)=>{ const tok=(e.state&&e.state.pf)||this._curToken||'rec'; this._applyingPop=true; this.applyToken(tok); this._curToken=tok; this._applyingPop=false; };
+    window.addEventListener('popstate', this._onPop);
+
+    try{ this._dockEnabled = window.matchMedia('(hover: hover) and (pointer: fine)').matches; }catch(e){ this._dockEnabled=false; }
+
+    if(!this.state.showOnboarding && !this.state.showParticipant) this.scheduleReveal();
+
+    this._prevState = this.state;   // baseline for componentDidUpdate's screen-entry guards
+  }
+  componentWillUnmount(){
+    if(this.io) this.io.disconnect();
+    document.removeEventListener('visibilitychange', this._onVis);
+    window.removeEventListener('keydown', this._onKey);
+    window.removeEventListener('popstate', this._onPop);
+    if(this._dockRaf) cancelAnimationFrame(this._dockRaf);
+    clearTimeout(this._revTimer);
+  }
+  isTyping(el){ return el && /^(input|textarea|select)$/i.test(el.tagName); }
+
+  scheduleReveal(){
+    clearTimeout(this._revTimer);
+    this._revTimer = setTimeout(()=>{
+      const shown = this.eligible().slice(0, this.cs().visibleCount);
+      const rev = {...this.state.revealed}; let changed=false;
+      shown.forEach(g=>{ if(!rev[g.id]){ rev[g.id]=true; changed=true; } });
+      if(changed) this.setState({revealed:rev});
+    }, 120);
+  }
+
+  // The DC runtime calls componentDidUpdate(prevProps) only — it never passes a previous
+  // state. Without a real snapshot every "entered this screen" guard below evaluated true on
+  // every commit, so each keystroke on Participant Setup re-focused the heading and stole
+  // focus from the input. _prevState is the state as of the previous commit (see the
+  // assignment at the end of this method and in componentDidMount).
+  componentDidUpdate(prevProps, prevState){
+    prevState = prevState || this._prevState || {};
+    const onMain=!this.state.showOnboarding && !this.state.showParticipant;
+    if(onMain) this.scheduleReveal();
+    if(!prevState.detailId && this.state.detailId){
+      this._prevFocus = document.activeElement;
+      setTimeout(()=>{ if(this._closeBtn) this._closeBtn.focus(); },30);
+    }
+    if(prevState.detailId && !this.state.detailId){
+      if(this._prevFocus && this._prevFocus.focus) try{ this._prevFocus.focus(); }catch(e){}
+    }
+    if(!prevState.studyOpen && this.state.studyOpen){ setTimeout(()=>{ if(this._studyCloseBtn) try{this._studyCloseBtn.focus();}catch(e){} },30); }
+    if(prevState.studyOpen && !this.state.studyOpen){ if(this._studyOpener && this._studyOpener.focus) try{ this._studyOpener.focus(); }catch(e){} }
+    if(!prevState.confirmKind && this.state.confirmKind){ this._confirmOpener=document.activeElement; setTimeout(()=>{ if(this._confirmHeading) try{ this._confirmHeading.focus(); }catch(e){} },30); }
+    if(prevState.confirmKind && !this.state.confirmKind){ if(this._confirmOpener && this._confirmOpener.focus) try{ this._confirmOpener.focus(); }catch(e){} }
+    // Heading focus moves the caret out of any field, so it is additionally suppressed while
+    // the participant is typing — it must never fight with a focused input.
+    if(this.state.showOnboarding && (this._focusHeading || prevState.stage!==this.state.stage || !prevState.showOnboarding)){
+      this._focusHeading=false;
+      setTimeout(()=>{ if(this._obHeading && !this.isTyping(document.activeElement)) try{ this._obHeading.focus(); }catch(e){} },40);
+    }
+    if(this.state.showParticipant && !prevState.showParticipant){ setTimeout(()=>{ if(this._pHeading && !this.isTyping(document.activeElement)) try{ this._pHeading.focus(); }catch(e){} },40); }
+    if(this._focusSurveyHeading && this.state.surveyOpen){
+      this._focusSurveyHeading=false;
+      setTimeout(()=>{ if(this._surveyHeading && !this.isTyping(document.activeElement)) try{ this._surveyHeading.focus(); }catch(e){} },40);
+    }
+    if(this._focusOpenHeading && this.state.openOpen){
+      this._focusOpenHeading=false;
+      setTimeout(()=>{ if(this._openHeading && !this.isTyping(document.activeElement)) try{ this._openHeading.focus(); }catch(e){} },40);
+    }
+    if(this._pendingRoundFocus && onMain){
+      this._pendingRoundFocus=false;
+      setTimeout(()=>{
+        const el=this._roundHeading;
+        if(el){ try{ const y=el.getBoundingClientRect().top+window.pageYOffset-80; window.scrollTo({top:Math.max(0,y),behavior:this.state.reduceMotion?'auto':'smooth'}); }catch(e){} try{ el.focus({preventScroll:true}); }catch(e2){ try{el.focus();}catch(e3){} } }
+      },60);
+    }
+    if(this._pendingScrollRestore!=null && onMain){
+      const y=this._pendingScrollRestore; this._pendingScrollRestore=null;
+      setTimeout(()=>{ try{ window.scrollTo(0,y); }catch(e){} },80);
+    }
+    this._prevState = this.state;   // snapshot for the next commit's comparisons
+  }
+
+  // ---- IntersectionObserver: reveal + impressions, scoped to the active round ----
+  makeIO(){
+    if(this.io || typeof IntersectionObserver==='undefined') return this.io;
+    const gen=this._obsGen;
+    this.io = new IntersectionObserver((entries)=>{
+      if(gen!==this._obsGen) return;                       // stale callback from a previous round
+      let changed=false; const rev={...this.state.revealed};
+      const imp={...this.cs().impressions}; let impChanged=false;
+      const cond=this.activeCondition(), round=this.state.round, pid=this.state.participantId||'anon';
+      const batch=this.cs().visibleBatch;
+      entries.forEach(en=>{
+        const el=en.target; const id=el.dataset.gameId; if(!id) return;
+        if(en.isIntersecting && !rev[id]){ rev[id]=true; changed=true; }
+        if(el.dataset.cond && el.dataset.cond!==cond) return;                    // card belongs to another condition
+        if(el.dataset.round && String(el.dataset.round)!==String(round)) return; // card belongs to another round
+        if(en.intersectionRatio>=0.5){
+          const key=pid+'|'+cond+'|'+round+'|'+id+'|'+batch;
+          if(!imp[key]){ imp[key]=true; impChanged=true; this.log('impression',{gameId:id,visibleBatch:batch}); }
+        }
+      });
+      if(impChanged) this.patchCS({impressions:imp}, cond, changed?{revealed:rev}:null);
+      else if(changed) this.setState({revealed:rev});
+    },{threshold:[0,0.5,1]});
+    return this.io;
+  }
+  // Rebuild the observer for a new round/filter set, then re-observe the live cards on the
+  // next frames so each surviving card produces a fresh initial callback with its new attributes.
+  resetIO(){
+    this._obsGen++;
+    if(this.io){ try{ this.io.disconnect(); }catch(e){} this.io=null; }
+    this.makeIO();
+    if(this._reobsRaf) cancelAnimationFrame(this._reobsRaf);
+    const run=()=>{ this._reobsRaf=requestAnimationFrame(()=>{ this._reobsRaf=0; this.reobserve(); }); };
+    this._reobsRaf=requestAnimationFrame(run);
+  }
+  reobserve(){
+    const set=this._observed; if(!set || !this.io) return;
+    set.forEach(el=>{ if(el && el.isConnected){ try{ this.io.observe(el); }catch(e){} } else set.delete(el); });
+  }
+  cardRef = (el)=>{ if(el){ this._observed=this._observed||new Set(); this._observed.add(el); this.makeIO(); if(this.io) this.io.observe(el); } };
+  closeRef = (el)=>{ this._closeBtn = el; };
+
+  // ---- dwell timing: context captured at open, used at finalize ----
+  startDwell(gameId){
+    const cond=this.inStudy()?this.activeCondition():null;
+    this._dwell={
+      gameId, accum:0, since:Date.now(), paused:false,
+      ctx:{ participantId:this.state.participantId||null, sequence:this.state.sequence||null, round:this.inStudy()?this.state.round:null,
+            condition:cond, internalModel:cond?this.CONDITION_MODELS[cond]:null, visibleBatch:this.cs().visibleBatch, activeFilters:this.snapshotFilters() }
+    };
+    this.log('dwell_started',{gameId});
+  }
+  pauseDwell(){ const d=this._dwell; if(d && !d.paused){ d.accum += Date.now()-d.since; d.paused=true; } }
+  resumeDwell(){ const d=this._dwell; if(d && d.paused){ d.since=Date.now(); d.paused=false; } }
+  endDwell(){
+    const d=this._dwell; if(!d) return null;
+    if(!d.paused) d.accum += Date.now()-d.since;
+    const ms=d.accum; this._dwell=null;
+    this.log('dwell_time', Object.assign({gameId:d.gameId, dwellTimeMs:ms}, d.ctx));
+    return ms;
+  }
+
+  // ============================================================
+  // ONBOARDING
+  // ============================================================
+  // Each handler builds the new draft first and passes that object straight into log(), so the
+  // recorded snapshot is the state *after* the click and never depends on setState having landed.
+  toggleTaste(t){
+    if(this.inStudy()) return;
+    const d={...this.state.draft};
+    if(!d.taste.includes(t) && this.tastePolicyBlock(t,d.taste)) return;
+    if(!d.taste.includes(t) && d.taste.length>=3) return;
+    d.taste = d.taste.includes(t)? d.taste.filter(x=>x!==t): d.taste.concat(t);   // selection order preserved
+    this.setState({draft:d});
+    this.log('preference_selected',{preferenceValue:t, preferenceSelected:d.taste.includes(t), preferencesSnapshot:this.prefsSnapshot(d)});
+  }
+  setBudget(v){
+    const d={...this.state.draft, budget:+v, anyPrice:false};
+    this.setState({draft:d});
+    this.log('budget_changed',{preferenceValue:d.budget, preferencesSnapshot:this.prefsSnapshot(d)});
+  }
+  toggleAnyPrice(){
+    const d={...this.state.draft, anyPrice:!this.state.draft.anyPrice};
+    this.setState({draft:d});
+    this.log('budget_changed',{preferenceValue:'Any Price', preferenceSelected:d.anyPrice, preferencesSnapshot:this.prefsSnapshot(d)});
+  }
+  togglePlatform(p){
+    const d={...this.state.draft};
+    d.platforms = d.platforms.includes(p)? d.platforms.filter(x=>x!==p): d.platforms.concat(p);
+    this.setState({draft:d});
+    this.log('platform_selected',{preferenceValue:p, preferenceSelected:d.platforms.includes(p), preferencesSnapshot:this.prefsSnapshot(d)});
+  }
+  goStage(n){ const dir=n>this.state.stage?'fwd':'back'; this.setState({stage:n, navDir:dir}); this.pushState('ob-'+n+'-'+(this.state.onboardingSource||'first')); }
+  finishOnboarding(){
+    const d=this.state.draft;
+    if(new Set(d.taste).size!==3 || d.platforms.length<1) return;
+    const matched=this.matchProfile(d.taste);
+    const assignedProfileId=this.state.prefs.assignedProfileId || (matched&&matched.profileId);
+    if(!assignedProfileId) return;
+    const prefs={taste:[...d.taste], budget:d.budget, anyPrice:d.anyPrice, platforms:[...d.platforms],assignedProfileId};
+    this.write(this.LS.preferences,prefs);
+    const known=!!this.state.participantId;
+    // Seed only conditions the participant has not interacted with yet.
+    const all={...this.state.conditionState};
+    ['A','B','C'].forEach(c=>{ const s=all[c]; const untouched=!s || (Object.keys(s.feedback||{}).length===0 && (s.visibleBatch||1)===1 && Object.keys(s.impressions||{}).length===0); if(untouched) all[c]=this.freshCond(prefs); });
+    this.write(this.LS.conditionState,this.serializeCS(all));
+    this.setState({prefs, conditionState:all, onboarded:true, showOnboarding:false, showParticipant:!known, onboardingSource:'first', navDir:'fwd'});
+    this.log('onboarding_completed',{preferencesSnapshot:this.prefsSnapshot(prefs)});   // the prefs just submitted, not stale state
+    if(known){ this.pushState('rec'); this._pendingRoundFocus=true; }
+    else { this.pushState('psetup'); }
+  }
+  reopenPreferences(){
+    const p=this.state.prefs;
+    this.setState({showOnboarding:true, showParticipant:false, stage:1, onboardingSource:'edit', navDir:'fwd', detailId:null, studyOpen:false, howOpen:false, confirmKind:null, draft:{taste:[...(p.taste||[])],budget:p.budget??40,anyPrice:!!p.anyPrice,platforms:[...(p.platforms||['Windows'])],assignedProfileId:p.assignedProfileId}});
+    this._focusHeading=true;
+    this.pushState('ob-1-edit');
+    this.log('preferences_reopened'); this.log('onboarding_started');
+  }
+
+  // ============================================================
+  // PARTICIPANT SETUP + COUNTERBALANCING
+  // ============================================================
+  onParticipantInput=(e)=>{ this.setState({participantDraft:e.target.value, participantError:''}); };
+  onParticipantKey=(e)=>{ if(e.key==='Enter'){ e.preventDefault(); this.startStudy(); } };
+  startStudy(){
+    const info=this.parseParticipant(this.state.participantDraft);
+    if(!info){ this.setState({participantError:'Enter an ID in the form P followed by a number, e.g. P01.'}); return; }
+    const sequence=this.sequenceFor(info.number);
+    this.write(this.LS.participant, info.id);
+    this.write(this.LS.sequence, sequence);
+    this.write(this.LS.activeRound, 1);
+    this.write(this.LS.completed, false);
+    const fresh=this.freshCondSet(this.state.prefs);
+    this.write(this.LS.conditionState, this.serializeCS(fresh));
+    this.del(this.LS.openResponses);
+    this._roundStarted={}; this._roundCompleted={}; this._studyCompletedLogged=false;
+    this.resetIO();
+    this.setState({participantId:info.id, participantDraft:info.id, participantError:'', sequence, round:1, completed:false, conditionState:fresh, showParticipant:false, revealed:{}, tagsExpanded:false,
+      surveyOpen:false, surveyDraft:{}, openOpen:false, openDraft:{preferredRound:null}, openResponses:null}, ()=>{
+      this.log('participant_assigned',{participantNumber:info.number});
+      this.logRoundStarted();
+    });
+    this._pendingRoundFocus=true;
+    this.pushState('rec');
+  }
+  participantBack(){ this.setState({showParticipant:false, showOnboarding:true, stage:3, navDir:'back', onboardingSource:'first'}); this._focusHeading=true; this.pushState('ob-3-first'); }
+
+  logRoundStarted(){
+    const r=this.state.round;
+    if(!this.inStudy() || this._roundStarted[r] || this.cs().roundStarted) return;   // once per round, survives reloads
+    this._roundStarted[r]=true;
+    this.patchCS({roundStarted:true});
+    this.log('round_started');
+  }
+
+  // The protocol requires all ten Likert items to be administered after the round and
+  // before continuing, so "finished here?" opens the questionnaire rather than a
+  // confirmation dialog. Submitting the ten answers is itself the deliberate
+  // confirmation, which is why no extra confirm step is inserted afterwards.
+  askContinue(){
+    this.endDwell();
+    const existing=this.cs().survey;
+    const draft={};
+    if(existing) this.LIKERT_ITEMS.forEach(i=>{ draft[i.key]=existing[i.key]; });
+    this._surveyOpener=document.activeElement;
+    this.setState({surveyOpen:true, surveyDraft:draft, detailId:null, studyOpen:false, howOpen:false, confirmKind:null});
+    this._focusSurveyHeading=true;
+    try{ window.scrollTo(0,0); }catch(e){}
+    this.log('round_survey_opened');
+  }
+  setSurveyAnswer(key,value){
+    const draft={...this.state.surveyDraft, [key]:value};
+    this.setState({surveyDraft:draft});
+  }
+  surveyComplete(draft){ return this.LIKERT_ITEMS.every(i=>Number.isInteger(draft[i.key])); }
+  cancelSurvey(){
+    this.setState({surveyOpen:false, surveyDraft:{}});
+    this.log('round_survey_dismissed');
+    if(this._surveyOpener && this._surveyOpener.focus) try{ this._surveyOpener.focus(); }catch(e){}
+  }
+  // The submission time is recorded here, at the moment the participant submits, so it
+  // can be audited against this round's round_completed timestamp. participant_id,
+  // round and condition come from study state and are never typed by hand.
+  submitSurvey(){
+    const draft=this.state.surveyDraft;
+    if(!this.surveyComplete(draft)) return;
+    const survey={};
+    this.LIKERT_ITEMS.forEach(i=>{ survey[i.key]=draft[i.key]; });
+    survey.submittedAt=new Date().toISOString();
+    const last=this.state.round>=3;
+    this.patchCS({survey}, this.activeCondition(), {surveyOpen:false, surveyDraft:{}});
+    setTimeout(()=>{
+      this.log('round_survey_submitted', Object.assign({surveySubmittedAt:survey.submittedAt}, survey));
+      if(last) this.completeStudy();
+      else this.advanceRound();
+    },0);
+  }
+  setOpenAnswer(key,value){ this.setState({openDraft:{...this.state.openDraft, [key]:value}}); }
+  openComplete(draft){
+    if(!(draft.preferredRound===1||draft.preferredRound===2||draft.preferredRound===3)) return false;
+    return this.OPEN_ITEMS.every(i=>String(draft[i.key]||'').trim().length>0);
+  }
+  submitOpen(){
+    const draft=this.state.openDraft;
+    if(!this.openComplete(draft)) return;
+    const out={preferredRound:draft.preferredRound, submittedAt:new Date().toISOString()};
+    this.OPEN_ITEMS.forEach(i=>{ out[i.key]=String(draft[i.key]||'').trim(); });
+    this.write(this.LS.openResponses,out);
+    this.setState({openResponses:out, openOpen:false});
+    setTimeout(()=>this.log('open_responses_submitted',{preferredRound:out.preferredRound, surveySubmittedAt:out.submittedAt}),0);
+  }
+  confirmAccept(){
+    const kind=this.state.confirmKind;
+    this.setState({confirmKind:null});
+    if(kind==='clear') this.clearData();
+    else if(kind==='newParticipant') this.startNewParticipant();
+  }
+  advanceRound(){
+    const from=this.state.round;
+    if(from>=3) return;
+    this.endDwell();                                         // 1. finalize open dwell
+    const outCond=this.activeCondition();
+    let scroll=0; try{ scroll=window.pageYOffset||0; }catch(e){}
+    const all={...this.state.conditionState, [outCond]:{...this.cs(outCond), scrollPosition:scroll, detailId:null}};
+    this.write(this.LS.conditionState,this.serializeCS(all));
+    this.setState({conditionState:all}, ()=>{
+      if(!this._roundCompleted[from]){ this._roundCompleted[from]=true; this.log('round_completed'); }   // 3.
+      const next=from+1;
+      const inCond=this.state.sequence[next-1];
+      const all2={...this.state.conditionState};
+      if(!all2[inCond]) all2[inCond]=this.freshCond(this.state.prefs);
+      this.write(this.LS.conditionState,this.serializeCS(all2));
+      this.write(this.LS.activeRound,next);
+      this.resetIO();                                        // 6. observers only for the incoming round
+      this.setState({round:next, conditionState:all2, detailId:null, studyOpen:false, howOpen:false, revealed:{}, tagsExpanded:false}, ()=>{
+        this.logRoundStarted();                              // 5. exactly once per round
+        this._pendingRoundFocus=true;                        // 7/8. scroll + focus the round heading
+        const restore=this.cs().scrollPosition;
+        if(restore) this._pendingScrollRestore=restore;
+        this.forceUpdate();
+      });
+    });
+  }
+  completeStudy(){
+    this.endDwell();
+    const cond=this.activeCondition();
+    let scroll=0; try{ scroll=window.pageYOffset||0; }catch(e){}
+    const all={...this.state.conditionState, [cond]:{...this.cs(cond), scrollPosition:scroll}};
+    this.write(this.LS.conditionState,this.serializeCS(all));
+    this.write(this.LS.completed,true);
+    // Round 3's Likert answers have just been stored, so the two final open questions
+    // are presented next; the completion/export screen follows once they are submitted.
+    const needOpen=!this.state.openResponses;
+    this.setState({conditionState:all, completed:true, openOpen:needOpen, surveyOpen:false}, ()=>{
+      if(!this._roundCompleted[3]){ this._roundCompleted[3]=true; this.log('round_completed'); }
+      if(!this._studyCompletedLogged){ this._studyCompletedLogged=true; this.log('study_completed'); }
+      if(needOpen){ this._focusOpenHeading=true; this.log('open_responses_opened'); try{ window.scrollTo(0,0); }catch(e){} }
+    });
+  }
+
+  // ============================================================
+  // RANKING ADAPTER + FILTERING + SHARED MMR
+  // ============================================================
+  rankingFor(cond){
+    const profile=this.assignedProfile();
+    if(!profile) return [];
+    const byId={}; this.GAMES.forEach(g=>{byId[g.id]=g;});
+    return ((profile.rankings&&profile.rankings[cond])||[])
+      .map(row=>byId[String(row.itemId)]?{...byId[String(row.itemId)],rank:Number(row.rank)}:null)
+      .filter(Boolean);
+  }
+  orderedPool(){
+    return this.rankingFor(this.inStudy()?this.activeCondition():'A');
+  }
+  normToken(x){ return String(x||'').trim().toLocaleLowerCase('en-US').replace(/\s+/g,' '); }
+  mmr(items){
+    const remaining=items.map(g=>({...g,relevance:1-(g.rank-1)/99,_tokens:[...new Set([...(g.genres||[]),...(g.tags||[])].map(x=>this.normToken(x)).filter(Boolean))]}));
+    const selected=[];
+    while(remaining.length){
+      let best=0,bestValue=-Infinity;
+      remaining.forEach((g,i)=>{
+        let maxSimilarity=0;
+        selected.forEach(s=>{maxSimilarity=Math.max(maxSimilarity,this.jaccard(g._tokens,s._tokens));});
+        const value=.8*g.relevance-.2*maxSimilarity;
+        const cur=remaining[best], tied=Math.abs(value-bestValue)<1e-12;
+        if(value>bestValue+1e-12 || (tied && (g.rank<cur.rank || (g.rank===cur.rank && BigInt(g.id)<BigInt(cur.id))))){best=i;bestValue=value;}
+      });
+      const picked=remaining.splice(best,1)[0]; picked.mmr=bestValue; selected.push(picked);
+    }
+    return selected.map(({_tokens,...g})=>g);
+  }
+  poolExcept(dim){
+    const f=this.cs().filters, fb=this.cs().feedback;
+    const seen=new Set((this.assignedProfile()?.seenItemIds||[]).map(String));
+    const filtered=this.orderedPool().filter(g=>{
+      if(seen.has(g.id)) return false;
+      if(fb[g.id] && fb[g.id].notInterested) return false;
+      if(dim!=='genres' && f.genres.length && !f.genres.some(x=>g.genres.includes(x))) return false;
+      if(dim!=='tags' && f.tags.length && !f.tags.some(x=>g.tags.includes(x))) return false;
+      if(dim!=='price' && f.maxPrice!==Infinity && (typeof g.price!=='number' || !isFinite(g.price) || g.price>f.maxPrice)) return false;
+      if(dim!=='platforms' && f.platforms.length && !f.platforms.some(x=>g.platforms.includes(x))) return false;
+      return true;
+    });
+    return this.mmr(filtered);
+  }
+  eligible(){ return this.poolExcept(null); }
+  // Catalogue-wide facet vocabulary. Only used to report how many facets are hidden;
+  // the rendered GENRE/TAGS lists are built from facetEntries() over the result pool.
+  genreOptions(){ return [...new Set(this.GAMES.flatMap(g=>g.genres||[]))].sort((a,b)=>a.localeCompare(b)); }
+  tagOptions(){ return [...new Set(this.GAMES.flatMap(g=>g.tags||[]))].sort((a,b)=>a.localeCompare(b)); }
+  // ---- facet display scope ----
+  // Counts come from poolExcept(dim): the assigned profile's active-condition Top-100
+  // after seen exclusion, Not Interested, budget, platform and the *other* facet filter.
+  // A zero-count value is dropped unless currently selected; a selected value always
+  // stays visible and clickable so it can be removed even at count 0.
+  TAG_DEFAULT_LIMIT=16;
+  facetCounts(pool,dim){ const counts={}; pool.forEach(g=>{ (g[dim]||[]).forEach(x=>{ counts[x]=(counts[x]||0)+1; }); }); return counts; }
+  facetEntries(dim){
+    const selected=this.cs().filters[dim]||[];
+    const counts=this.facetCounts(this.poolExcept(dim),dim);
+    const names=Object.keys(counts).filter(x=>counts[x]>0);
+    selected.forEach(x=>{ if(!names.includes(x)) names.push(x); });
+    return names.map(name=>({name,count:counts[name]||0,selected:selected.includes(name)}))
+      .sort((a,b)=>((b.selected?1:0)-(a.selected?1:0)) || (b.count-a.count) || a.name.localeCompare(b.name));
+  }
+  defaultVisibleTagEntries(entries){ return entries.filter((e,i)=>e.selected || i<this.TAG_DEFAULT_LIMIT); }
+
+  toggleGenre(x){ const f={...this.cs().filters}; f.genres = f.genres.includes(x)? f.genres.filter(v=>v!==x): f.genres.concat(x); this.applyFilter(f); }
+  toggleTag(x){ const f={...this.cs().filters}; f.tags = f.tags.includes(x)? f.tags.filter(v=>v!==x): f.tags.concat(x); this.applyFilter(f); }
+  // SHOW ALL / SHOW FEWER for the tag list is pure presentation state: it never touches
+  // filters, feedback, rankings, condition state, or the event log.
+  toggleTagsExpanded(){ this.setState({tagsExpanded:!this.state.tagsExpanded}); }
+  togglePlat(x){ const f={...this.cs().filters}; f.platforms = f.platforms.includes(x)? f.platforms.filter(v=>v!==x): f.platforms.concat(x); this.applyFilter(f); }
+  setMaxPrice(v){ this.applyFilter({...this.cs().filters, maxPrice:v}); }
+  clearAll(){ this.applyFilter({genres:[],tags:[],maxPrice:Infinity,platforms:[]}); }
+  // A filter change resets the visible window and rebuilds the observer, but never
+  // erases this condition's impression history — the observer callback dedupes against
+  // the persisted keys, so re-observed cards cannot log a second time.
+  applyFilter(f){
+    this.patchCS({filters:f, visibleCount:6, visibleBatch:1});
+    this.resetIO();
+    setTimeout(()=>this.log('filter_changed'),0);
+  }
+
+  // ============================================================
+  // FEEDBACK — always the active condition only
+  // ============================================================
+  fbOf(id){ return this.cs().feedback[id] || {rating:null,wishlist:false,notInterested:false}; }
+  saveFb(fb){ this.patchCS({feedback:fb}); }
+  confirmToast(id,msg){ const c={...this.state.confirm,[id]:msg}; this.setState({confirm:c}); this._ct=this._ct||{}; clearTimeout(this._ct[id]); this._ct[id]=setTimeout(()=>{ const cc={...this.state.confirm}; delete cc[id]; this.setState({confirm:cc}); },1700); }
+  like(id){ const fb={...this.cs().feedback}; const cur=this.fbOf(id); const on=cur.rating!=='like'; fb[id]={...cur,rating:on?'like':null}; this.saveFb(fb); this.log('like',{gameId:id}); this.confirmToast(id, on?'✓ Liked':'Removed'); }
+  dislike(id){ const fb={...this.cs().feedback}; const cur=this.fbOf(id); const on=cur.rating!=='dislike'; fb[id]={...cur,rating:on?'dislike':null}; this.saveFb(fb); this.log('dislike',{gameId:id}); this.confirmToast(id, on?'✓ Disliked':'Removed'); }
+  wishlist(id){ const fb={...this.cs().feedback}; const cur=this.fbOf(id); const on=!cur.wishlist; fb[id]={...cur,wishlist:on}; this.saveFb(fb); this.log(on?'wishlist_added':'wishlist_removed',{gameId:id}); this.confirmToast(id, on?'✓ Wishlisted':'Removed from wishlist'); }
+  // The event is written to the global log *before* the state change that removes the
+  // card, and an already-dismissed game returns early so a double click cannot log twice.
+  notInterested(id){ const cur=this.fbOf(id); if(cur.notInterested) return; const fb={...this.cs().feedback}; this.log('not_interested',{gameId:id}); fb[id]={...cur,notInterested:true}; this.saveFb(fb); if(this.state.detailId===id) this.closeDetail(); }
+
+  // ============================================================
+  // DETAIL
+  // ============================================================
+  openDetail(id){ this._prevFocus=document.activeElement; this.setState({detailId:id}); this.log('game_card_clicked',{gameId:id}); this.log('game_detail_opened',{gameId:id,method:'visible-button'}); this.startDwell(id); this.pushState('detail-'+id); }
+  closeDetail(){ this.closeOverlay('visible-button'); }
+  onDrawerKey = (e)=>{
+    if(e.key!=='Tab') return;
+    const root=e.currentTarget;
+    const f=root.querySelectorAll('button,[href],input,[tabindex]:not([tabindex="-1"])');
+    if(!f.length) return;
+    const first=f[0], last=f[f.length-1];
+    if(e.shiftKey && document.activeElement===first){ e.preventDefault(); last.focus(); }
+    else if(!e.shiftKey && document.activeElement===last){ e.preventDefault(); first.focus(); }
+  };
+
+  // ============================================================
+  // SHOW MORE / RESTART / STUDY PANEL
+  // ============================================================
+  showMore(){
+    const s=this.cs();
+    this.patchCS({visibleCount:s.visibleCount+6, visibleBatch:s.visibleBatch+1});
+    setTimeout(()=>this.log('show_more_clicked'),0);
+  }
+  // Restart recommendations: back to round 1, everything preserved.
+  restartRecommendations(){
+    this.endDwell();
+    this.write(this.LS.activeRound,1);
+    this.resetIO();
+    this.setState({round:1, detailId:null, studyOpen:false, howOpen:false, confirmKind:null, revealed:{}, tagsExpanded:false}, ()=>{
+      this.log('recommendations_restarted');
+      this.logRoundStarted();
+    });
+    this._pendingRoundFocus=true;
+  }
+  toggleStudy(){
+    if(this.state.studyOpen){ this.closeOverlay('visible-button'); }
+    else { this.endDwell(); this._studyOpener=document.activeElement; this.setState({studyOpen:true, detailId:null}); this.pushState('study'); setTimeout(()=>this.log('study_panel_opened'),0); }
+  }
+  // ---- shared destructive reset ----------------------------------------------------------
+  // Both researcher-facing destructive actions (CLEAR STUDY DATA and START NEW PARTICIPANT)
+  // funnel through this one helper so their cleanup can never diverge. Both still require the
+  // confirmation dialog; nothing here runs before the researcher confirms.
+  resetStudyState(kind){
+    this.endDwell();                                   // 1. finalize any open dwell timer
+    if(this._observed) this._observed.clear();          // 2. drop and invalidate observers
+    this.resetIO();                                    //    (bumps _obsGen: stale callbacks ignored)
+    const s=this.newSession();                         // new anonymous session
+    const prefs=this.validPrefs(null);                 // clean onboarding defaults
+    const fresh=this.freshCondSet(prefs);              // empty A/B/C feedback, filters, counts,
+                                                       // batches, impressions, scroll, detail
+    [this.LS.logs,this.LS.participant,this.LS.sequence,this.LS.activeRound,this.LS.completed,this.LS.openResponses].forEach(k=>this.del(k));
+    // Written, not deleted: an absent v2 preferences key would let the legacy pf_prefs import
+    // in the constructor repopulate the previous participant's choices on the next reload.
+    this.write(this.LS.preferences,prefs);
+    this.write(this.LS.conditionState,this.serializeCS(fresh));
+    this.write(this.LS.session,s);
+    this._logs=[];
+    this._roundStarted={}; this._roundCompleted={}; this._studyCompletedLogged=false;
+    this.setState({
+      session:s, logs:[], participantId:'', participantDraft:'', participantError:'', sequence:null, round:1, completed:false,
+      conditionState:fresh, prefs, draft:{taste:[], budget:prefs.budget, anyPrice:prefs.anyPrice, platforms:[...prefs.platforms],assignedProfileId:null},
+      onboarded:false, detailId:null, studyOpen:false, howOpen:false, confirmKind:null, confirm:{},
+      showOnboarding:true, showParticipant:false, stage:1, onboardingSource:'first', navDir:'back', revealed:{}, tagsExpanded:false,
+      surveyOpen:false, surveyDraft:{}, openOpen:false, openDraft:{preferredRound:null}, openResponses:null
+    }, ()=>{
+      this.log('session_started');
+      this.log(kind==='newParticipant'?'new_participant_started':'study_data_cleared');
+      this.log('onboarding_started');
+    });
+    this._focusHeading=true;
+    try{ window.scrollTo(0,0); }catch(e){}
+    this.pushState('ob-1-first');
+  }
+  clearData(){ this.resetStudyState('clear'); }
+  // Researcher workflow: hand the device to the next participant with no carry-over.
+  startNewParticipant(){ this.resetStudyState('newParticipant'); }
+
+  // ============================================================
+  // EXPORT
+  // ============================================================
+  download(name,type,content){ try{ const b=new Blob([content],{type}); const u=URL.createObjectURL(b); const a=document.createElement('a'); a.href=u; a.download=name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(u),500);}catch(e){} }
+  exportBase(){ return 'playfinder-'+(this.state.participantId||'NOID')+'-'+this.state.session; }
+  exportJson(){
+    this.endDwell();
+    this.log('json_exported');
+    setTimeout(()=>{ this.download(this.exportBase()+'.json','application/json', JSON.stringify(this.exportEvents(),null,2)); },0);
+  }
+  // Questionnaire exports use the exact headers of study/templates/*.csv so
+  // study/analysis/analyze_study.py consumes them without any transformation. The
+  // condition letter and preferred_condition are derived from the assigned sequence,
+  // never typed, which removes the join-key error class from the workflow entirely.
+  likertRows(){
+    const seq=this.state.sequence||'';
+    const rows=[];
+    for(let round=1; round<=3; round++){
+      const cond=seq[round-1]; if(!cond) continue;
+      const survey=this.validSurvey((this.state.conditionState[cond]||{}).survey);
+      if(!survey) continue;
+      rows.push(Object.assign({participant_id:this.state.participantId||'', round, condition:cond},
+        Object.fromEntries(this.LIKERT_ITEMS.map(i=>[i.key, survey[i.key]])),
+        {submitted_at:survey.submittedAt}));
+    }
+    return rows;
+  }
+  openRow(){
+    const o=this.validOpen(this.state.openResponses); if(!o) return null;
+    const seq=this.state.sequence||'';
+    return Object.assign({participant_id:this.state.participantId||'', preferred_round:o.preferredRound,
+      preferred_condition:seq[o.preferredRound-1]||''},
+      Object.fromEntries(this.OPEN_ITEMS.map(i=>[i.key, o[i.key]])),
+      {submitted_at:o.submittedAt});
+  }
+  csvText(cols,rows){
+    const esc=(v)=>{ const s=(v==null)?'':String(v); return /[",\r\n]/.test(s)? '"'+s.replace(/"/g,'""')+'"' : s; };
+    return [cols.join(','), ...rows.map(r=>cols.map(c=>esc(r[c])).join(','))].join('\r\n');
+  }
+  exportLikertCsv(){
+    const rows=this.likertRows();
+    if(!rows.length) return;
+    this.log('likert_csv_exported',{likertRowCount:rows.length});
+    const likertCols=['participant_id','round','condition',...this.LIKERT_ITEMS.map(i=>i.key),'submitted_at'];
+    setTimeout(()=>this.download(this.exportBase()+'-likert.csv','text/csv',this.csvText(likertCols,rows)),0);
+  }
+  exportOpenCsv(){
+    const row=this.openRow();
+    if(!row) return;
+    this.log('open_responses_csv_exported');
+    const openCols=['participant_id','preferred_round','preferred_condition',...this.OPEN_ITEMS.map(i=>i.key),'submitted_at'];
+    setTimeout(()=>this.download(this.exportBase()+'-open-responses.csv','text/csv',this.csvText(openCols,[row])),0);
+  }
+  exportCsv(){
+    this.endDwell();
+    this.log('csv_exported');
+    setTimeout(()=>{
+      // The original 12 columns keep their order; the three preference columns are appended.
+      const cols=['sessionId','participantId','sequence','round','condition','internalModel','eventType','gameId','visibleBatch','timestamp','dwellTimeMs','activeFilters','preferenceValue','preferenceSelected','preferencesSnapshot'];
+      const esc=(v)=>{ if(v==null) return '""'; const s=(typeof v==='object')? JSON.stringify(v) : String(v); return '"'+s.replace(/"/g,'""')+'"'; };
+      const rows=[cols.join(',')].concat(this.exportEvents().map(e=>cols.map(c=>esc(e[c])).join(',')));
+      this.download(this.exportBase()+'.csv','text/csv', rows.join('\r\n'));
+    },0);
+  }
+
+  // ============================================================
+  // VIEW HELPERS
+  // ============================================================
+  artStyle(g,cover){
+    const h=g.hue;
+    const a=`oklch(0.30 0.035 ${h})`, b=`oklch(0.145 0.02 ${(h+40)%360})`;
+    const rm=this.state.reduceMotion;
+    const anim = (g.featured && cover!=='thumb' && !rm)? 'animation:pfPan 22s ease-in-out infinite;' : '';
+    return `position:absolute;inset:0;background:linear-gradient(145deg,${a},${b});background-image:linear-gradient(145deg,${a},${b}),repeating-linear-gradient(115deg,rgba(244,242,238,.035) 0 1px,transparent 1px 22px);transition:transform .6s cubic-bezier(.22,1,.36,1);transform-origin:center;${anim}`;
+  }
+  priceLabel(p){ return p===0?'FREE':(typeof p==='number'&&isFinite(p)?'$'+p.toFixed(2):'PRICE UNAVAILABLE'); }
+  chip(active,accent){
+    const base='background:none;font-family:\'Space Mono\',monospace;font-size:11px;letter-spacing:.06em;padding:8px 13px;border-radius:100px;cursor:pointer;transition:all .18s;';
+    if(accent) return base+'border:1px solid var(--accent);color:var(--accent);';
+    return base+ (active?'border:1px solid var(--ink);color:var(--ink);':'border:1px solid var(--line-soft);color:var(--g2);');
+  }
+  filterWord(active,disabled){
+    const size='font-family:\'Archivo\',sans-serif;font-weight:800;font-size:clamp(1.1rem,1.7vw,1.7rem);letter-spacing:-.02em;background:none;border:none;padding:2px 0;cursor:pointer;transition:color .25s,transform .18s cubic-bezier(.22,1,.36,1);line-height:1.1;transform-origin:center bottom;will-change:transform;position:relative;';
+    if(disabled) return size+'color:var(--line-soft);cursor:not-allowed;text-decoration:line-through;text-decoration-thickness:1px;';
+    return size+ (active?'color:var(--ink);':'color:var(--g3);');
+  }
+
+  renderVals(){
+    const st=this.state;
+    const accent = this.props.accentColor ?? '#e8a13c';
+    const solidBtn='background:var(--ink);color:#060606;border:1px solid var(--ink);border-radius:100px;font-family:\'Archivo\',sans-serif;font-weight:700;font-size:13px;letter-spacing:.1em;padding:14px 26px;cursor:pointer;transition:all .2s;';
+    const ghostBtn='background:none;color:var(--g2);border:1px solid var(--line);border-radius:100px;font-family:\'Archivo\',sans-serif;font-weight:700;font-size:13px;letter-spacing:.1em;padding:14px 26px;cursor:pointer;transition:all .2s;';
+    const disabledBtn='background:none;color:var(--g3);border:1px solid var(--line-soft);border-radius:100px;font-family:\'Archivo\',sans-serif;font-weight:700;font-size:13px;letter-spacing:.1em;padding:14px 26px;cursor:not-allowed;';
+    const ghostChip=this.chip(false,false);
+    const footLink='background:none;border:none;color:var(--g2);font-family:\'Space Mono\',monospace;font-size:12px;letter-spacing:.1em;cursor:pointer;';
+    const panelBtn='background:none;border:1px solid var(--line);color:var(--ink);font-family:\'Space Mono\',monospace;font-size:12px;letter-spacing:.1em;padding:13px;cursor:pointer;transition:all .2s;text-align:left;';
+    const panelBtnDanger='background:none;border:1px solid #5a1c1c;color:#e88;font-family:\'Space Mono\',monospace;font-size:12px;letter-spacing:.1em;padding:13px;cursor:pointer;transition:all .2s;text-align:left;';
+    const dangerBtn='background:#5a1c1c;color:#ffd9d9;border:1px solid #5a1c1c;border-radius:100px;font-family:\'Archivo\',sans-serif;font-weight:700;font-size:13px;letter-spacing:.1em;padding:14px 26px;cursor:pointer;transition:all .2s;';
+    // Researcher-only reset control: ghost weight so it never competes with the participant's
+    // own actions, red border so its destructive nature is legible.
+    const newParticipantBtn='background:none;color:#e88;border:1px solid #5a1c1c;border-radius:100px;font-family:\'Archivo\',sans-serif;font-weight:700;font-size:12px;letter-spacing:.1em;padding:12px 22px;cursor:pointer;transition:all .2s;';
+    const inStudy=this.inStudy();
+
+    const v={
+      accent,
+      fixtureMode:this.STUDY_PAYLOAD.mode==='fixture',
+      provisionalMode:!!this.tastePolicy() && !this.tastePolicy().formal,
+      showOnboarding:st.showOnboarding,
+      showParticipant:!st.showOnboarding && st.showParticipant,
+      showSurvey: !st.showOnboarding && !st.showParticipant && st.surveyOpen,
+      showOpenQuestions: !st.showOnboarding && !st.showParticipant && !st.surveyOpen && st.openOpen,
+      showMain: !st.showOnboarding && !st.showParticipant && !st.surveyOpen && !st.openOpen,
+      solidBtn, ghostBtn, ghostChip, footLink, panelBtn, panelBtnDanger,
+      stopProp:(e)=>e.stopPropagation(),
+      onWordmark:()=>this.onWordmark(),
+      metaBack:'background:none;border:none;padding:8px 0;cursor:pointer;align-self:flex-start;color:var(--g2);font-family:\'Space Mono\',monospace;font-size:12px;letter-spacing:.1em;transition:color .2s;margin-bottom:6px;'
+    };
+
+    // ---------- ONBOARDING ----------
+    if(st.showOnboarding){
+      const d=st.draft;
+      v.stageLabel = String(st.stage).padStart(2,'0');
+      v.isStage1=st.stage===1; v.isStage2=st.stage===2; v.isStage3=st.stage===3;
+      const kick=['','01 — CHOOSE YOUR TASTE','02 — SET YOUR BUDGET','03 — CHOOSE YOUR PLATFORM'];
+      const titl=['','What do you love to play?','How much do you want to spend?','Where do you play?'];
+      const subt=['','Pick exactly three genres or tags. Your matched research profile stays fixed for all three rounds.','Set a ceiling, or open it up entirely. You can change this anytime.','Choose every platform you play on. At least one is required.'];
+      v.stageKicker=kick[st.stage]; v.stageTitle=titl[st.stage]; v.stageSub=subt[st.stage];
+      v.tastePolicyActive=!!this.tastePolicy();
+      v.tasteLockActive=inStudy;   // active-study taste lock: explain it instead of failing silently
+      v.tastePolicyNote=this.tastePolicy()?.formal
+        ? 'The approved study policy supports 558 evidence-backed three-taste combinations. An unsupported third choice is disabled after the relevant two-taste prefix.'
+        : 'This provisional policy supports 558 of 560 three-taste combinations. When two selected tastes have no evidence-backed completion, the unsupported third choice is disabled.';
+      v.tasteOptions = this.TASTE.map(t=>{ const on=d.taste.includes(t), reason=on?'':this.tastePolicyBlock(t,d.taste), disabled=this.inStudy()||!!reason||(!on&&d.taste.length>=3); return {label:t, pressed:on, disabled, title:reason, ariaLabel:reason?`${t}. Unavailable. ${reason}`:t, onClick:()=>this.toggleTaste(t),
+        style:`background:none;border:none;padding:2px 0;cursor:${disabled?'not-allowed':'pointer'};text-align:left;font-family:'Archivo',sans-serif;font-weight:800;letter-spacing:-.02em;line-height:1;font-size:clamp(1.4rem,3.4vw,3rem);transition:color .25s,transform .25s;color:${on?'var(--ink)':'var(--g3)'};opacity:${disabled&&!on ? .42 : 1};text-decoration:${reason?'line-through':'none'};text-decoration-thickness:2px;`}; });
+      v.tasteCount=d.taste.length; v.counterColor = d.taste.length===3?'var(--g2)':'var(--accent)';
+      v.continue1Disabled = d.taste.length!==3;
+      v.continue1Style = d.taste.length!==3? disabledBtn: solidBtn;
+      v.onContinue1 = ()=>{ if(d.taste.length===3) this.goStage(2); };
+      v.budgetValue = d.budget; v.anyPrice=d.anyPrice;
+      v.budgetDisplay = d.anyPrice? 'Any price' : 'Up to $'+d.budget;
+      v.budgetColor = d.anyPrice? 'var(--g3)' : 'var(--ink)';
+      v.onBudgetInput = (e)=>this.setBudget(e.target.value);
+      v.onAnyPrice = ()=>this.toggleAnyPrice();
+      v.anyPriceStyle = 'margin-top:26px;background:none;border:1px solid '+(d.anyPrice?'var(--accent)':'var(--line)')+';color:'+(d.anyPrice?'var(--accent)':'var(--g2)')+';border-radius:100px;font-family:\'Space Mono\',monospace;font-size:12px;letter-spacing:.1em;padding:11px 20px;cursor:pointer;transition:all .2s;';
+      v.onContinue2 = ()=>this.goStage(3);
+      v.platformOptions = this.PLATFORMS.map(p=>{ const on=d.platforms.includes(p); return {label:p,pressed:on,onClick:()=>this.togglePlatform(p),
+        style:`background:none;border:none;padding:2px 0;cursor:pointer;font-family:'Archivo',sans-serif;font-weight:800;letter-spacing:-.02em;line-height:1;font-size:clamp(2rem,5vw,4rem);transition:color .25s;color:${on?'var(--ink)':'var(--g3)'};`}; });
+      v.platformCount=d.platforms.length;
+      v.platformCountColor = d.platforms.length>0? 'var(--g2)' : 'var(--accent)';
+      v.finishDisabled = d.platforms.length<1;
+      v.finishStyle = d.platforms.length<1? disabledBtn: solidBtn;
+      v.finishLabel = st.participantId? 'FIND MY GAMES →' : 'CONTINUE →';
+      v.onFinish = ()=>{ if(d.platforms.length>=1) this.finishOnboarding(); };
+      v.onBack = ()=>this.obBack();
+      v.headingRef=this.headingRef;
+      v.step1CancelShow = st.stage===1 && st.onboardingSource==='edit';
+      v.onCancelEdit=()=>this.cancelEdit();
+      v.stageAnim=(st.navDir==='back'?'pfInLeft':'pfInRight')+' .42s cubic-bezier(.22,1,.36,1) both';
+      v.liveRegion='Onboarding, step '+st.stage+' of 3: '+titl[st.stage];
+      return v;
+    }
+
+    // ---------- PARTICIPANT SETUP ----------
+    if(st.showParticipant){
+      const ok=!!this.parseParticipant(st.participantDraft);
+      v.participantHeadingRef=this.participantHeadingRef;
+      v.participantDraft=st.participantDraft;
+      v.onParticipantInput=this.onParticipantInput;
+      v.onParticipantKey=this.onParticipantKey;
+      v.onParticipantStart=()=>this.startStudy();
+      v.onParticipantBack=()=>this.participantBack();
+      v.participantDisabled=!ok;
+      v.participantBtnStyle= ok? solidBtn : disabledBtn;
+      v.participantHint = st.participantError || 'Format: P followed by a number — P01, P02, P03. Lowercase is fine.';
+      v.participantHintColor = st.participantError? 'var(--accent)' : 'var(--g3)';
+      v.liveRegion = st.participantError || 'Participant setup';
+      return v;
+    }
+
+    // ---------- PER-ROUND QUESTIONNAIRE ----------
+    // Participants see the round ordinal only; the condition letter stays researcher-facing.
+    if(st.surveyOpen){
+      const draft=st.surveyDraft||{};
+      const answered=this.LIKERT_ITEMS.filter(i=>Number.isInteger(draft[i.key])).length;
+      const done=this.surveyComplete(draft);
+      v.surveyHeadingRef=this.surveyHeadingRef;
+      v.surveyRoundLabel='ROUND '+st.round+' OF 3';
+      v.surveyKicker='TEN QUESTIONS · 1 DISAGREE — 7 AGREE';
+      v.surveyItems=this.LIKERT_ITEMS.map((item,index)=>({
+        label:(index+1)+'. '+item.text,
+        options:this.LIKERT_SCALE.map(step=>{
+          const on=draft[item.key]===step.value;
+          return {value:String(step.value), checked:on, title:step.label,
+            ariaLabel:`${step.value} of 7, ${step.label}`,
+            onClick:()=>this.setSurveyAnswer(item.key,step.value),
+            style:'background:'+(on?'var(--ink)':'none')+';color:'+(on?'#060606':'var(--g2)')+';border:1px solid '+(on?'var(--ink)':'var(--line)')+';border-radius:100px;font-family:\'Space Mono\',monospace;font-size:14px;font-weight:700;min-width:46px;padding:11px 0;cursor:pointer;transition:all .18s;'};
+        })
+      }));
+      v.surveyAnsweredLabel=answered+' / 10 answered';
+      v.surveyCountColor=done?'var(--g2)':'var(--accent)';
+      v.surveySubmitDisabled=!done;
+      v.surveySubmitStyle=done?solidBtn:disabledBtn;
+      v.surveySubmitLabel=st.round<3? ('SUBMIT & CONTINUE TO ROUND '+(st.round+1)+' →') : 'SUBMIT & FINISH ROUNDS →';
+      v.onSurveySubmit=()=>this.submitSurvey();
+      v.onSurveyBack=()=>this.cancelSurvey();
+      v.liveRegion='Round '+st.round+' questionnaire, '+answered+' of 10 answered';
+      return v;
+    }
+
+    // ---------- FINAL OPEN QUESTIONS ----------
+    if(st.openOpen){
+      const draft=st.openDraft||{};
+      const done=this.openComplete(draft);
+      const filled=this.OPEN_ITEMS.filter(i=>String(draft[i.key]||'').trim().length>0).length;
+      v.openHeadingRef=this.openHeadingRef;
+      v.preferredRoundOptions=[1,2,3].map(n=>{
+        const on=draft.preferredRound===n;
+        return {label:'Round '+n, checked:on, onClick:()=>this.setOpenAnswer('preferredRound',n),
+          style:'background:'+(on?'var(--ink)':'none')+';color:'+(on?'#060606':'var(--g2)')+';border:1px solid '+(on?'var(--ink)':'var(--line)')+';border-radius:100px;font-family:\'Space Mono\',monospace;font-size:13px;letter-spacing:.06em;padding:11px 22px;cursor:pointer;transition:all .18s;'};
+      });
+      v.openItems=this.OPEN_ITEMS.map((item,index)=>({
+        id:'pf-open-'+(index+1), label:(index+1)+'. '+item.text,
+        value:String(draft[item.key]||''),
+        placeholder:'Type your answer here',
+        onChange:(e)=>this.setOpenAnswer(item.key,e.target.value)
+      }));
+      v.openAnsweredLabel=(draft.preferredRound?'Round chosen':'Round not chosen')+' · '+filled+' / 2 written';
+      v.openCountColor=done?'var(--g2)':'var(--accent)';
+      v.openSubmitDisabled=!done;
+      v.openSubmitStyle=done?solidBtn:disabledBtn;
+      v.onOpenSubmit=()=>this.submitOpen();
+      v.liveRegion='Final open questions';
+      return v;
+    }
+
+    // ---------- MAIN ----------
+    const cs=this.cs();
+    const cond=this.activeCondition();
+    v.sessionShort = st.session.slice(0,12);
+    v.sessionId = st.session;
+    v.dockRef=this.dockRef; v.onDockMove=this.onDockMove; v.onDockLeave=this.onDockLeave;
+    v.studyCloseRef=this.studyCloseRef; v.roundHeadingRef=this.roundHeadingRef; v.confirmRef=this.confirmRef;
+    v.onHowItWorks=()=>this.setState({howOpen:true});
+    v.onCloseHow=()=>this.setState({howOpen:false});
+    v.howOpen=st.howOpen;
+    v.onEditPrefs=()=>this.reopenPreferences();
+    v.onRestart=()=>this.restartRecommendations();
+    v.onStudyPanel=()=>this.toggleStudy();
+
+    // round chrome (participant-facing: ordinal only, never A/B/C or model names)
+    v.inStudy=inStudy;
+    v.roundLabel = inStudy? ('Round '+st.round+' of 3') : 'Preview';
+    v.roundDots = [1,2,3].map(n=>({style:'display:block;width:'+(n===st.round?'26px':'10px')+';height:3px;border-radius:2px;background:'+(n===st.round?'var(--accent)':(n<st.round?'var(--g3)':'var(--line-soft)'))+';transition:all .3s;'}));
+    v.footerStamp = inStudy? ('PROTOTYPE 01 · ROUND '+st.round+' / 3') : 'PROTOTYPE 01';
+    v.liveRegion = st.detailId ? 'Game details open' : (st.studyOpen ? 'Study data panel open' : (inStudy? ('Round '+st.round+' of 3 started') : 'Recommendations'));
+
+    const elig = this.eligible();
+    v.matchCountLabel = elig.length+' game'+(elig.length===1?'':'s')+' match';
+    v.hasResults = elig.length>0;
+    v.isEmpty = elig.length===0;
+    v.onClearAll=()=>this.clearAll();
+
+    // filter groups
+    const f=cs.filters;
+    const platPool=this.poolExcept('platforms');
+    const gCount=(pool,dim,val)=>pool.filter(g=>g[dim].includes(val)).length;
+    const anyFilterActive = f.genres.length||f.tags.length||f.platforms.length||f.maxPrice!==Infinity;
+
+    v.filterGroupsLead=[{label:'ALL / RESET', words:[
+      {label:'All Games', active:!anyFilterActive, disabled:false, onClick:()=>this.clearAll(), style:this.filterWord(!anyFilterActive,false)},
+      {label:'Clear Filters', active:false, disabled:!anyFilterActive, onClick:()=>this.clearAll(), style:this.filterWord(false,!anyFilterActive)}
+    ]}];
+    v.filterGroupsTail=[
+      {label:'MAX PRICE', words:this.PRICE_OPTIONS.map(o=>({label:o.label, active:f.maxPrice===o.val, disabled:false, onClick:()=>this.setMaxPrice(o.val), style:this.filterWord(f.maxPrice===o.val,false)}))},
+      {label:'PLATFORM', words:this.PLATFORMS.map(x=>{ const c=gCount(platPool,'platforms',x); const dis=c===0 && !f.platforms.includes(x); return {label:x, active:f.platforms.includes(x), disabled:dis, onClick:()=>{ if(!dis) this.togglePlat(x); }, style:this.filterWord(f.platforms.includes(x),dis)}; })}
+    ];
+
+    // GENRE/TAGS words come from facetEntries() over the current result pool. A rendered
+    // facet is either available (count > 0) or currently selected, so it is never disabled.
+    const facetWord=(e,dim)=>{ const plural=e.count===1?'':'s'; return {
+      label:e.name, active:e.selected, countLabel:String(e.count),
+      countStyle:`font-family:'Space Mono',monospace;font-weight:400;font-size:.52em;letter-spacing:.02em;color:${e.selected?'var(--g2)':'var(--g3)'};margin-left:7px;`,
+      ariaLabel: e.selected? `${e.name}, ${e.count} matching game${plural}, selected. Click to remove.` : `${e.name}, ${e.count} matching game${plural}`,
+      onClick: dim==='genres'? ()=>this.toggleGenre(e.name) : ()=>this.toggleTag(e.name),
+      style:this.filterWord(e.selected,false)
+    }; };
+    const facetNote=(entries,vocabTotal)=>{ const avail=entries.filter(e=>e.count>0).length; return avail+' AVAILABLE · '+Math.max(0,vocabTotal-entries.length)+' UNAVAILABLE HIDDEN'; };
+    const genreEntries=this.facetEntries('genres');
+    v.genreFacetWords=genreEntries.map(e=>facetWord(e,'genres'));
+    v.genreFacetNote=facetNote(genreEntries,this.genreOptions().length);
+    const tagEntries=this.facetEntries('tags');
+    const tagDefault=this.defaultVisibleTagEntries(tagEntries);
+    const tagAvailable=tagEntries.filter(e=>e.count>0).length;
+    v.tagFacetWords=(st.tagsExpanded?tagEntries:tagDefault).map(e=>facetWord(e,'tags'));
+    v.tagFacetNote=facetNote(tagEntries,this.tagOptions().length);
+    v.tagsExpanded=!!st.tagsExpanded;
+    v.tagToggleLabel=st.tagsExpanded? 'SHOW FEWER TAGS' : 'SHOW ALL AVAILABLE TAGS ('+tagAvailable+')';
+    v.onToggleTags=()=>this.toggleTagsExpanded();
+    v.tagToggleStyle=((tagEntries.length>tagDefault.length || st.tagsExpanded)?'':'display:none;')+'background:none;border:1px solid var(--line);border-radius:100px;color:var(--g2);font-family:\'Space Mono\',monospace;font-size:11px;letter-spacing:.08em;padding:8px 14px;cursor:pointer;transition:all .18s;';
+
+    // grid
+    const shown = elig.slice(0, cs.visibleCount);
+    v.games = shown.map((g,i)=>{
+      const fb=this.fbOf(g.id);
+      const liked=fb.rating==='like', disliked=fb.rating==='dislike', wished=fb.wishlist;
+      const rev = st.revealed[g.id] || st.reduceMotion;
+      const delay=(i%6)*70;
+      return {
+        id:g.id, round:String(st.round), cond, title:g.title, num:String(i+1).padStart(2,'0'),
+        aspect:g.aspect, artStyle:this.artStyle(g), artLabel:'// KEY ART · '+String(g.genres[0]||'GAME').toUpperCase(),
+        priceLabel:this.priceLabel(g.price), priceColor:g.price===0?'var(--accent)':'var(--g2)',
+        tagLine:g.tags.slice(0,3).join(' · '), platformLine:g.platforms.map(p=>p==='Windows'?'WIN':p==='macOS'?'MAC':'LINUX').join(' / '),
+        explanation:g.explanation, metaAlign: (i%3===2)?'flex-direction:row-reverse;':'',
+        revealStyle:`transition:opacity .6s cubic-bezier(.22,1,.36,1) ${delay}ms,transform .6s cubic-bezier(.22,1,.36,1) ${delay}ms;opacity:${rev?1:0};transform:${rev?'none':'translateY(20px)'};`,
+        openLabel:'View '+g.title+' details', onOpen:()=>this.openDetail(g.id),
+        liked, disliked, wished, wishLabel: wished?'♥ Wishlisted':'♡ Wishlist',
+        likeStyle:this.chip(liked,liked), dislikeStyle:this.chip(disliked,false)+(disliked?'border-color:var(--ink);color:var(--ink);':''), wishStyle:this.chip(wished,wished),
+        onLike:()=>this.like(g.id), onDislike:()=>this.dislike(g.id), onWishlist:()=>this.wishlist(g.id), onNotInterested:()=>this.notInterested(g.id),
+        confirm: st.confirm[g.id]||'', confirmOpacity: st.confirm[g.id]?1:0
+      };
+    });
+    v.canShowMore = cs.visibleCount < elig.length;
+    v.allShown = elig.length>0 && cs.visibleCount>=elig.length;
+    v.remainingLabel = '['+Math.max(0,Math.min(6, elig.length-cs.visibleCount))+' MORE]';
+    v.onShowMore=()=>this.showMore();
+
+    // round progression
+    v.showContinue = inStudy && !(st.round===3 && st.completed);
+    v.continueLabel = 'ANSWER THE TEN QUESTIONS →';
+    v.onAskContinue=()=>this.askContinue();
+    v.showComplete = inStudy && st.completed && st.round===3;
+
+    // confirmation dialog — destructive researcher actions only. Round progression is
+    // confirmed by submitting the ten questionnaire answers, so it needs no dialog.
+    v.confirmOpen = !!st.confirmKind;
+    if(st.confirmKind==='clear'){
+      v.confirmTitle='CLEAR ALL STUDY DATA?';
+      v.confirmBody='This permanently deletes the event log, the participant ID, the assigned sequence, the onboarding preferences and all three conditions of feedback on this device.\nThis cannot be undone.';
+      v.confirmAcceptLabel='DELETE EVERYTHING'; v.confirmBorder='#5a1c1c';
+      v.confirmAcceptStyle=dangerBtn;
+    } else if(st.confirmKind==='newParticipant'){
+      v.confirmTitle='START A NEW PARTICIPANT?';
+      v.confirmBody='This will end the current local study session and remove the current participant ID, assigned sequence, event log, onboarding preferences and all three rounds of feedback from this device.\nExport the current participant’s JSON and CSV before continuing.\nThis action cannot be undone.';
+      v.confirmAcceptLabel='START NEW PARTICIPANT'; v.confirmBorder='#5a1c1c';
+      v.confirmAcceptStyle=dangerBtn;
+    } else { v.confirmTitle=''; v.confirmBody=''; v.confirmAcceptLabel=''; v.confirmBorder='var(--line)'; v.confirmAcceptStyle=solidBtn; }
+    v.onConfirmCancel=()=>this.setState({confirmKind:null});
+    v.onConfirmAccept=()=>this.confirmAccept();
+
+    // detail
+    v.detailOpen = !!st.detailId;
+    if(st.detailId){
+      const g=this.GAMES.find(x=>x.id===st.detailId);
+      if(g){
+        const idx=elig.findIndex(x=>x.id===st.detailId);
+        const fb=this.fbOf(g.id); const liked=fb.rating==='like',disliked=fb.rating==='dislike',wished=fb.wishlist;
+        v.detail={ title:g.title, num:String((idx<0?0:idx)+1).padStart(2,'0'), artStyle:this.artStyle(g,'detail'),
+          priceLabel:this.priceLabel(g.price), description:g.description, explanation:g.explanation,
+          genreLine:g.genres.join(' · '), tagLine:g.tags.join(' · '), platformLine:g.platforms.join(' · '),
+          liked,disliked,wished, wishLabel:wished?'♥ Wishlisted':'♡ Wishlist',
+          likeStyle:this.chip(liked,liked), dislikeStyle:this.chip(disliked,false)+(disliked?'border-color:var(--ink);color:var(--ink);':''), wishStyle:this.chip(wished,wished),
+          onLike:()=>this.like(g.id), onDislike:()=>this.dislike(g.id), onWishlist:()=>this.wishlist(g.id), onNotInterested:()=>this.notInterested(g.id) };
+      } else { v.detailOpen=false; v.detail={}; }
+    } else v.detail={};
+    v.onCloseDetail=()=>this.closeDetail();
+    v.onDetailBack=()=>this.closeDetail();
+    v.onDrawerKey=this.onDrawerKey;
+    v.cardRef=this.cardRef; v.closeRef=this.closeRef;
+
+    // study panel (researcher-facing — A/B/C and model names allowed here only)
+    v.studyOpen=st.studyOpen;
+    v.onCloseStudy=()=>this.closeOverlay('visible-button');
+    v.eventCount=this._logs.length;
+    v.feedbackCount=Object.keys(cs.feedback).length;
+    v.participantLabel=st.participantId||'— not set —';
+    v.sequenceLabel=st.sequence||'—';
+    v.roundStatusLabel= inStudy? (st.round+' of 3'+(st.completed?' · complete':'')) : '—';
+    v.conditionStatusLabel= inStudy? (cond+' · '+this.CONDITION_MODELS[cond]) : '—';
+    v.roundStats=[1,2,3].map(n=>{
+      const c=st.sequence? st.sequence[n-1] : '—';
+      return {label:'R'+n+' · '+c+' · '+(this.CONDITION_MODELS[c]||'—'), count:this._logs.filter(e=>e.round===n).length};
+    });
+    v.condStats=['A','B','C'].map(c=>{
+      const fbs=(st.conditionState[c]||{feedback:{}}).feedback||{};
+      const vals=Object.values(fbs);
+      const l=vals.filter(x=>x.rating==='like').length, d=vals.filter(x=>x.rating==='dislike').length, w=vals.filter(x=>x.wishlist).length, n=vals.filter(x=>x.notInterested).length;
+      return {label:c+' · '+this.CONDITION_MODELS[c], detail:'▲'+l+' ▼'+d+' ♥'+w+' ✕'+n};
+    });
+    v.onExportJson=()=>this.exportJson(); v.onExportCsv=()=>this.exportCsv();
+    // Questionnaire exports carry the template headers analyze_study.py already reads.
+    const likertRows=this.likertRows(), openRow=this.openRow();
+    v.onExportLikert=()=>this.exportLikertCsv();
+    v.likertExportDisabled=likertRows.length===0;
+    v.likertExportLabel='EXPORT LIKERT CSV ('+likertRows.length+'/3)';
+    v.likertExportStyle=likertRows.length?ghostBtn:disabledBtn;
+    v.onExportOpen=()=>this.exportOpenCsv();
+    v.openExportDisabled=!openRow;
+    v.openExportLabel=openRow?'EXPORT OPEN RESPONSES CSV':'OPEN RESPONSES NOT ANSWERED';
+    v.openExportStyle=openRow?ghostBtn:disabledBtn;
+    v.newParticipantBtn=newParticipantBtn;
+    v.onNewParticipant=()=>this.setState({confirmKind:'newParticipant'});   // nothing is deleted until confirmed
+    v.onClearData=()=>this.setState({confirmKind:'clear'});
+    v.onRestartOnboarding=()=>this.reopenPreferences();
+    v.recentEvents = this._logs.slice(-14).reverse().map(e=>({type:(e.round?('R'+e.round+' '):'')+e.eventType+(e.gameId?(' · '+e.gameId.replace('game-','#')):''), time:new Date(e.timestamp).toLocaleTimeString()}));
+
+    return v;
+  }
+}
+</script>
+</body>
+</html>

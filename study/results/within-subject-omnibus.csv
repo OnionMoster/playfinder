@@ -1,0 +1,9 @@
+outcome,outcome_label,outcome_family,test,n_complete,statistic,degrees_of_freedom,p_value,mean_A,mean_B,mean_C,p_holm_across_outcomes,significant_raw_0_05,significant_holm_0_05
+q10_satisfaction,Overall satisfaction (Q10),primary,Friedman chi-square,20,0.09836065573772729,2,0.9520094403852634,4.85,5.5,5.3,1.0,False,False
+perceived_relevance,Perceived relevance,secondary,Friedman chi-square,20,0.5675675675675736,2,0.7529294226587885,4.95,5.4,5.275,1.0,False,False
+discovery_quality,Discovery quality,secondary,Friedman chi-square,20,0.560000000000006,2,0.7557837414557232,4.925,5.525,5.3,1.0,False,False
+constraint_fit,Budget/platform fit,secondary,Friedman chi-square,20,0.5428571428571688,2,0.7622897307899438,5.175,5.525,5.15,1.0,False,False
+total_dwell_seconds,Detail dwell time (seconds),secondary,Friedman chi-square,20,5.0545454545454875,2,0.07987656868146271,5.377549999999999,10.7852,13.11155,0.6390125494517017,False,False
+unique_games_opened,Unique games opened,secondary,Friedman chi-square,20,0.7916666666667046,2,0.6731188730678646,2.1,2.1,2.7,1.0,False,False
+accepted_any,Accepted at least one game,secondary,Cochran's Q,20,1.0,2,0.6065306597126334,0.95,0.95,1.0,1.0,False,False
+rejected_any,Rejected at least one game,secondary,Cochran's Q,20,1.0,2,0.6065306597126334,0.9,0.95,0.85,1.0,False,False

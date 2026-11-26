@@ -1,0 +1,74 @@
+{
+  "created_at_utc": "2026-08-02T11:07:53.993952+00:00",
+  "training_ratio": 0.8,
+  "cutoff_timestamp": 1641340800,
+  "test_data_used": false,
+  "positive_only": true,
+  "single_threaded": true,
+  "random_state": 42,
+  "best_parameters_path": "models/c-cf-mf/results/best_parameters.json",
+  "train_users": 1838974,
+  "train_items": 20435,
+  "train_interactions": 15148098,
+  "load_and_matrix_seconds": 3.566,
+  "shared_files": [
+    "user_item_matrix.npz",
+    "user_ids.npy",
+    "item_ids.npy",
+    "best_parameters.json"
+  ],
+  "models": [
+    {
+      "name": "itemcf",
+      "params": {
+        "name": "itemcf",
+        "n_neighbors": 600,
+        "similarity": "cosine",
+        "n_jobs": 1
+      },
+      "fit_seconds": 7.313,
+      "files": [
+        "itemcf_similarity.npz"
+      ]
+    },
+    {
+      "name": "als",
+      "params": {
+        "name": "als",
+        "factors": 32,
+        "regularization": 0.1,
+        "alpha": 2.5,
+        "iterations": 15,
+        "num_threads": 1,
+        "random_state": 42,
+        "calculate_training_loss": false
+      },
+      "fit_seconds": 68.436,
+      "files": [
+        "als_user_factors.npy",
+        "als_item_factors.npy"
+      ]
+    },
+    {
+      "name": "bpr",
+      "params": {
+        "name": "bpr",
+        "factors": 64,
+        "learning_rate": 0.005,
+        "regularization": 0.003,
+        "iterations": 400,
+        "verify_negative_samples": true,
+        "num_threads": 1,
+        "random_state": 42
+      },
+      "fit_seconds": 2146.918,
+      "files": [
+        "bpr_user_factors.npy",
+        "bpr_item_factors.npy"
+      ]
+    }
+  ],
+  "completed_at_utc": "2026-08-02T11:45:02.037597+00:00",
+  "last_run_seconds": 2238.681,
+  "recorded_seconds": 2226.233
+}

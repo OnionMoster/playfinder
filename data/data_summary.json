@@ -1,0 +1,106 @@
+{
+  "items": {
+    "n_items": 50872,
+    "kaggle_games": 50872,
+    "ucsd_games": 32132,
+    "ucsd_metadata_matched": 14931,
+    "ucsd_match_rate": 0.2935,
+    "description_present": 40499,
+    "with_genres": 14953,
+    "with_tags": 49628
+  },
+  "interactions": {
+    "raw_interactions": 41154773,
+    "raw_users": 13781059,
+    "raw_items": 37610,
+    "raw_sparsity": 0.9999206,
+    "min_user_interactions": 5,
+    "min_item_interactions": 20,
+    "kcore_iter_sizes_users_items": [
+      [
+        1907117,
+        24617
+      ],
+      [
+        1905469,
+        22695
+      ],
+      [
+        1905450,
+        22679
+      ],
+      [
+        1905447,
+        22677
+      ],
+      [
+        1905447,
+        22676
+      ],
+      [
+        1905447,
+        22676
+      ]
+    ],
+    "core_interactions": 22286960,
+    "core_users": 1905447,
+    "core_items": 22676,
+    "core_sparsity": 0.99948419,
+    "core_positive_rate": 0.8476,
+    "retained_interactions_pct": 0.5415,
+    "confidence_alpha": 1.0,
+    "user_group_method": "value_tertile",
+    "user_group_cutoffs": {
+      "q33": 6.0,
+      "q67": 10.0
+    },
+    "user_groups": {
+      "cold": {
+        "n_users": 733194,
+        "n_range": [
+          5,
+          6
+        ],
+        "avg_n": 5.4
+      },
+      "normal": {
+        "n_users": 589754,
+        "n_range": [
+          7,
+          10
+        ],
+        "avg_n": 8.2
+      },
+      "heavy": {
+        "n_users": 582499,
+        "n_range": [
+          11,
+          4875
+        ],
+        "avg_n": 23.2
+      }
+    }
+  },
+  "ucsd_extras": {
+    "playtime": {
+      "n_rows": 5153209,
+      "n_users": 70912,
+      "n_items": 10978
+    },
+    "reviews": {
+      "n_rows": 59305,
+      "n_users": 25458,
+      "positive_rate": 0.8848
+    },
+    "bundles": {
+      "n_bundles": 615
+    },
+    "note": "UCSD user_id is a 64-bit Steam id, disjoint from Kaggle user_id; items share the Steam appid."
+  },
+  "eda": {
+    "longtail": {
+      "top_1pct_share": 0.5561,
+      "top_10pct_share": 0.9159
+    }
+  }
+}

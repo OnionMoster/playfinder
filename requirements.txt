@@ -1,0 +1,17 @@
+# Integrated Python environment for data, evaluation, models, and notebooks.
+# Exact model-run versions remain recorded in each member's reproducibility file.
+pandas>=2.0
+# Keep the scientific stack on the ABI-compatible NumPy 1.x line used by the
+# integrated model environment. NumPy 2.x can break older SciPy/implicit wheels.
+numpy>=1.24,<2.0
+scipy>=1.10,<1.14
+scikit-learn>=1.3
+pyarrow>=14.0
+duckdb>=1.0
+matplotlib>=3.7
+implicit==0.7.3
+threadpoolctl>=3.1
+torch>=2.1
+jupyter>=1.0
+nbconvert>=7.0
+ipython>=8.0

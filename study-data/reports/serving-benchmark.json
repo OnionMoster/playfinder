@@ -1,0 +1,10 @@
+{
+  "payload": "study-data/generated/playfinder-study-payload.json",
+  "runs": 75,
+  "sampled_profiles": 5,
+  "mean_ms": 102.96255052,
+  "p50_ms": 56.312790999999834,
+  "p95_ms": 263.3731659999994,
+  "p99_ms": 279.60520799999995,
+  "measured_at": "2026-07-30T06:14:48.257Z"
+}

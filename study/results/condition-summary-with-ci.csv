@@ -1,0 +1,25 @@
+outcome,outcome_label,outcome_family,condition,model,n,mean,median,sd,bootstrap_ci_low,bootstrap_ci_high
+q10_satisfaction,Overall satisfaction (Q10),primary,A,Popularity,20,4.85,5.0,2.0332758116683998,3.95,5.7
+q10_satisfaction,Overall satisfaction (Q10),primary,B,BPR,20,5.5,6.0,1.5727950313140984,4.8,6.1
+q10_satisfaction,Overall satisfaction (Q10),primary,C,Hybrid,20,5.3,6.0,1.5593520921743174,4.6,5.9
+perceived_relevance,Perceived relevance,secondary,A,Popularity,20,4.95,5.5,1.6772471179694546,4.2,5.6256249999999905
+perceived_relevance,Perceived relevance,secondary,B,BPR,20,5.4,6.0,1.5525869752736798,4.675,6.025
+perceived_relevance,Perceived relevance,secondary,C,Hybrid,20,5.275,5.5,1.27191318803397,4.7,5.8
+discovery_quality,Discovery quality,secondary,A,Popularity,20,4.925,5.5,1.7938124645276432,4.125,5.65
+discovery_quality,Discovery quality,secondary,B,BPR,20,5.525,5.75,1.4093204782895608,4.875,6.075
+discovery_quality,Discovery quality,secondary,C,Hybrid,20,5.3,5.75,1.5593520921743174,4.599375,5.9
+constraint_fit,Budget/platform fit,secondary,A,Popularity,20,5.175,5.75,2.001808392955046,4.275,5.975
+constraint_fit,Budget/platform fit,secondary,B,BPR,20,5.525,6.0,1.455253640399067,4.85,6.075
+constraint_fit,Budget/platform fit,secondary,C,Hybrid,20,5.15,5.5,1.5312533566021214,4.45,5.725
+total_dwell_seconds,Detail dwell time (seconds),secondary,A,Popularity,20,5.377549999999999,2.642,7.3439074460613805,2.55824375,8.768792499999996
+total_dwell_seconds,Detail dwell time (seconds),secondary,B,BPR,20,10.7852,6.3469999999999995,19.008886718418946,4.0244025,20.1386175
+total_dwell_seconds,Detail dwell time (seconds),secondary,C,Hybrid,20,13.11155,8.7,18.960669387681104,6.023733750000001,22.022277499999998
+unique_games_opened,Unique games opened,secondary,A,Popularity,20,2.1,0.5,3.2265347225451446,0.9,3.6
+unique_games_opened,Unique games opened,secondary,B,BPR,20,2.1,1.0,3.1937438845342623,0.85,3.6
+unique_games_opened,Unique games opened,secondary,C,Hybrid,20,2.7,1.0,3.853911205379202,1.2,4.45
+accepted_any,Accepted at least one game,secondary,A,Popularity,20,0.95,1.0,0.22360679774997902,0.85,1.0
+accepted_any,Accepted at least one game,secondary,B,BPR,20,0.95,1.0,0.22360679774997902,0.85,1.0
+accepted_any,Accepted at least one game,secondary,C,Hybrid,20,1.0,1.0,0.0,1.0,1.0
+rejected_any,Rejected at least one game,secondary,A,Popularity,20,0.9,1.0,0.30779350562554625,0.75,1.0
+rejected_any,Rejected at least one game,secondary,B,BPR,20,0.95,1.0,0.223606797749979,0.85,1.0
+rejected_any,Rejected at least one game,secondary,C,Hybrid,20,0.85,1.0,0.36634754853252327,0.7,1.0

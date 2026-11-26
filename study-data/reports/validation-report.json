@@ -1,0 +1,268 @@
+{
+  "ok": true,
+  "formal_ready": true,
+  "validation_complete": true,
+  "scope": "complete-formal-package",
+  "stopped_after": null,
+  "executed_sections": [
+    "required-file-presence",
+    "parsing-and-schema",
+    "manifest-and-provenance",
+    "catalogue-quality",
+    "candidate-integrity",
+    "profile-integrity-and-coverage",
+    "seen-item-integrity",
+    "ranking-integrity-and-recommended-metadata",
+    "filter-availability"
+  ],
+  "not_executed_sections": [],
+  "note": "All validation sections were executed.",
+  "mode": "formal",
+  "input": "study-data/incoming/final",
+  "summary": {
+    "profileCount": 46,
+    "catalogueCount": 50872,
+    "candidateCount": 20435,
+    "tasteCombinations": 560,
+    "supportedTasteCombinations": 558,
+    "coverageThreshold": 0.5,
+    "checkedConditions": [
+      "A",
+      "B",
+      "C"
+    ],
+    "skippedConditions": [],
+    "catalogueQuality": {
+      "rows": 50872,
+      "missingTitle": 0,
+      "missingPrice": 0,
+      "missingPlatform": 792
+    },
+    "candidateQuality": {
+      "rows": 20435,
+      "missingCatalogue": 0,
+      "missingTitle": 0,
+      "missingPrice": 0,
+      "missingPlatform": 17
+    },
+    "rankingQuality": {
+      "A": {
+        "rows": 4600,
+        "uniqueRecommendedItems": 131,
+        "recommendedMissingTitleItems": 0,
+        "recommendedMissingPriceItems": 0,
+        "recommendedMissingPlatformItems": 0
+      },
+      "B": {
+        "rows": 4600,
+        "uniqueRecommendedItems": 3685,
+        "recommendedMissingTitleItems": 0,
+        "recommendedMissingPriceItems": 0,
+        "recommendedMissingPlatformItems": 1
+      },
+      "C": {
+        "rows": 4600,
+        "uniqueRecommendedItems": 3084,
+        "recommendedMissingTitleItems": 0,
+        "recommendedMissingPriceItems": 0,
+        "recommendedMissingPlatformItems": 2
+      }
+    }
+  },
+  "errors": [],
+  "warnings": [
+    {
+      "level": "warning",
+      "rule": "catalogue-platform-missing",
+      "message": "792 catalogue items have missing platform metadata; missing platform remains unknown and is excluded by an active platform filter",
+      "file": "catalogue.json",
+      "affected_items": 792,
+      "catalogue_items": 50872
+    },
+    {
+      "level": "warning",
+      "rule": "candidate-platform-missing",
+      "message": "17 candidate items have missing platform metadata",
+      "file": "candidate_items.csv",
+      "affected_items": 17,
+      "candidate_items": 20435
+    },
+    {
+      "level": "warning",
+      "rule": "recommended-platform-metadata",
+      "message": "recommended item has unknown platform compatibility and will be excluded when a platform filter is active",
+      "file": "bpr_top100.csv",
+      "condition": "B",
+      "profile_id": "profile-022",
+      "item_id": "909090"
+    },
+    {
+      "level": "warning",
+      "rule": "recommended-platform-metadata",
+      "message": "recommended item has unknown platform compatibility and will be excluded when a platform filter is active",
+      "file": "hybrid_top100.csv",
+      "condition": "C",
+      "profile_id": "profile-001",
+      "item_id": "245550"
+    },
+    {
+      "level": "warning",
+      "rule": "recommended-platform-metadata",
+      "message": "recommended item has unknown platform compatibility and will be excluded when a platform filter is active",
+      "file": "hybrid_top100.csv",
+      "condition": "C",
+      "profile_id": "profile-045",
+      "item_id": "633030"
+    },
+    {
+      "level": "warning",
+      "rule": "single-platform-availability",
+      "message": "only 2 games available at Any Price; the formal policy permits an honest short list",
+      "condition": "B",
+      "profile_id": "profile-016",
+      "budget": "any",
+      "platforms": "macOS"
+    },
+    {
+      "level": "warning",
+      "rule": "single-platform-availability",
+      "message": "only 2 games available at Any Price; the formal policy permits an honest short list",
+      "condition": "B",
+      "profile_id": "profile-016",
+      "budget": "any",
+      "platforms": "Linux"
+    },
+    {
+      "level": "warning",
+      "rule": "single-platform-availability",
+      "message": "only 4 games available at Any Price; the formal policy permits an honest short list",
+      "condition": "B",
+      "profile_id": "profile-024",
+      "budget": "any",
+      "platforms": "macOS"
+    },
+    {
+      "level": "warning",
+      "rule": "single-platform-availability",
+      "message": "only 3 games available at Any Price; the formal policy permits an honest short list",
+      "condition": "B",
+      "profile_id": "profile-024",
+      "budget": "any",
+      "platforms": "Linux"
+    },
+    {
+      "level": "warning",
+      "rule": "single-platform-availability",
+      "message": "only 4 games available at Any Price; the formal policy permits an honest short list",
+      "condition": "C",
+      "profile_id": "profile-024",
+      "budget": "any",
+      "platforms": "Linux"
+    },
+    {
+      "level": "warning",
+      "rule": "single-platform-availability",
+      "message": "only 5 games available at Any Price; the formal policy permits an honest short list",
+      "condition": "B",
+      "profile_id": "profile-027",
+      "budget": "any",
+      "platforms": "macOS"
+    },
+    {
+      "level": "warning",
+      "rule": "single-platform-availability",
+      "message": "only 4 games available at Any Price; the formal policy permits an honest short list",
+      "condition": "B",
+      "profile_id": "profile-027",
+      "budget": "any",
+      "platforms": "Linux"
+    },
+    {
+      "level": "warning",
+      "rule": "single-platform-availability",
+      "message": "only 5 games available at Any Price; the formal policy permits an honest short list",
+      "condition": "C",
+      "profile_id": "profile-027",
+      "budget": "any",
+      "platforms": "macOS"
+    },
+    {
+      "level": "warning",
+      "rule": "single-platform-availability",
+      "message": "only 3 games available at Any Price; the formal policy permits an honest short list",
+      "condition": "C",
+      "profile_id": "profile-027",
+      "budget": "any",
+      "platforms": "Linux"
+    },
+    {
+      "level": "warning",
+      "rule": "single-platform-availability",
+      "message": "only 5 games available at Any Price; the formal policy permits an honest short list",
+      "condition": "B",
+      "profile_id": "profile-029",
+      "budget": "any",
+      "platforms": "Linux"
+    },
+    {
+      "level": "warning",
+      "rule": "single-platform-availability",
+      "message": "only 5 games available at Any Price; the formal policy permits an honest short list",
+      "condition": "B",
+      "profile_id": "profile-030",
+      "budget": "any",
+      "platforms": "Linux"
+    },
+    {
+      "level": "warning",
+      "rule": "single-platform-availability",
+      "message": "only 5 games available at Any Price; the formal policy permits an honest short list",
+      "condition": "B",
+      "profile_id": "profile-034",
+      "budget": "any",
+      "platforms": "macOS"
+    },
+    {
+      "level": "warning",
+      "rule": "single-platform-availability",
+      "message": "only 3 games available at Any Price; the formal policy permits an honest short list",
+      "condition": "B",
+      "profile_id": "profile-034",
+      "budget": "any",
+      "platforms": "Linux"
+    },
+    {
+      "level": "warning",
+      "rule": "single-platform-availability",
+      "message": "only 2 games available at Any Price; the formal policy permits an honest short list",
+      "condition": "B",
+      "profile_id": "profile-042",
+      "budget": "any",
+      "platforms": "Linux"
+    },
+    {
+      "level": "warning",
+      "rule": "single-platform-availability",
+      "message": "only 2 games available at Any Price; the formal policy permits an honest short list",
+      "condition": "C",
+      "profile_id": "profile-042",
+      "budget": "any",
+      "platforms": "macOS"
+    },
+    {
+      "level": "warning",
+      "rule": "single-platform-availability",
+      "message": "only 1 games available at Any Price; the formal policy permits an honest short list",
+      "condition": "C",
+      "profile_id": "profile-042",
+      "budget": "any",
+      "platforms": "Linux"
+    },
+    {
+      "level": "warning",
+      "rule": "filter-availability-summary",
+      "message": "2012 finite-budget/platform states contain fewer than six games; the formal policy permits an honest short list",
+      "affected_filter_states": 2012
+    }
+  ]
+}

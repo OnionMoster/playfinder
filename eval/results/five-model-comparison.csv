@@ -1,0 +1,6 @@
+model,scenario,scope,k,users,precision_at_k,recall_at_k,ndcg_at_k,map_at_k,mrr_at_k,auc,rmse,mae,catalogue_coverage,user_coverage,novelty,intra_list_diversity,serendipity,comparison_role,source
+popularity,seen_users_only,overall,10,5119,0.008302,0.026179,0.017678,0.009017,0.026229,0.520276,0.623801,0.540216,0.000413,1.0,4.754978,0.907297,0.0,non_personalized_baseline,eval/final_eval/main_results.csv
+itemcf,seen_users_only,overall,10,5119,0.017093,0.053138,0.038518,0.021788,0.058092,0.531385,0.604186,0.525833,0.069095,0.990232,6.711869,0.843711,0.013948,offline_accuracy_winner,models/c-cf-mf/results/final_results.csv
+als,seen_users_only,overall,10,5119,0.015902,0.051038,0.034983,0.019129,0.050689,0.518762,0.613826,0.531362,0.006841,0.990232,5.881277,0.887366,0.013929,strong_accuracy_low_coverage,models/c-cf-mf/results/final_results.csv
+bpr,seen_users_only,overall,10,5119,0.009885,0.032966,0.023148,0.012933,0.034369,0.51651,0.58948,0.505463,0.16172,0.990232,10.825962,0.835205,0.009533,coverage_and_novelty_winner,eval/final_eval/main_results.csv
+hybrid,seen_users_only,overall,10,5119,0.013342,0.041397,0.028842,0.015333,0.043391,0.523489,0.586099,0.516287,0.112557,0.990232,7.852739,0.840698,0.011819,best_balanced_personalized_model,eval/final_eval/main_results.csv

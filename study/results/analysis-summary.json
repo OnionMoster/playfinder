@@ -1,0 +1,10 @@
+{
+  "status": "observed-study-results",
+  "participants": 20,
+  "participant_condition_rows": 60,
+  "complete_three_round_participants": 20,
+  "offline_ndcg_zero_rate": 0.9666666666666667,
+  "primary_outcome": "q10_satisfaction",
+  "primary_offline_metric": "seen_users_only overall NDCG@10",
+  "correlation_interpretation": "descriptive; within-subject rows are not independent and offline NDCG is zero-inflated"
+}

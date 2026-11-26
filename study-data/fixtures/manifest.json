@@ -1,0 +1,36 @@
+{
+  "schema_version": "playfinder-study-v1",
+  "mode": "fixture",
+  "notice": "FIXTURE / NOT FOR FORMAL STUDY",
+  "id_namespace": "steam_appid",
+  "candidate_hash": "058f5426761a10541a839ca3b2600a711efd79c0e3b1b0852feaa37b0ae6867d",
+  "conditions": {
+    "A": {
+      "model": "popularity",
+      "data_snapshot": "fixture-snapshot-v1",
+      "split_id": "fixture-split-v1",
+      "candidate_hash": "058f5426761a10541a839ca3b2600a711efd79c0e3b1b0852feaa37b0ae6867d"
+    },
+    "B": {
+      "model": "bpr",
+      "data_snapshot": "fixture-snapshot-v1",
+      "split_id": "fixture-split-v1",
+      "candidate_hash": "058f5426761a10541a839ca3b2600a711efd79c0e3b1b0852feaa37b0ae6867d"
+    },
+    "C": {
+      "model": "hybrid",
+      "data_snapshot": "fixture-snapshot-v1",
+      "split_id": "fixture-split-v1",
+      "candidate_hash": "058f5426761a10541a839ca3b2600a711efd79c0e3b1b0852feaa37b0ae6867d"
+    }
+  },
+  "files": {
+    "catalogue.json": "bfda0736682db916254d573f164254dd90d42fe38cbe7bf0a0024b81e2e9f45a",
+    "candidate_items.csv": "ad9235ce6db2ec77f165a51712d9635d1d586aa8654c70c9628626a5dff9132c",
+    "study_profiles.csv": "199eba0272685fb2499c944a7fc7fdce4e66a1d1350772c134d145b0a111bb09",
+    "profile_seen_items.csv": "125830a6ece7d2a5baa3b7b6810bd095b6f515abfe70ac33c2d7e82c36ea62fc",
+    "popularity_top100.csv": "f3f9191a45e418efde58a0bf9d5cc9efa84232c64114017b0b9a844fef01a6cb",
+    "bpr_top100.csv": "2cf1e2def4fac443312949276dcefe971635f310599145d06cf5150a9b675339",
+    "hybrid_top100.csv": "ff26227ffbef98ea06c521e7a1a3dc0d69613d3f71cdb8359a071efbd8dbeea5"
+  }
+}

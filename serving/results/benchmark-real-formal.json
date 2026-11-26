@@ -1,0 +1,57 @@
+{
+  "schema_version": "playfinder-serving-benchmark-v1",
+  "status": "formal-real-three-model-data",
+  "input": "study-data/incoming/final",
+  "measured_at": "2026-07-29T11:03:38.707Z",
+  "definition": "Warm in-memory request from profile/condition lookup through seen exclusion, hard filters, and deterministic MMR; excludes process startup and file loading.",
+  "profiles": 46,
+  "conditions": {
+    "A": "popularity_top100.csv",
+    "B": "bpr_top100.csv",
+    "C": "hybrid_top100.csv"
+  },
+  "passes": 5,
+  "overall": {
+    "runs": 690,
+    "mean_ms": 81.45048831594195,
+    "p50_ms": 18.879459000003408,
+    "p95_ms": 273.0382090000003,
+    "p99_ms": 300.679667000004,
+    "max_ms": 317.8005830000002
+  },
+  "by_condition": {
+    "A": {
+      "runs": 230,
+      "mean_ms": 31.019595326086918,
+      "p50_ms": 12.210542000000714,
+      "p95_ms": 69.96816699999908,
+      "p99_ms": 75.04249999999593,
+      "max_ms": 82.08675000000221
+    },
+    "B": {
+      "runs": 230,
+      "mean_ms": 106.85189279999993,
+      "p50_ms": 27.12412499999482,
+      "p95_ms": 288.1134579999998,
+      "p99_ms": 304.6464999999953,
+      "max_ms": 317.8005830000002
+    },
+    "C": {
+      "runs": 230,
+      "mean_ms": 106.47997682173899,
+      "p50_ms": 30.28087499999674,
+      "p95_ms": 278.3032499999972,
+      "p99_ms": 297.531332999999,
+      "max_ms": 306.3083340000012
+    }
+  },
+  "post_filter_result_count": {
+    "minimum": 0,
+    "maximum": 100,
+    "mean": 60.78695652173913
+  },
+  "limitations": [
+    "This is a local single-process service-layer benchmark, not browser network latency.",
+    "The input is the formally validated three-model study package."
+  ]
+}
